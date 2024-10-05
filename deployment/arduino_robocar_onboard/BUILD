@@ -3,6 +3,14 @@ load(
     "platformio_library",
     "platformio_project",
 )
+load("//fraikin_home_automation/modules:modules.bzl", "MODULES")
+load("//fraikin_home_automation/utils:helpers.bzl", "get_deployment_deps_for_arduino")
+
+DEPLOYED_MODULES = ["blink"]
+
+ADDITIONAL_DEPS = [
+    "//fraikin_home_automation/common/base_classes:i_module_arduino",
+]
 
 platformio_project(
     name = "arduino_deployment",
@@ -18,9 +26,5 @@ platformio_project(
     #    },
     framework = "arduino",
     platform = "atmelavr",
-    deps = [
-        "//fraikin_home_automation/common/base_classes:i_module_arduino",
-        "//fraikin_home_automation/common/base_classes:module_base_arduino",
-        "//fraikin_home_automation/modules/blink:blink_arduino",
-    ],
+    deps = get_deployment_deps_for_arduino(DEPLOYED_MODULES, MODULES) + ADDITIONAL_DEPS,
 )

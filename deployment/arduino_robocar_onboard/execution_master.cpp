@@ -4,7 +4,7 @@
  * then off for one second, repeatedly.
  */
 
-#include "blink.h"
+#include "blink/blink.h"
 
 Blink blink{};
 
