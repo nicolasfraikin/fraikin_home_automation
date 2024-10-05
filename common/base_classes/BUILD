@@ -6,16 +6,36 @@ load("//fraikin_home_automation/utils:helpers.bzl", "get_includes_from_library_d
 
 LIBRARIES = [
     {
-        "Name": "blink",
-        "hdrs": ["blink.h"],
-        "srcs": ["blink.cpp"],
+        "Name": "i_module",
+        "hdrs": ["i_module.h"],
+        "srcs": [],
         "visibility": [
             "//fraikin_home_automation/deployment:__subpackages__",
         ],
-        "deps": [
-            "//fraikin_home_automation/common/base_classes:module_base",
-            "//fraikin_home_automation/utils/test_stubs:Arduino_mock",
+        "deps": [],
+    },
+    {
+        "Name": "module_base",
+        "hdrs": ["module_base.h"],
+        "srcs": ["module_base.cpp"],
+        "visibility": [
+            "//fraikin_home_automation/deployment:__subpackages__",
+            "//fraikin_home_automation/modules:__subpackages__",
         ],
+        "deps": [
+            ":i_module",
+            ":i_interface",
+        ],
+    },
+    {
+        "Name": "i_interface",
+        "hdrs": ["i_interface.h"],
+        "srcs": [],
+        "visibility": [
+            "//fraikin_home_automation/deployment:__subpackages__",
+            "//fraikin_home_automation/modules:__subpackages__",
+        ],
+        "deps": [],
     },
 ]
 
@@ -28,7 +48,7 @@ LIBRARIES = [
             add_srcs = library["hdrs"][1:] if len(library["srcs"]) > 1 else [],
             hdr = library["hdrs"][0],
             visibility = library["visibility"],
-            deps = [(library_dep + "_arduino") for library_dep in library["deps"] if "test_stubs" not in library_dep],
+            deps = [library_dep + "_arduino" for library_dep in library["deps"]],
         ),
         cc_library(
             name = library["Name"],

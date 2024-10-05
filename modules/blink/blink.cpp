@@ -11,7 +11,9 @@
 #define LED_BUILTIN 2
 #endif
 
-void Blink::Init() { pinMode(LED_BUILTIN, OUTPUT); }
+void Blink::Init() {
+  pinMode(LED_BUILTIN, OUTPUT);
+}
 
 void Blink::Step() {
   // turn the LED on (HIGH is the voltage level)

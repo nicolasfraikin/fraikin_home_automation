@@ -1,10 +1,12 @@
+#ifdef NON_TARGET_BUILD
+#include "fraikin_home_automation/utils/test_stubs/arduino_mock.h"
+#else
 #include <Arduino.h>
-#include <module_base.h>
+#endif
+#include "module_base.h"
 
 class Blink : ModuleBase {
   public:
     void Init() final;
     void Step() final;
-
-  private:
 };

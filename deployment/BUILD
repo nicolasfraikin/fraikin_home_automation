@@ -4,14 +4,6 @@ load(
     "platformio_project",
 )
 
-platformio_library(
-    name = "test",
-    hdr = "test.h",
-    visibility = ["//fraikin_home_automation/deployment:__subpackages__"],
-    deps = [
-    ],
-)
-
 platformio_project(
     name = "arduino_deployment",
     src = "execution_master.cpp",
@@ -27,9 +19,8 @@ platformio_project(
     framework = "arduino",
     platform = "atmelavr",
     deps = [
-        ":test",
-        "//fraikin_home_automation/common/interfaces:i_module",
-        "//fraikin_home_automation/common/interfaces:module_base",
-        "//fraikin_home_automation/modules/blink",
+        "//fraikin_home_automation/common/base_classes:i_module_arduino",
+        "//fraikin_home_automation/common/base_classes:module_base_arduino",
+        "//fraikin_home_automation/modules/blink:blink_arduino",
     ],
 )

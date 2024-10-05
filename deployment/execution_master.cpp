@@ -5,8 +5,6 @@
  */
 
 #include "blink.h"
-#include "test.h"
-#include <Arduino.h>
 
 Blink blink{};
 

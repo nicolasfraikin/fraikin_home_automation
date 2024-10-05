@@ -5,6 +5,7 @@
 #ifndef MODULE_BASE_H
 #define MODULE_BASE_H
 #include "i_module.h"
+#include "i_interface.h"
 
 class ModuleBase : public IModule {
   protected:
