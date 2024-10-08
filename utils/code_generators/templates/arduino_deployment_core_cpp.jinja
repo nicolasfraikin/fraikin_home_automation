@@ -1,0 +1,19 @@
+{% for module_name_snake_case in ModuleNameSnakeCase %}
+#include "{{module_name_snake_case}}.h"
+{% endfor %}
+
+{% for module_name_pascal_case, module_name_snake_case in ModuleNames %}
+{{module_name_pascal_case}} {{module_name_snake_case}}{};
+{% endfor %}
+
+void setup() {
+{% for module_name_snake_case in ModuleNameSnakeCase %}
+    {{module_name_snake_case}}.Init();
+{% endfor %}
+}
+
+void loop() {
+{% for module_name_snake_case in ModuleNameSnakeCase %}
+    {{module_name_snake_case}}.Step();
+{% endfor %}
+}

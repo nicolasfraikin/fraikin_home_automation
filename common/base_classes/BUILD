@@ -20,7 +20,7 @@ LIBRARIES = [
         "srcs": ["module_base.cpp"],
         "visibility": [
             "//fraikin_home_automation/deployment:__subpackages__",
-            "//fraikin_home_automation/modules:__subpackages__",
+            "//fraikin_home_automation/cpp_modules:__subpackages__",
         ],
         "deps": [
             ":i_module",
@@ -33,7 +33,7 @@ LIBRARIES = [
         "srcs": [],
         "visibility": [
             "//fraikin_home_automation/deployment:__subpackages__",
-            "//fraikin_home_automation/modules:__subpackages__",
+            "//fraikin_home_automation/cpp_modules:__subpackages__",
         ],
         "deps": [],
     },
@@ -42,16 +42,16 @@ LIBRARIES = [
 [
     (
         platformio_library(
-            name = "{}_arduino".format(library["Name"]),
+            name = library["Name"],
             src = library["srcs"][0] if len(library["srcs"]) > 0 else None,
             add_hdrs = library["hdrs"][1:] if len(library["hdrs"]) > 1 else [],
             add_srcs = library["hdrs"][1:] if len(library["srcs"]) > 1 else [],
             hdr = library["hdrs"][0],
             visibility = library["visibility"],
-            deps = [library_dep + "_arduino" for library_dep in library["deps"]],
+            deps = library["deps"],
         ),
         cc_library(
-            name = library["Name"],
+            name = "{}_test".format(library["Name"]),
             srcs = library["srcs"],
             hdrs = library["hdrs"],
             defines = ["NON_TARGET_BUILD"],
@@ -59,7 +59,7 @@ LIBRARIES = [
                 library["deps"],
             ),
             visibility = library["visibility"],
-            deps = library["deps"],
+            deps = [library_dep + "_test" for library_dep in library["deps"]],
         ),
     )
     for library in LIBRARIES
