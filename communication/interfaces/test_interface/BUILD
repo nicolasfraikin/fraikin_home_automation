@@ -6,36 +6,13 @@ load("//fraikin_home_automation/utils:helpers.bzl", "get_includes_from_library_d
 
 LIBRARIES = [
     {
-        "Name": "i_module",
-        "hdrs": ["i_module.h"],
+        "Name": "test_interface",
+        "hdrs": ["test_interface.h"],
         "srcs": [],
         "visibility": [
-            "//fraikin_home_automation/deployment:__subpackages__",
+            "//visibility:public",
         ],
-        "deps": [],
-    },
-    {
-        "Name": "module_base",
-        "hdrs": ["module_base.h"],
-        "srcs": ["module_base.cpp"],
-        "visibility": [
-            "//fraikin_home_automation/deployment:__subpackages__",
-            "//fraikin_home_automation/cpp_modules:__subpackages__",
-        ],
-        "deps": [
-            ":i_module",
-            ":interface_base",
-        ],
-    },
-    {
-        "Name": "interface_base",
-        "hdrs": ["interface_base.h"],
-        "srcs": [],
-        "visibility": [
-            "//fraikin_home_automation/deployment:__subpackages__",
-            "//fraikin_home_automation/communication:__subpackages__",
-        ],
-        "deps": [],
+        "deps": ["//fraikin_home_automation/common/base_classes:interface_base"],
     },
 ]
 

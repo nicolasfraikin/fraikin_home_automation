@@ -4,29 +4,24 @@
  * then off for one second, repeatedly.
  */
 
-#include "blink.h"
-#include "test_interface.h"
+#include "blink2.h"
 
 // Set LED_BUILTIN if it is not defined by Arduino framework
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 2
 #endif
 
-Blink::Blink() : test_bool_blink_{false} {}
-
-void Blink::Init() {
+void Blink2::Init() {
   pinMode(LED_BUILTIN, OUTPUT);
-  AddSubscriberCallback<TestInterface>(
-      [this](const TestInterface::DataType& data) { test_bool_blink_ = data.test_bool; });
 }
 
-void Blink::Step() {
+void Blink2::Step() {
   // turn the LED on (HIGH is the voltage level)
   digitalWrite(LED_BUILTIN, HIGH);
   // wait for a second
-  delay(500);
+  delay(1500);
   // turn the LED off by making the voltage LOW
   digitalWrite(LED_BUILTIN, LOW);
   // wait for a second
-  delay(500);
+  delay(1500);
 }

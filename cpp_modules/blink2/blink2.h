@@ -5,12 +5,8 @@
 #endif
 #include "module_base.h"
 
-class Blink : ModuleBase {
+class Blink2 : ModuleBase {
   public:
-    Blink();
-    void Init() override;
-    void Step() override;
-
-  private:
-    bool test_bool_blink_;
+    void Init() final;
+    void Step() final;
 };
