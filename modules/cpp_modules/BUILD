@@ -2,7 +2,7 @@ load(
     "@platformio_rules//platformio:platformio.bzl",
     "platformio_library",
 )
-load("//fraikin_home_automation/cpp_modules:modules.bzl", "MODULES")
+load("//fraikin_home_automation/modules/cpp_modules:modules.bzl", "MODULES")
 load("//fraikin_home_automation/utils:helpers.bzl", "get_includes_from_library_deps")
 
 [

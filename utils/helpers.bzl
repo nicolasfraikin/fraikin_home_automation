@@ -15,7 +15,7 @@ def get_deployment_deps_for_arduino(deployed_module_names, all_modules):
     arduino_deps = []
     for deployed_module_name in deployed_module_names:
         deployed_library = all_modules[deployed_module_name]
-        arduino_deps.append("//fraikin_home_automation/cpp_modules:" + deployed_module_name)
+        arduino_deps.append("//fraikin_home_automation/modules/cpp_modules:" + deployed_module_name)
         print(deployed_library)
         for lib_dep in deployed_library["deps"]:
             if "test_stubs" not in lib_dep and lib_dep not in arduino_deps:

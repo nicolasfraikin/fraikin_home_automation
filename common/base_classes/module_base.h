@@ -9,6 +9,14 @@
 
 class ModuleBase : public IModule {
   public:
+    template <typename Interface>
+    void ReceiveInterfaceData(typename Interface::DataType& variable) {
+      Interface::GetInstance()->GetData(variable);
+    }
+    template <typename Interface>
+    void PublishInterfaceData(const typename Interface::DataType& variable) {
+      Interface::GetInstance()->SetData(variable);
+    }
     void Step() override {
       UpdateInterfaceSubscription();
       UpdateInterfacePublishing();

@@ -20,7 +20,7 @@ LIBRARIES = [
         "srcs": ["module_base.cpp"],
         "visibility": [
             "//fraikin_home_automation/deployment:__subpackages__",
-            "//fraikin_home_automation/cpp_modules:__subpackages__",
+            "//fraikin_home_automation/modules/cpp_modules:__subpackages__",
         ],
         "deps": [
             ":i_module",
