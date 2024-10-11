@@ -5,20 +5,18 @@
  */
 
 #include "blink.h"
-#include "test_interface.h"
 
 // Set LED_BUILTIN if it is not defined by Arduino framework
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 2
 #endif
 
-Blink::Blink() : test_bool_blink_{false} {}
+Blink::Blink() : test_interface_object_{} {}
 
-void Blink::Init() {
-  pinMode(LED_BUILTIN, OUTPUT);
-  AddSubscriberCallback<TestInterface>(
-      [this](const TestInterface::DataType& data) { test_bool_blink_ = data.test_bool; });
-}
+void Blink::UpdateInterfaceSubscription() { TestInterface::GetInstance()->GetData(test_interface_object_); }
+void Blink::UpdateInterfacePublishing() {}
+
+void Blink::Init() { pinMode(LED_BUILTIN, OUTPUT); }
 
 void Blink::Step() {
   // turn the LED on (HIGH is the voltage level)

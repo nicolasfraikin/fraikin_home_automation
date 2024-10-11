@@ -7,7 +7,10 @@ load("//fraikin_home_automation/cpp_modules:modules.bzl", "MODULES")
 load("//fraikin_home_automation/utils:helpers.bzl", "get_deployment_deps_for_arduino")
 load("//fraikin_home_automation/utils/code_generators:create_arduino_deployment_core.bzl", "generate_arduino_deployment_core")
 
-DEPLOYED_MODULES = ["blink"]
+DEPLOYED_MODULES = [
+    "blink",
+    "blink2",
+]
 
 ADDITIONAL_DEPS = [
     "//fraikin_home_automation/common/base_classes:i_module",

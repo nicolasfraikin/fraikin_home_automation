@@ -11,9 +11,14 @@
 #define LED_BUILTIN 2
 #endif
 
-void Blink2::Init() {
-  pinMode(LED_BUILTIN, OUTPUT);
+void Blink2::UpdateInterfaceSubscription() {}
+void Blink2::UpdateInterfacePublishing() {
+  TestInterface::DataType data{};
+  data.test_bool = true;
+  TestInterface::GetInstance()->SetData(data);
 }
+
+void Blink2::Init() { pinMode(LED_BUILTIN, OUTPUT); }
 
 void Blink2::Step() {
   // turn the LED on (HIGH is the voltage level)
