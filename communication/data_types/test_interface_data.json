@@ -1,0 +1,34 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatements": [],
+    "DataTypeName": "TestInterfaceData",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "bool",
+        "VariableName": "test_bool",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "uint8_t",
+        "VariableName": "test_uint8",
+        "DefaultValue": "255"
+      },
+      {
+        "Type": "TestEnum",
+        "VariableName": "test_enum",
+        "DefaultValue": "TestEnum::kInvalid"
+      }
+    ],
+    "EnumDefinitions": [
+      {
+        "EnumName": "TestEnum",
+        "EnumFields": [
+          "kTestEnumValue1",
+          "kTestEnumValue2",
+          "kInvalid"
+        ]
+      }
+    ]
+  }
+}

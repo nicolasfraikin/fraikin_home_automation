@@ -6,13 +6,13 @@ load("//fraikin_home_automation/utils:helpers.bzl", "get_includes_from_library_d
 
 LIBRARIES = [
     {
-        "Name": "test_interface",
-        "hdrs": ["test_interface.h"],
+        "Name": "logging",
+        "hdrs": ["logging.h"],
         "srcs": [],
         "visibility": [
-            "//visibility:public",
+            "//fraikin_home_automation:__subpackages__",
         ],
-        "deps": ["//fraikin_home_automation/common/base_classes:interface_base"],
+        "deps": [],
     },
 ]
 

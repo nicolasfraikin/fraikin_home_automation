@@ -1,0 +1,19 @@
+#ifndef {{DataTypeNameUpperCase}}_H
+#define {{DataTypeNameUpperCase}}_H
+{% for include_statement in IncludeStatements %}
+#include "{{include_statement}}"
+{% endfor %}
+
+{% for enum_name, enum_fields in EnumDefinitions %}
+enum {{enum_name}} {
+{% for enum_field in enum_fields %}
+    {{enum_field}},{% endfor %}
+};
+{% endfor %}
+
+{{DataTypeType}} {{DataTypeName}} {
+{% for type, name, default_init in DataTypeMembers %}
+    {{type}} {{name}} { {{default_init}} };{% endfor %}
+};
+
+#endif // {{DataTypeNameUpperCase}}_H

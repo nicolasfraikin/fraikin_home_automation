@@ -6,27 +6,15 @@
 
 #include "blink2.h"
 
-// Set LED_BUILTIN if it is not defined by Arduino framework
-#ifndef LED_BUILTIN
-#define LED_BUILTIN 2
-#endif
-
 void Blink2::UpdateInterfaceSubscription() {}
 void Blink2::UpdateInterfacePublishing() {
-  TestInterface::DataType data{};
-  data.test_bool = true;
+  data.test_uint8 = local_uint8;
   PublishInterfaceData<TestInterface>(data);
 }
 
-void Blink2::Init() { pinMode(LED_BUILTIN, OUTPUT); }
+void Blink2::Init() {}
 
 void Blink2::Step() {
-  // turn the LED on (HIGH is the voltage level)
-  digitalWrite(LED_BUILTIN, HIGH);
-  // wait for a second
-  delay(1500);
-  // turn the LED off by making the voltage LOW
-  digitalWrite(LED_BUILTIN, LOW);
-  // wait for a second
-  delay(1500);
+  local_uint8 += 1;
+  Log("Uint8 value BLINK2 is " + String(local_uint8));
 }

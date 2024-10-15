@@ -9,7 +9,7 @@
 #include "module_base.h"
 #include "test_interface.h"
 
-class Blink : ModuleBase {
+class Blink : public ModuleBase {
   public:
     Blink();
     void Init() final;

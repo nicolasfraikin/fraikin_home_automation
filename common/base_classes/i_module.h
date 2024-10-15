@@ -9,6 +9,7 @@ class IModule {
   public:
     virtual void Init() = 0;
     virtual void Step() = 0;
+    virtual void StepModule() = 0;
     virtual void UpdateInterfaceSubscription() = 0;
     virtual void UpdateInterfacePublishing() = 0;
 };

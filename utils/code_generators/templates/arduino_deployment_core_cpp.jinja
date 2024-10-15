@@ -7,6 +7,7 @@
 {% endfor %}
 
 void setup() {
+    Serial.begin(9600);
 {% for module_name_snake_case in ModuleNameSnakeCase %}
     {{module_name_snake_case}}.Init();
 {% endfor %}
@@ -14,6 +15,6 @@ void setup() {
 
 void loop() {
 {% for module_name_snake_case in ModuleNameSnakeCase %}
-    {{module_name_snake_case}}.Step();
+    {{module_name_snake_case}}.StepModule();
 {% endfor %}
 }

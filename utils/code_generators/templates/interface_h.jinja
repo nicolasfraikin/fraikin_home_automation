@@ -1,0 +1,11 @@
+#ifndef {{InterfaceNameUpperCase}}_H
+#define {{InterfaceNameUpperCase}}_H
+#include "{{IncludeStatementDataType}}"
+#include "interface_base.h"
+
+class {{InterfaceNamePascalCase}} : public InterfaceBase<{{InterfaceNamePascalCase}}, {{DataTypeNamePascalCase}}> {
+  public:
+    using DataType = {{DataTypeNamePascalCase}};
+};
+
+#endif // {{InterfaceNameUpperCase}}_H

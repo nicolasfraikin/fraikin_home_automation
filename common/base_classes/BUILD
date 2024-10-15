@@ -25,6 +25,7 @@ LIBRARIES = [
         "deps": [
             ":i_module",
             ":interface_base",
+            "//fraikin_home_automation/common/logging:logging",
         ],
     },
     {

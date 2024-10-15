@@ -9,21 +9,18 @@ template <typename Interface, typename DataType>
 class InterfaceBase {
 
   public:
-    static InterfaceBase* GetInstance() {
-      static InterfaceBase<Interface, DataType>* instance;
-      return instance;
-    };
-
-    void SetData(const DataType& data) { data_ = data; }
-    void GetData(DataType& data) const { data = data_; }
+    static void SetData(const DataType& data) { GetDataRaw() = data; }
+    static const DataType& GetData() { return GetDataRaw(); }
 
   private:
     InterfaceBase(){};
     InterfaceBase(const InterfaceBase&) = delete;
     InterfaceBase& operator=(const InterfaceBase&) = delete;
 
-    static InterfaceBase* instance;
-    DataType data_{};
+    static DataType& GetDataRaw() {
+      static DataType data{};
+      return data;
+    }
 };
 
 #endif // I_INTERFACE_H

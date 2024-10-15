@@ -7,3 +7,24 @@ py_binary(
     visibility = ["//visibility:public"],
     deps = ["@pip_deps_jinja2//:pkg"],
 )
+
+py_binary(
+    name = "create_data_type_cpp",
+    srcs = ["create_data_type_cpp.py"],
+    data = [
+        "//fraikin_home_automation/communication/data_types",
+        "//fraikin_home_automation/utils/code_generators/templates:data_type_h_template",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
+    name = "create_interface_cpp",
+    srcs = ["create_interface_cpp.py"],
+    data = [
+        "//fraikin_home_automation/utils/code_generators/templates:interface_h_template",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)

@@ -19,7 +19,7 @@ ADDITIONAL_DEPS = [
 generate_arduino_deployment_core(
     name = "arduino_core",
     deployed_modules = DEPLOYED_MODULES,
-    file_name = "arduino_core.cpp",
+    file_name = "arduino_core.cc",
 )
 
 platformio_project(

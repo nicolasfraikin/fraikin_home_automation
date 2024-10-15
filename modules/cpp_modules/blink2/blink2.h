@@ -9,11 +9,15 @@
 #include "module_base.h"
 #include "test_interface.h"
 
-class Blink2 : ModuleBase {
+class Blink2 : public ModuleBase {
   public:
     void Init() final;
     void Step() final;
     void UpdateInterfaceSubscription() final;
     void UpdateInterfacePublishing() final;
+
+  private:
+    uint8_t local_uint8{0};
+    TestInterface::DataType data{};
 };
 #endif // BLINK_2_H
