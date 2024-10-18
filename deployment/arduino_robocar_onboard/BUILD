@@ -4,7 +4,7 @@ load(
     "platformio_project",
 )
 load("//fraikin_home_automation/modules/cpp_modules:modules.bzl", "MODULES")
-load("//fraikin_home_automation/utils:helpers.bzl", "get_deployment_deps_for_arduino")
+load("//fraikin_home_automation/utils:helpers.bzl", "get_deployment_deps")
 load("//fraikin_home_automation/utils/code_generators:create_arduino_deployment_core.bzl", "generate_arduino_deployment_core")
 
 DEPLOYED_MODULES = [
@@ -13,7 +13,7 @@ DEPLOYED_MODULES = [
 ]
 
 ADDITIONAL_DEPS = [
-    "//fraikin_home_automation/common/base_classes:i_module",
+    "//fraikin_home_automation/common/cpp_base_classes:i_module",
 ]
 
 generate_arduino_deployment_core(
@@ -36,5 +36,5 @@ platformio_project(
     #    },
     framework = "arduino",
     platform = "atmelavr",
-    deps = get_deployment_deps_for_arduino(DEPLOYED_MODULES, MODULES) + ADDITIONAL_DEPS,
+    deps = get_deployment_deps(DEPLOYED_MODULES, MODULES, "cpp") + ADDITIONAL_DEPS,
 )

@@ -1,0 +1,26 @@
+{% for module_name_pascal_case, module_name_snake_case in ModuleNames %}
+from fraikin_home_automation.modules.py_modules.{{module_name_snake_case}}.{{module_name_snake_case}} import {{module_name_pascal_case}}
+{% endfor %}
+
+def init():
+    {% for module_name_pascal_case, module_name_snake_case in ModuleNames1 %}
+    {{module_name_snake_case}}.init()
+    {% endfor %}
+
+def step():
+    {% for module_name_pascal_case, module_name_snake_case in ModuleNames2 %}
+    {{module_name_snake_case}}.update_interface_subscription()
+    {{module_name_snake_case}}.step()
+    {{module_name_snake_case}}.update_interface_publishing()
+    {% endfor %}
+
+
+if __name__ == "__main__":
+    # All modules
+    {% for module_name_pascal_case, module_name_snake_case in ModuleNames3 %}
+    {{module_name_snake_case}} =  {{module_name_pascal_case}}();
+    {% endfor %}
+
+    init()
+    while True:
+        step()

@@ -24,7 +24,7 @@ def generate_data_type_h(output_file, template_path, data_type_json):
     data_type_definition = data_type_description["DataTypeDefinition"]
     # Render the template with the given parameters
     res = {}
-    res["IncludeStatements"] = data_type_definition["IncludeStatements"]
+    res["IncludeStatements"] = data_type_definition["IncludeStatementsCpp"]
     res["DataTypeType"] = data_type_definition["DataTypeType"]
     res["DataTypeName"] = data_type_definition["DataTypeName"]
     res["DataTypeNameUpperCase"] = data_type_definition["DataTypeName"].upper()

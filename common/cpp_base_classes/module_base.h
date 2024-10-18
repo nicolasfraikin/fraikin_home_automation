@@ -21,7 +21,7 @@ class ModuleBase : public IModule {
     void StepModule() final {
       UpdateInterfaceSubscription();
       Step();
-      UpdateInterfacePublishing(); // TODO: This makes everything crash
+      UpdateInterfacePublishing();
     }
 };
 

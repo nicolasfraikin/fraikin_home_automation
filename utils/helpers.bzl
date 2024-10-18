@@ -16,11 +16,11 @@ def get_includes_from_library_deps(libray_deps):
         includes.append(INCLUDE_PATH_DATA_TYPES)
     return includes
 
-def get_deployment_deps_for_arduino(deployed_module_names, all_modules):
+def get_deployment_deps(deployed_module_names, all_modules, programming_language):
     arduino_deps = []
     for deployed_module_name in deployed_module_names:
         deployed_library = all_modules[deployed_module_name]
-        arduino_deps.append("//fraikin_home_automation/modules/cpp_modules:" + deployed_module_name)
+        arduino_deps.append("//fraikin_home_automation/modules/{}_modules:".format(programming_language) + deployed_module_name)
         for lib_dep in deployed_library["deps"]:
             if "test_stubs" not in lib_dep and lib_dep not in arduino_deps:
                 arduino_deps.append(lib_dep)

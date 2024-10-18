@@ -1,6 +1,7 @@
 {
   "DataTypeDefinition": {
-    "IncludeStatements": [],
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
     "DataTypeName": "TestInterfaceData",
     "DataTypeType": "struct",
     "DataTypeMembers": [

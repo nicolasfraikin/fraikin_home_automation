@@ -9,6 +9,14 @@ py_binary(
 )
 
 py_binary(
+    name = "create_raspi_deployment_core",
+    srcs = ["create_raspi_deployment_core.py"],
+    data = ["//fraikin_home_automation/utils/code_generators/templates:raspi_deployment_core_template"],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
     name = "create_data_type_cpp",
     srcs = ["create_data_type_cpp.py"],
     data = [
@@ -20,10 +28,31 @@ py_binary(
 )
 
 py_binary(
+    name = "create_data_type_py",
+    srcs = ["create_data_type_py.py"],
+    data = [
+        "//fraikin_home_automation/communication/data_types",
+        "//fraikin_home_automation/utils/code_generators/templates:data_type_py_template",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
     name = "create_interface_cpp",
     srcs = ["create_interface_cpp.py"],
     data = [
         "//fraikin_home_automation/utils/code_generators/templates:interface_h_template",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
+    name = "create_interface_py",
+    srcs = ["create_interface_py.py"],
+    data = [
+        "//fraikin_home_automation/utils/code_generators/templates:interface_py_template",
     ],
     visibility = ["//visibility:public"],
     deps = ["@pip_deps_jinja2//:pkg"],

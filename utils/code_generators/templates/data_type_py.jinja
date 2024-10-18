@@ -1,0 +1,15 @@
+{% for include_statement in IncludeStatements %}
+import "{{include_statement}}"
+{% endfor %}
+from enum import Enum
+
+{% for enum_name, enum_fields in EnumDefinitions %}
+class {{enum_name}}(Enum):
+{% for enum_field in enum_fields %}
+    {{enum_field}}{% endfor %}
+{% endfor %}
+
+class {{DataTypeName}}:
+    def __init__(self, {% for type, name, default_init,komma in DataTypeMembers %} {{name}} : {{type}} = {{default_init}}{{komma}}{% endfor %}):
+    {% for type, name, default_init in DataTypeMembers2 %}
+        self.{{name}} = {{name}}{% endfor %}

@@ -4,6 +4,6 @@ INTERFACE_DEFINITIONS = [
     {
         "Name": "test_interface",
         "DataTypeDefinition": "test_interface_data.json",
-        "InterfaceConfig": "ArduinoOnly",
+        "InterfaceConfig": "ArduinoAndRaspi",
     },
 ]
