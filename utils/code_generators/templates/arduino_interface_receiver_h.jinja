@@ -1,0 +1,33 @@
+#ifndef {{FileNameUpperCase}}
+#define {{FileNameUpperCase}}
+
+#include "module_base.h"
+
+class InterfaceReceiver : public ModuleBase {
+  public:
+    InterfaceReceiver(){};
+    void Init() final;
+    void Step() final;
+    void UpdateInterfaceSubscription() final;
+    void UpdateInterfacePublishing() final;
+
+private:
+    void ReadAndProcessSerialInput(const String& message);
+    bool AllInterfacesReceived();
+    void ProcessData(const String& message);
+    bool InterfaceAlreadyReceived(const String& interface_name);
+    void SetInterfaceReceived(const String& interface_name);
+    void ProcessInterface(const String& interface_name, const String& interface_values);
+    {% for interface_name in InterfaceNamesPascalCase %}
+    void Send{{interface_name}}Data(const String& interface_values);
+    {% endfor %}
+    void ResetExpectedInterfacesArray();
+    bool StringContainsSubstring(const String& main_string, const String& sub_string);
+    bool InterfaceReceptionTimedOut(const unsigned long& start_time);
+
+
+
+    bool expected_interfaces_detected_[{{NumOfInterfaces}}] = {false};
+
+};
+#endif // {{FileNameUpperCase}}

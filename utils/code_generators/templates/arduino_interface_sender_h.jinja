@@ -1,0 +1,18 @@
+#ifndef {{FileNameUpperCase}}
+#define {{FileNameUpperCase}}
+
+#include "module_base.h"
+
+class InterfaceSender : public ModuleBase {
+  public:
+    InterfaceSender(){};
+    void Init() final;
+    void Step() final;
+    void UpdateInterfaceSubscription() final;
+    void UpdateInterfacePublishing() final;
+
+private:
+    void SendSerialCommunicationString(const String& message);
+
+};
+#endif // {{FileNameUpperCase}}

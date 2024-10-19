@@ -1,0 +1,100 @@
+#include "{{FileNameLowerCase}}.h"
+{% for interface_name in InterfaceNamesSnakeCase %}
+#include "{{interface_name}}.h"
+{% endfor %}
+
+void InterfaceReceiver::UpdateInterfaceSubscription() {}
+void InterfaceReceiver::UpdateInterfacePublishing() {}
+
+void InterfaceReceiver::Init() {}
+
+void InterfaceReceiver::Step() {
+    ResetExpectedInterfacesArray();
+    unsigned long start_time = millis();
+    while (!InterfaceReceptionTimedOut(start_time) && !AllInterfacesReceived()) {
+        String data = Serial.readStringUntil('\n');
+        ProcessData(data);
+    }
+
+}
+
+bool InterfaceReceiver::InterfaceReceptionTimedOut(const unsigned long& start_time) {
+    return (millis() - start_time) > 100;
+}
+
+bool InterfaceReceiver::AllInterfacesReceived() {
+    for (size_t i = 0; i < {{NumOfInterfaces}}; i++) {
+        if (!expected_interfaces_detected_[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void InterfaceReceiver::ProcessData(const String& message) {
+    if (!StringContainsSubstring(message, "Interface :")) {
+        return;
+    }
+    const String interface_name = message.substring(0,message.indexOf(": "));
+    Log("interface_name=" + interface_name);
+    if (InterfaceAlreadyReceived(interface_name)) {
+        return;
+    }
+    const String interface_values = message.substring(message.indexOf(": ")+2,message.length());
+    Log("interface_values=" + interface_values);
+    ProcessInterface(interface_name,interface_values);
+}
+
+bool InterfaceReceiver::InterfaceAlreadyReceived(const String& interface_name) {
+    {% for interface_name, index in InterfaceNamesAndIndex %}
+    if (StringContainsSubstring(interface_name, "{{interface_name}}")) {
+        return expected_interfaces_detected_[{{index}}];
+    }
+    {% endfor %}
+    return true;
+}
+
+void InterfaceReceiver::SetInterfaceReceived(const String& interface_name) {
+    {% for interface_name, index in InterfaceNamesAndIndex1 %}
+    if (StringContainsSubstring(interface_name, "{{interface_name}}")) {
+        return expected_interfaces_detected_[{{index}}];
+    }
+    {% endfor %}
+}
+
+void InterfaceReceiver::ProcessInterface(const String& interface_name, const String& interface_values) {
+        {% for interface_name in InterfaceNamesPascalCase %}
+        if (StringContainsSubstring(interface_name, "{{interface_name}}")) {
+            Send{{interface_name}}Data(interface_values);
+            return;
+        }
+        {% endfor %}
+}
+
+{% for interface_name, data_type_variable_assignments in InterfaceNamesAndDataTypes %}
+void InterfaceReceiver::Send{{interface_name}}Data(const String& interface_values) {
+    String str = interface_values;
+    String data_fields[{{data_type_variable_assignments|length}}] = {""};
+    for (uint8_t idx=0; idx< {{data_type_variable_assignments|length}}; idx++) {
+        data_fields[idx] = str.substring(str.indexOf("=")+1, str.indexOf("|"));
+        str = str.substring(str.indexOf("|")+1, str.length());
+    }
+    Log("Data fields are");
+    for (const auto& field : data_fields) {
+        Log(field);
+    }
+    {{interface_name}}::DataType data{};
+    {% for var_assignments in data_type_variable_assignments %}
+    {{var_assignments}};{% endfor %}
+    {{interface_name}}::SetData(data);
+
+}
+{% endfor %}
+
+void InterfaceReceiver::ResetExpectedInterfacesArray() {
+    memset(expected_interfaces_detected_, false, sizeof(expected_interfaces_detected_));
+}
+
+bool InterfaceReceiver::StringContainsSubstring(const String& main_string, const String& sub_string) {
+    return main_string.indexOf(sub_string) != -1;
+}

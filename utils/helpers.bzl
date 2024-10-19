@@ -27,10 +27,10 @@ def get_deployment_deps(deployed_module_names, all_modules, programming_language
     return arduino_deps
 
 def config_qualifies_for_cc_library(interface_config):
-    return "ArduinoOnly" in interface_config or "ArduinoAndRaspi" in interface_config
+    return "Arduino" in interface_config
 
 def config_qualifies_for_py_library(interface_config):
-    return "ArduinoAndRaspi" in interface_config or "RaspiOnly" in interface_config or "AppAndRaspi" in interface_config
+    return "Raspi" in interface_config
 
 def get_all_data_type_names_cc_library(interface_list):
     data_type_names = []

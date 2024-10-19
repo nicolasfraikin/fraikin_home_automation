@@ -7,6 +7,7 @@
 #include <Arduino.h>
 #endif
 #include "module_base.h"
+#include "test_1_interface.h"
 #include "test_interface.h"
 
 class Blink : public ModuleBase {
@@ -19,5 +20,6 @@ class Blink : public ModuleBase {
 
   private:
     TestInterface::DataType test_interface_object_;
+    TestInterface::DataType test_interface_1_object_;
 };
 #endif // BLINK_H

@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 from jinja2 import Environment, FileSystemLoader
@@ -14,8 +15,17 @@ def create_interface_h(output_file, template_path, interface_name, interface_dat
     env = Environment(loader=FileSystemLoader(searchpath=os.path.dirname(template_path)))
     template = env.get_template(os.path.basename(template_path))
 
+    data_type_json = interface_data_type + ".json"
+    json_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+                             DATA_TYPE_FOLDER, data_type_json)
+    with open(json_path, "r") as file:
+        data_type_description = json.load(file)
+    file.close()
+
     # Render the template with the given parameters
     res = {}
+    res["DataTypeVariables"] = [member["VariableName"] for member in
+                                data_type_description["DataTypeDefinition"]["DataTypeMembers"]]
     res["InterfaceNameUpperCase"] = interface_name.upper()
     res["InterfaceNamePascalCase"] = pascal_case(interface_name)
     res["DataTypeNamePascalCase"] = pascal_case(interface_data_type)

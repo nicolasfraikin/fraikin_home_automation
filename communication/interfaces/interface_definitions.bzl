@@ -1,9 +1,14 @@
-INTERFACE_CONFIGS = ["ArduinoOnly", "ArduinoAndRaspi", "RaspiOnly", "AppAndRaspi"]
+INTERFACE_CONFIGS = ["ArduinoOnly", "ArduinoToRaspi", "RaspiToArduino", "RaspiOnly", "AppToRaspi", "RaspiToApp"]
 
 INTERFACE_DEFINITIONS = [
     {
         "Name": "test_interface",
         "DataTypeDefinition": "test_interface_data.json",
-        "InterfaceConfig": "ArduinoAndRaspi",
+        "InterfaceConfig": "ArduinoToRaspi",
+    },
+    {
+        "Name": "test_1_interface",
+        "DataTypeDefinition": "test_interface_data.json",
+        "InterfaceConfig": "RaspiToArduino",
     },
 ]

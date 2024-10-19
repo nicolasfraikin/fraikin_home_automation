@@ -14,6 +14,8 @@ DEPLOYED_MODULES = [
 
 ADDITIONAL_DEPS = [
     "//fraikin_home_automation/common/cpp_base_classes:i_module",
+    "//fraikin_home_automation/communication/external_interface_communication/arduino:interface_sender",
+    "//fraikin_home_automation/communication/external_interface_communication/arduino:interface_receiver",
 ]
 
 generate_arduino_deployment_core(

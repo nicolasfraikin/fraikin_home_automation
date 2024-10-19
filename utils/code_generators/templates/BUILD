@@ -33,3 +33,21 @@ filegroup(
     srcs = ["interface_py.jinja"],
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "arduino_interface_sender",
+    srcs = [
+        "arduino_interface_sender_cpp.jinja",
+        "arduino_interface_sender_h.jinja",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "arduino_interface_receiver",
+    srcs = [
+        "arduino_interface_receiver_cpp.jinja",
+        "arduino_interface_receiver_h.jinja",
+    ],
+    visibility = ["//visibility:public"],
+)

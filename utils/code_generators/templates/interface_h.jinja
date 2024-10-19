@@ -2,10 +2,26 @@
 #define {{InterfaceNameUpperCase}}_H
 #include "{{IncludeStatementDataType}}"
 #include "interface_base.h"
+#ifdef NON_TARGET_BUILD
+#include "fraikin_home_automation/utils/test_stubs/arduino_mock.h"
+#else
+#include <Arduino.h>
+#endif
 
 class {{InterfaceNamePascalCase}} : public InterfaceBase<{{InterfaceNamePascalCase}}, {{DataTypeNamePascalCase}}> {
   public:
     using DataType = {{DataTypeNamePascalCase}};
+
+    static String GetInterfaceCommunicationString() {
+        String out_string = "{{InterfaceNamePascalCase}}";
+        out_string += " : ";
+        {% for data_type_variable in DataTypeVariables %}
+        out_string += "{{data_type_variable}}=";
+        out_string += String(InterfaceBase<{{InterfaceNamePascalCase}}, {{DataTypeNamePascalCase}}>::GetData().{{data_type_variable}});
+        out_string += " | ";
+        {% endfor %}
+        return out_string;
+    }
 };
 
 #endif // {{InterfaceNameUpperCase}}_H

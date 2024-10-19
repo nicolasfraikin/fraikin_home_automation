@@ -1,0 +1,19 @@
+#include "{{FileNameLowerCase}}.h"
+{% for interface_name in InterfaceNameSnakeCase %}
+#include "{{interface_name}}.h"
+{% endfor %}
+
+void InterfaceSender::UpdateInterfaceSubscription() {}
+void InterfaceSender::UpdateInterfacePublishing() {}
+
+void InterfaceSender::Init() {}
+
+void InterfaceSender::Step() {
+{% for interface_name in InterfaceNamePascalCase %}
+    SendSerialCommunicationString({{interface_name}}::GetInterfaceCommunicationString());
+{% endfor %}
+}
+
+void InterfaceSender::SendSerialCommunicationString(const String& message) {
+    Log(message);
+}

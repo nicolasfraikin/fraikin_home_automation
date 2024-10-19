@@ -1,7 +1,13 @@
 {% for module_name_snake_case in ModuleNameSnakeCase %}
 #include "{{module_name_snake_case}}.h"
 {% endfor %}
+#include "interface_sender.h"
+#include "interface_receiver.h"
 
+// Communication modules
+InterfaceSender interface_sender{};
+InterfaceReceiver interface_receiver{};
+// Modules
 {% for module_name_pascal_case, module_name_snake_case in ModuleNames %}
 {{module_name_pascal_case}} {{module_name_snake_case}}{};
 {% endfor %}
@@ -11,10 +17,14 @@ void setup() {
 {% for module_name_snake_case in ModuleNameSnakeCase %}
     {{module_name_snake_case}}.Init();
 {% endfor %}
+    interface_receiver.Init();
+    interface_sender.Init();
 }
 
 void loop() {
+    interface_receiver.StepModule();
 {% for module_name_snake_case in ModuleNameSnakeCase %}
     {{module_name_snake_case}}.StepModule();
 {% endfor %}
+    interface_sender.StepModule();
 }
