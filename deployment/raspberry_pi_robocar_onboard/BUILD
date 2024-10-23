@@ -7,7 +7,8 @@ DEPLOYED_MODULES = [
 ]
 
 ADDITIONAL_DEPS = [
-    "//fraikin_home_automation/common/cpp_base_classes:i_module",
+    "//fraikin_home_automation/communication/external_interface_communication/raspi:interface_sender",
+    "//fraikin_home_automation/communication/external_interface_communication/raspi:interface_receiver",
 ]
 
 generate_raspi_deployment_core(
@@ -19,5 +20,5 @@ generate_raspi_deployment_core(
 py_binary(
     name = "raspi_deployment",
     srcs = [":raspi_core"],
-    deps = get_deployment_deps(DEPLOYED_MODULES, MODULES, "py"),
+    deps = get_deployment_deps(DEPLOYED_MODULES, MODULES, "py") + ADDITIONAL_DEPS,
 )

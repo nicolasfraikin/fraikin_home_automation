@@ -22,7 +22,7 @@ void Blink::UpdateInterfacePublishing() {}
 void Blink::Init() { pinMode(LED_BUILTIN, OUTPUT); }
 
 void Blink::Step() {
-  Log("Uint8 value received from pi is " + String(test_interface_1_object_.test_uint8));
+  Log("Arduino : Uint8 value received from pi is " + String(test_interface_1_object_.test_uint8));
   // turn the LED on (HIGH is the voltage level)
   digitalWrite(LED_BUILTIN, HIGH);
   // wait for a second

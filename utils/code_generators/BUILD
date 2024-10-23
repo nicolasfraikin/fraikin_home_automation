@@ -53,6 +53,7 @@ py_binary(
     name = "create_interface_py",
     srcs = ["create_interface_py.py"],
     data = [
+        "//fraikin_home_automation/communication/data_types",
         "//fraikin_home_automation/utils/code_generators/templates:interface_py_template",
     ],
     visibility = ["//visibility:public"],
@@ -75,6 +76,28 @@ py_binary(
     data = [
         "//fraikin_home_automation/communication/data_types",
         "//fraikin_home_automation/utils/code_generators/templates:arduino_interface_receiver",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
+    name = "create_raspi_interface_sender",
+    srcs = ["create_raspi_interface_sender.py"],
+    data = [
+        "//fraikin_home_automation/communication/data_types",
+        "//fraikin_home_automation/utils/code_generators/templates:raspi_interface_sender",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
+    name = "create_raspi_interface_receiver",
+    srcs = ["create_raspi_interface_receiver.py"],
+    data = [
+        "//fraikin_home_automation/communication/data_types",
+        "//fraikin_home_automation/utils/code_generators/templates:raspi_interface_receiver",
     ],
     visibility = ["//visibility:public"],
     deps = ["@pip_deps_jinja2//:pkg"],

@@ -1,0 +1,27 @@
+import serial
+from fraikin_home_automation.common.py_base_classes.i_module import IModule
+{% for interface_name_snake, interface_name_pascal in InterfaceNameSnakePascalCase %}
+from fraikin_home_automation.communication.interfaces.{{interface_name_snake}} import {{interface_name_pascal}}
+{% endfor %}
+
+class InterfaceSender(IModule):
+    def __init__(self):
+        self.ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+        self.ser.reset_input_buffer()
+
+    def init(self):
+        pass
+
+    def step(self):
+        {% for interface_name_pascal in InterfaceNamePascalCase %}
+        self.send_serial_communication_string({{interface_name_pascal}}.get_instance().get_data_string())
+        {% endfor %}
+
+    def send_serial_communication_string(self, message : str):
+        self.ser.write(message)
+
+    def update_interface_subscription(self):
+        pass
+
+    def update_interface_publishing(self):
+        pass

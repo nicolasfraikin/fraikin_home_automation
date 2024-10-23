@@ -1,0 +1,71 @@
+import serial
+import time
+from fraikin_home_automation.common.py_base_classes.i_module import IModule
+{% for interface_name_snake, interface_name_pascal in InterfaceNameSnakePascalCase %}
+from fraikin_home_automation.communication.interfaces.{{interface_name_snake}} import {{interface_name_pascal}}, {{interface_name_pascal}}DataType
+{% endfor %}
+
+class InterfaceReceiver(IModule):
+    def __init__(self):
+        self.ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+        self.ser.reset_input_buffer()
+        self.serial_read_time = 0
+        self.expected_interfaces = [
+            {% for interface_name_pascal in InterfaceNamePascalCase1 %}
+            "{{interface_name_pascal}}",
+            {% endfor %}
+        ]
+
+    def fill_expected_interfaces(self):
+        self.expected_interfaces = [
+            {% for interface_name_pascal in InterfaceNamePascalCase2 %}
+            "{{interface_name_pascal}}",
+            {% endfor %}
+        ]
+
+    def init(self):
+        pass
+
+    def reset_serial_read_time(self):
+        self.serial_read_time = time.time()
+
+    def serial_read_timeout(self):
+        return time.time() - self.serial_read_time > 100
+
+    def step(self):
+        self.reset_serial_read_time()
+        self.fill_expected_interfaces()
+        while not self.serial_read_timeout() and len(self.expected_interfaces) > 0:
+            line_read = self.ser.readline().decode('utf-8').rstrip()
+            self.process_line(line_read)
+        if len(self.expected_interfaces) > 0:
+            print("ERROR : Did not receive the following interfaces :" + str(self.expected_interfaces))
+
+    def process_line(self, message : str):
+        if not "Interface :" in message:
+            return
+        interface_name = message.split(" :")[0]
+        if interface_name not in self.expected_interfaces:
+            return
+        interface_values = message.split(" :")[1].split(" | ")
+        interface_values  = [entry.replace(" ","").replace("|","") for entry in interface_values]
+        self.process_interface(interface_name, interface_values)
+
+    def process_interface(self, interface_name, interface_values):
+        if interface_name == "":
+            return
+        {% for interface_name_pascal in InterfaceNamePascalCase3 %}
+        elif interface_name == "{{interface_name_pascal}}":
+            data = {{interface_name_pascal}}DataType()
+            for interface_value in interface_values:
+                exec("data." + interface_value)
+            {{interface_name_pascal}}.get_instance().set_data(data)
+            self.expected_interfaces.remove("{{interface_name_pascal}}")
+        {% endfor %}
+
+
+    def update_interface_subscription(self):
+        pass
+
+    def update_interface_publishing(self):
+        pass
