@@ -1,10 +1,24 @@
 android_library(
     name = "greeter_activity",
     srcs = [
+        "DebugFragment.java",
         "Greeter.java",
+        "HomeFragment.java",
         "MainActivity.java",
+        "SandboxFragment.java",
+        "SplashActivity.java",
+        "StatusFragment.java",
     ],
     manifest = "AndroidManifest.xml",
     resource_files = glob(["res/**"]),
     visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:androidx_appcompat_appcompat",
+        #        "@maven//:androidx_appcompat_appcompat_resources",
+        "@maven//:androidx_annotation_annotation",
+        "@maven//:androidx_fragment_fragment",
+        "@maven//:androidx_drawerlayout_drawerlayout",
+        "@maven//:com_google_android_material_material",
+        "@maven//:androidx_core_core",
+    ],
 )
