@@ -5,4 +5,5 @@
     <string name="app_name">Fraikin Home Automation</string>
     <string name="drawer_open">Open Navigation Drawer</string>
     <string name="drawer_close">Close Navigation Drawer</string>
+    <string name="gps_position">GPS position</string>
 </resources>
