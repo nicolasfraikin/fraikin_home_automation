@@ -79,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        // Setup websocket connection
+        MyWebSocketClient webSocketClient = new MyWebSocketClient();
+        webSocketClient.connect();
+        webSocketClient.sendMessage("Hello from Android!");
     }
 
     @Override
@@ -105,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
             isLocationPermissionGranted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
         }
     }
-
 
     public boolean isLocationPermissionGranted() {
         return isLocationPermissionGranted;

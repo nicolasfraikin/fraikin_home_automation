@@ -5,6 +5,7 @@ android_library(
         "Greeter.java",
         "HomeFragment.java",
         "MainActivity.java",
+        "MyWebSocketClient.java",
         "SandboxFragment.java",
         "SplashActivity.java",
         "StatusFragment.java",
@@ -20,5 +21,6 @@ android_library(
         "@maven//:androidx_drawerlayout_drawerlayout",
         "@maven//:com_google_android_material_material",
         "@maven//:androidx_core_core",
+        "@maven//:com_squareup_okhttp3_okhttp",
     ],
 )
