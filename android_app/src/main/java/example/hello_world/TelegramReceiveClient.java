@@ -33,14 +33,11 @@ public class TelegramReceiveClient extends AsyncTask<Void, Void, String> {
         String received_message = "";
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                Log.v("Fraikin Home Automation", "Response not successfull receiving" + response);
                 throw new IOException("Unexpected code " + response);
             }
-            Log.v("Fraikin Home Automation", "EBefore json");
             String jsonData = response.body().string();
             JSONObject jsonObject = new JSONObject(jsonData);
             JSONArray updates = jsonObject.getJSONArray("result");
-            Log.v("Fraikin Home Automation", "After json");
 
             for (int i = 0; i < updates.length(); i++) {
                 JSONObject update = updates.getJSONObject(i);
@@ -48,11 +45,9 @@ public class TelegramReceiveClient extends AsyncTask<Void, Void, String> {
 
                 JSONObject message = update.getJSONObject("message");
                 String text = message.getString("text");
-                Log.v("Fraikin Home Automation", "Received message: " + text);
                 received_message = text;
             }
         } catch (Exception e) {
-            Log.v("Fraikin Home Automation", "Error receiving message:");
             e.printStackTrace();
         }
         return received_message;
@@ -62,6 +57,5 @@ public class TelegramReceiveClient extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         onMessageReceived.onTaskCompleted(result);
-        Log.d("TelegramReceiveTask", result);
     }
 }

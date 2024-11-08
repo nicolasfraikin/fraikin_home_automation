@@ -1,12 +1,14 @@
 android_library(
     name = "greeter_activity",
     srcs = [
+        "BackgroundService.java",
         "DebugFragment.java",
         "Greeter.java",
         "HomeFragment.java",
         "MainActivity.java",
         "MyWebSocketClient.java",
         "OnMessageReceived.java",
+        "Restarter.java",
         "SandboxFragment.java",
         "SplashActivity.java",
         "StatusFragment.java",
