@@ -1,0 +1,50 @@
+package example.hello_world;
+
+
+
+public class {{InterfaceNamePascalCase}} {
+    public static String interface_name = "{{InterfaceNamePascalCase}}";
+    {% for enum_name, enum_fields in EnumDefinitions %}
+    public enum {{enum_name}} {
+    {% for enum_field in enum_fields %}
+        {{enum_field}},{% endfor %}
+    }
+    {% endfor %}
+
+    {% for type, name, default_init in DataTypeMembers %}
+    public static {{type}} {{name}} = {{default_init}};{% endfor %}
+
+    private void set_values({% for type, name, default_init in DataTypeMembers2 %}{{type}} {{name}}{% endfor %}) {
+    {% for type, name, default_init in DataTypeMembers3 %}
+        this.{{name}} = {{name}};{% endfor %}
+    }
+    
+    public void send_message({% for type, name, default_init in DataTypeMembers6 %}{{type}} {{name}}{% endfor %}) {
+        set_values({% for type, name, default_init in DataTypeMembers7 %}{{name}}{% endfor %});
+
+        String out_string = "{{InterfaceNamePascalCase}}";
+        out_string += " : ";
+        {% for type, name, default_init in DataTypeMembers4 %}
+        out_string += "{{name}}=";
+        out_string += String.valueOf(this.{{name}});
+        out_string += " | ";
+        {% endfor %}
+        out_string+= "\n";
+        new TelegramSendClient().execute(out_string);
+        
+    }
+
+    public void receive_message() {
+        new TelegramReceiveClient(receive_string -> {
+            if (!receive_string.contains("{{InterfaceNamePascalCase}}")) {
+                return;
+            }
+            String[] interface_values = receive_string.split(" :")[1].split(" | ");
+            {% for type, name, index in DataTypeMembers5 %}
+            this.{{name}} = {{type}}.valueOf(interface_values[{{index}}].replace(" ","").replace("|",""));
+            {% endfor %}
+
+        }).execute();
+
+    }
+}

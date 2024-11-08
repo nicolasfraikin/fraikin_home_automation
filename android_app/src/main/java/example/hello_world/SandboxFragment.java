@@ -18,6 +18,11 @@ import android.location.LocationManager;
 import android.content.Context;
 import android.Manifest;
 import androidx.core.app.ActivityCompat;
+// Telegram Messages
+import android.os.Handler;
+import java.util.Calendar;
+
+
 
 // UTILS
 import android.util.Log;
@@ -40,6 +45,8 @@ public class SandboxFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         handleButtonPress();
+        handleButtonPressTelegramSend();
+        handleTelegramReceive();
         handleGPSUpdates();
     }
 
@@ -51,6 +58,28 @@ public class SandboxFragment extends Fragment {
 
         // Bazel supports Java 8 language features like lambdas!
         clickMeButton.setOnClickListener(v -> helloBazelTextView.setText(greeter.sayHello()));
+    }
+
+    private void handleButtonPressTelegramSend() {
+        Button sendTelegramButton = getView().findViewById(R.id.sendTelegramTest);
+
+        // Bazel supports Java 8 language features like lambdas!
+        sendTelegramButton.setOnClickListener(v -> new Test2Interface().send_message(true, 243, Test2Interface.TestEnum.kTestEnumValue1));
+    }
+
+    private void handleTelegramReceive() {
+        TextView receiveTelegramTextView = getView().findViewById(R.id.receiveTelegramTestText);
+
+        Handler handler =new Handler();
+        final Runnable r = new Runnable() {
+                public void run() {
+                    handler.postDelayed(this, 1000);
+//                     String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+                    new TelegramReceiveClient(res -> {receiveTelegramTextView.setText(res);}).execute();
+                    new Test3Interface().receive_message();
+                }
+            };
+            handler.postDelayed(r, 0000);
     }
 
     private void handleGPSUpdates() {

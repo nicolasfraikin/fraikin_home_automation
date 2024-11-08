@@ -11,4 +11,14 @@ INTERFACE_DEFINITIONS = [
         "DataTypeDefinition": "test_interface_data.json",
         "InterfaceConfig": "RaspiToArduino",
     },
+    {
+        "Name": "test_2_interface",
+        "DataTypeDefinition": "test_interface_data.json",
+        "InterfaceConfig": "AppToRaspi",
+    },
+    {
+        "Name": "test_3_interface",
+        "DataTypeDefinition": "test_interface_data.json",
+        "InterfaceConfig": "RaspiToApp",
+    },
 ]

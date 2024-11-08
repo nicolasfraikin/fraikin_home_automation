@@ -102,3 +102,14 @@ py_binary(
     visibility = ["//visibility:public"],
     deps = ["@pip_deps_jinja2//:pkg"],
 )
+
+py_binary(
+    name = "create_app_interface",
+    srcs = ["create_app_interface.py"],
+    data = [
+        "//fraikin_home_automation/communication/data_types",
+        "//fraikin_home_automation/utils/code_generators/templates:app_interface",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)

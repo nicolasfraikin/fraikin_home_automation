@@ -3,10 +3,12 @@ load(
     "platformio_library",
 )
 load("//fraikin_home_automation/communication/interfaces:interface_definitions.bzl", "INTERFACE_DEFINITIONS")
-load("//fraikin_home_automation/utils:helpers.bzl", "config_qualifies_for_cc_library", "config_qualifies_for_py_library", "get_includes_from_library_deps")
+load("//fraikin_home_automation/utils:helpers.bzl", "config_qualifies_for_cc_library", "config_qualifies_for_java_library", "config_qualifies_for_py_library", "get_includes_from_library_deps")
+load("//fraikin_home_automation/utils/code_generators:create_app_interface.bzl", "create_app_interface")
 load("//fraikin_home_automation/utils/code_generators:create_interface_cpp.bzl", "create_interface_cpp")
 load("//fraikin_home_automation/utils/code_generators:create_interface_py.bzl", "create_interface_py")
 
+# CPP INTERFACES
 [
     (
         create_interface_cpp(
@@ -38,6 +40,7 @@ load("//fraikin_home_automation/utils/code_generators:create_interface_py.bzl", 
     if config_qualifies_for_cc_library(interface_definition["InterfaceConfig"])
 ]
 
+# PY INTERFACES
 [
     (
         create_interface_py(
@@ -59,3 +62,26 @@ load("//fraikin_home_automation/utils/code_generators:create_interface_py.bzl", 
     for interface_definition in INTERFACE_DEFINITIONS
     if config_qualifies_for_py_library(interface_definition["InterfaceConfig"])
 ]
+
+# JAVA INTERFACES
+[
+    (
+        create_app_interface(
+            name = interface_definition["Name"] + "_java_file",
+            interface_data_type = interface_definition["DataTypeDefinition"].replace(".json", ""),
+            interface_name = interface_definition["Name"],
+        ),
+    )
+    for interface_definition in INTERFACE_DEFINITIONS
+    if config_qualifies_for_java_library(interface_definition["InterfaceConfig"])
+]
+
+filegroup(
+    name = "java_interfaces",
+    srcs = [
+        interface_definition["Name"] + "_java_file"
+        for interface_definition in INTERFACE_DEFINITIONS
+        if config_qualifies_for_java_library(interface_definition["InterfaceConfig"])
+    ],
+    visibility = ["//fraikin_home_automation/android_app:__subpackages__"],
+)

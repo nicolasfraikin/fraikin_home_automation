@@ -32,6 +32,9 @@ def config_qualifies_for_cc_library(interface_config):
 def config_qualifies_for_py_library(interface_config):
     return "Raspi" in interface_config
 
+def config_qualifies_for_java_library(interface_config):
+    return "App" in interface_config
+
 def get_all_data_type_names_cc_library(interface_list):
     data_type_names = []
     for interface in interface_list:

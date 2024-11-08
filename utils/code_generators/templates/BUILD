@@ -67,3 +67,11 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "app_interface",
+    srcs = [
+        "app_interface_java.jinja",
+    ],
+    visibility = ["//visibility:public"],
+)
