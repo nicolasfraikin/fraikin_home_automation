@@ -10,6 +10,7 @@ android_library(
         "OnMessageReceived.java",
         "Restarter.java",
         "SandboxFragment.java",
+        "SettingsFragment.java",
         "SplashActivity.java",
         "StatusFragment.java",
         "TelegramReceiveClient.java",

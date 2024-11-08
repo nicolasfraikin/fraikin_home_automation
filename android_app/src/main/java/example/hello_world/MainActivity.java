@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new DebugFragment();
                 } else if (item_id==R.id.nav_sandbox) {
                     selectedFragment = new SandboxFragment();
+                } else if (item_id==R.id.nav_settings) {
+                    selectedFragment = new SettingsFragment();
                 } else {
                     selectedFragment = new HomeFragment();
                 }
