@@ -48,6 +48,7 @@ public class SandboxFragment extends Fragment {
         handleButtonPressTelegramSend();
         handleTelegramReceive();
         handleGPSUpdates();
+        handleSendDummyNotification();
     }
 
     private void handleButtonPress() {
@@ -65,6 +66,18 @@ public class SandboxFragment extends Fragment {
 
         // Bazel supports Java 8 language features like lambdas!
         sendTelegramButton.setOnClickListener(v -> new Test2Interface().send_message(true, 243, Test2Interface.TestEnum.kTestEnumValue1));
+    }
+
+    private void handleSendDummyNotification() {
+        Button sendDummyNotificationButton = getView().findViewById(R.id.sendDummyNotification);
+
+        // Bazel supports Java 8 language features like lambdas!
+        sendDummyNotificationButton.setOnClickListener(v -> {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            if (mainActivity != null) {
+                mainActivity.sendNotification("Orm", "Test notification.", "StatusFragment");
+            }
+        });
     }
 
     private void handleTelegramReceive() {

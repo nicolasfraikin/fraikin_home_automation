@@ -49,4 +49,13 @@
             android:layout_gravity="center_horizontal"
             android:textSize="32dp"
             android:textColor="@color/bazel_white"/>
+    <Button
+            android:id="@+id/sendDummyNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/bazel_green"
+            android:textColor="@color/color_on_bazel_green"
+            android:layout_marginTop="16dp"
+            android:text="@string/send_dummy_notification"/>
 </LinearLayout>

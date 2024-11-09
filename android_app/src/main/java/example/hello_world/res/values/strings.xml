@@ -7,4 +7,5 @@
     <string name="drawer_close">Close Navigation Drawer</string>
     <string name="gps_position">GPS position</string>
     <string name="send_telegram_text">Send Telegram message</string>
+    <string name="send_dummy_notification">Send Dummy Notification</string>
 </resources>
