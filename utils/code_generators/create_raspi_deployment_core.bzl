@@ -10,7 +10,7 @@ def _generate_raspi_deployment_core_impl(ctx):
         inputs = [],
         outputs = [output_file],
         executable = ctx.executable._codegen_script,
-        arguments = [output_file.path, ctx.attr.template_path, ",".join(ctx.attr.deployed_modules)],
+        arguments = [output_file.path, ctx.attr.template_path, ",".join(ctx.attr.deployed_modules), str(ctx.attr.include_serial_communication)],
     )
     return [DefaultInfo(files = depset([output_file]))]
 
@@ -21,6 +21,9 @@ def _generate_attrs():
         ),
         "file_name": attr.string(
             mandatory = True,
+        ),
+        "include_serial_communication": attr.bool(
+            default = True,
         ),
         "template_path": attr.string(default = TEMPLATE_PATH),
         "_codegen_script": attr.label(

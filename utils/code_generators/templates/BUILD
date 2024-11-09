@@ -53,17 +53,33 @@ filegroup(
 )
 
 filegroup(
-    name = "raspi_interface_sender",
+    name = "raspi_serial_interface_sender",
     srcs = [
-        "raspi_interface_sender_py.jinja",
+        "raspi_serial_interface_sender_py.jinja",
     ],
     visibility = ["//visibility:public"],
 )
 
 filegroup(
-    name = "raspi_interface_receiver",
+    name = "raspi_serial_interface_receiver",
     srcs = [
-        "raspi_interface_receiver_py.jinja",
+        "raspi_serial_interface_receiver_py.jinja",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "raspi_app_interface_sender",
+    srcs = [
+        "raspi_app_interface_sender_py.jinja",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "raspi_app_interface_receiver",
+    srcs = [
+        "raspi_app_interface_receiver_py.jinja",
     ],
     visibility = ["//visibility:public"],
 )

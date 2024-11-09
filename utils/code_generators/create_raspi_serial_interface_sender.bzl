@@ -1,7 +1,7 @@
-GENERATOR = "//fraikin_home_automation/utils/code_generators:create_raspi_interface_receiver"
-TEMPLATE_PATH = "templates/raspi_interface_receiver_py.jinja"
+GENERATOR = "//fraikin_home_automation/utils/code_generators:create_raspi_serial_interface_sender"
+TEMPLATE_PATH = "templates/raspi_serial_interface_sender_py.jinja"
 
-def _create_raspi_interface_receiver_impl(ctx):
+def _create_raspi_serial_interface_sender_impl(ctx):
     # Define output files
     output_file = ctx.actions.declare_file(ctx.attr.output_file)
 
@@ -26,8 +26,8 @@ def _generate_attrs():
         ),
     }
 
-create_raspi_interface_receiver = rule(
-    _create_raspi_interface_receiver_impl,
+create_raspi_serial_interface_sender = rule(
+    _create_raspi_serial_interface_sender_impl,
     attrs = _generate_attrs(),
     doc = "Builds the output communication for raspi",
 )

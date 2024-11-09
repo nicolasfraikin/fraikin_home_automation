@@ -19,7 +19,7 @@ def write_file(output_file, template_name, res):
         f.write(rendered_file)
 
 
-def create_raspi_interface_sender(output_file, template_path, interface_list):
+def create_raspi_app_interface_sender(output_file, template_path, interface_list):
     # Render the template with the given parameters
     res = {}
     res["InterfaceNameSnakeCase"] = interface_list
@@ -35,4 +35,4 @@ if __name__ == "__main__":
     interface_list = sys.argv[3].split(",")
     interface_list = [item for item in interface_list if len(item) > 0]
 
-    create_raspi_interface_sender(output_file, template_path, interface_list)
+    create_raspi_app_interface_sender(output_file, template_path, interface_list)

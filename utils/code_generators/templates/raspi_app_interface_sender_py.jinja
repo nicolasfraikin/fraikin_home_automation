@@ -1,0 +1,36 @@
+import telebot
+from fraikin_home_automation.common.py_base_classes.i_module import IModule
+{% for interface_name_snake, interface_name_pascal in InterfaceNameSnakePascalCase %}
+from fraikin_home_automation.communication.interfaces.{{interface_name_snake}} import {{interface_name_pascal}}
+{% endfor %}
+
+TOKEN = '1373590760:AAGilAC73vwIGZOnkbmVk_JV_2h4vdqewWM'
+CHAT_ID = '1244417647'
+
+class AppInterfaceSender(IModule):
+    def __init__(self):
+        self.bot = telebot.TeleBot(TOKEN, threaded=False)
+
+    def init(self):
+        pass
+
+    def step(self):
+        {% for interface_name_pascal in InterfaceNamePascalCase %}
+        self.send_message({{interface_name_pascal}}.get_instance().get_data_string())
+        {% endfor %}
+
+    def send_message(self, text):
+        max_length_message = 4096
+        for i in range(0, 10):
+            try:
+                self.bot.send_message(CHAT_ID, text, parse_mode='HTML')
+                break
+            except:
+                print("Sending message not succesfull")
+                time.sleep(0.3)
+
+    def update_interface_subscription(self):
+        pass
+
+    def update_interface_publishing(self):
+        pass

@@ -21,4 +21,9 @@ INTERFACE_DEFINITIONS = [
         "DataTypeDefinition": "test_interface_data.json",
         "InterfaceConfig": "RaspiToApp",
     },
+    {
+        "Name": "danbolig_house_interface",
+        "DataTypeDefinition": "danbolig_new_house.json",
+        "InterfaceConfig": "RaspiToApp",
+    },
 ]

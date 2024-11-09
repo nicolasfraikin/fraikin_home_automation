@@ -9,12 +9,14 @@ CPP_TO_JAVA_TYPE = {
     "uint8_t": "int",
     "bool": "boolean",
     "float": "double",
+    "string": "String"
 }
 
 CPP_TO_JAVA_CONVERSION_TYPE = {
     "uint8_t": "Integer",
     "bool": "Boolean",
     "float": "Double",
+    "string": "String",
 }
 
 CPP_TO_JAVA_DEFAULT_VALUE = {

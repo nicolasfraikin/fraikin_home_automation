@@ -1,6 +1,6 @@
 load("//fraikin_home_automation/communication/interfaces:interface_definitions.bzl", "INTERFACE_DEFINITIONS")
-load("//fraikin_home_automation/utils/code_generators:create_raspi_interface_receiver.bzl", "create_raspi_interface_receiver")
-load("//fraikin_home_automation/utils/code_generators:create_raspi_interface_sender.bzl", "create_raspi_interface_sender")
+load("//fraikin_home_automation/utils/code_generators:create_raspi_serial_interface_receiver.bzl", "create_raspi_serial_interface_receiver")
+load("//fraikin_home_automation/utils/code_generators:create_raspi_serial_interface_sender.bzl", "create_raspi_serial_interface_sender")
 
 INTERFACE_LIST_SENDER = [interface["Name"] for interface in INTERFACE_DEFINITIONS if "RaspiTo" in interface["InterfaceConfig"]]
 
@@ -23,16 +23,16 @@ LIBRARIES = [
     },
 ]
 
-create_raspi_interface_sender(
+create_raspi_serial_interface_sender(
     name = "interface_sender_py",
     interface_list = ",".join(INTERFACE_LIST_SENDER),
-    output_file = "interface_sender.py",
+    output_file = "serial_interface_sender.py",
 )
 
-create_raspi_interface_receiver(
+create_raspi_serial_interface_receiver(
     name = "interface_receiver_py",
     interface_list = ",".join(INTERFACE_LIST_RECEIVER),
-    output_file = "interface_receiver.py",
+    output_file = "serial_interface_receiver.py",
 )
 
 [
@@ -41,7 +41,7 @@ create_raspi_interface_receiver(
             name = "{}".format(library["Name"]),
             srcs = [":{}_py".format(library["Name"])],
             visibility = library["visibility"],
-            deps = library["deps"],
+            deps = library["deps"] + ["@pip_deps_pytelegrambotapi//:pkg"],
         ),
     )
     for library in LIBRARIES

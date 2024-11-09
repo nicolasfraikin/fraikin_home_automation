@@ -1,0 +1,37 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "DanboligNewHouse",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "string",
+        "VariableName": "name",
+        "DefaultValue": "None"
+      },
+      {
+        "Type": "string",
+        "VariableName": "link",
+        "DefaultValue": "None"
+      },
+      {
+        "Type": "string",
+        "VariableName": "price",
+        "DefaultValue": "None"
+      },
+      {
+        "Type": "uint8_t",
+        "VariableName": "size_house_sqm",
+        "DefaultValue": "0"
+      },
+      {
+        "Type": "uint8_t",
+        "VariableName": "size_grund_sqm",
+        "DefaultValue": "0"
+      }
+    ],
+    "EnumDefinitions": [
+    ]
+  }
+}

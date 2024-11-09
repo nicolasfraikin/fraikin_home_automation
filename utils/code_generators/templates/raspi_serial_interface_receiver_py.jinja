@@ -5,7 +5,7 @@ from fraikin_home_automation.common.py_base_classes.i_module import IModule
 from fraikin_home_automation.communication.interfaces.{{interface_name_snake}} import {{interface_name_pascal}}, {{interface_name_pascal}}DataType
 {% endfor %}
 
-class InterfaceReceiver(IModule):
+class SerialInterfaceReceiver(IModule):
     def __init__(self):
         self.ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
         self.ser.reset_input_buffer()

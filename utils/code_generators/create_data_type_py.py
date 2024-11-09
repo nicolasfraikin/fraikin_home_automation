@@ -6,7 +6,8 @@ from jinja2 import Environment, FileSystemLoader
 DATA_TYPE_FOLDER = "communication/data_types"
 
 CPP_TO_PY_TYPE = {
-    "uint8_t": "int"
+    "uint8_t": "int",
+    "string": "str"
 }
 
 CPP_TO_PY_DEFAULT_VALUE = {

@@ -10,4 +10,15 @@ MODULES = {
             "//fraikin_home_automation/communication/interfaces:test_1_interface_py",
         ],
     },
+    "danbolig_house_watcher": {
+        "srcs": ["danbolig_house_watcher/danbolig_house_watcher.py"],
+        "visibility": [
+            "//fraikin_home_automation/deployment:__subpackages__",
+        ],
+        "deps": [
+            "//fraikin_home_automation/common/py_base_classes:i_module",
+            "//fraikin_home_automation/communication/interfaces:test_interface_py",
+            "//fraikin_home_automation/communication/interfaces:test_1_interface_py",
+        ],
+    },
 }

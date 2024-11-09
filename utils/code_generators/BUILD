@@ -82,22 +82,44 @@ py_binary(
 )
 
 py_binary(
-    name = "create_raspi_interface_sender",
-    srcs = ["create_raspi_interface_sender.py"],
+    name = "create_raspi_serial_interface_sender",
+    srcs = ["create_raspi_serial_interface_sender.py"],
     data = [
         "//fraikin_home_automation/communication/data_types",
-        "//fraikin_home_automation/utils/code_generators/templates:raspi_interface_sender",
+        "//fraikin_home_automation/utils/code_generators/templates:raspi_serial_interface_sender",
     ],
     visibility = ["//visibility:public"],
     deps = ["@pip_deps_jinja2//:pkg"],
 )
 
 py_binary(
-    name = "create_raspi_interface_receiver",
-    srcs = ["create_raspi_interface_receiver.py"],
+    name = "create_raspi_serial_interface_receiver",
+    srcs = ["create_raspi_serial_interface_receiver.py"],
     data = [
         "//fraikin_home_automation/communication/data_types",
-        "//fraikin_home_automation/utils/code_generators/templates:raspi_interface_receiver",
+        "//fraikin_home_automation/utils/code_generators/templates:raspi_serial_interface_receiver",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
+    name = "create_raspi_app_interface_sender",
+    srcs = ["create_raspi_app_interface_sender.py"],
+    data = [
+        "//fraikin_home_automation/communication/data_types",
+        "//fraikin_home_automation/utils/code_generators/templates:raspi_app_interface_sender",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
+    name = "create_raspi_app_interface_receiver",
+    srcs = ["create_raspi_app_interface_receiver.py"],
+    data = [
+        "//fraikin_home_automation/communication/data_types",
+        "//fraikin_home_automation/utils/code_generators/templates:raspi_app_interface_receiver",
     ],
     visibility = ["//visibility:public"],
     deps = ["@pip_deps_jinja2//:pkg"],

@@ -1,0 +1,73 @@
+import telebot
+import time
+from fraikin_home_automation.common.py_base_classes.i_module import IModule
+{% for interface_name_snake, interface_name_pascal in InterfaceNameSnakePascalCase %}
+from fraikin_home_automation.communication.interfaces.{{interface_name_snake}} import {{interface_name_pascal}}, {{interface_name_pascal}}DataType
+{% endfor %}
+
+TOKEN = '1373590760:AAGilAC73vwIGZOnkbmVk_JV_2h4vdqewWM'
+CHAT_ID = '1244417647'
+
+class AppInterfaceReceiver(IModule):
+    def __init__(self):
+        self.bot = telebot.TeleBot(TOKEN, threaded=False)
+        self.last_message_id = -1
+        self.expected_interfaces = [
+            {% for interface_name_pascal in InterfaceNamePascalCase1 %}
+            "{{interface_name_pascal}}",
+            {% endfor %}
+        ]
+
+    def init(self):
+        pass
+
+    def step(self):
+        text_message = self.get_updates()
+        self.process_message(text_message)
+
+    def process_message(self, message : str):
+        if not "Interface :" in message or "None" in message:
+            return
+        interface_name = message.split(" :")[0]
+        if interface_name not in self.expected_interfaces:
+            return
+        interface_values = message.split(" :")[1].split(" | ")
+        interface_values  = [entry.replace(" ","").replace("|","") for entry in interface_values]
+        self.process_interface(interface_name, interface_values)
+
+    def process_interface(self, interface_name, interface_values):
+        if interface_name == "":
+            return
+        {% for interface_name_pascal in InterfaceNamePascalCase3 %}
+        elif interface_name == "{{interface_name_pascal}}":
+            data = {{interface_name_pascal}}DataType()
+            for interface_value in interface_values:
+                exec("data." + interface_value)
+            {{interface_name_pascal}}.get_instance().set_data(data)
+            self.expected_interfaces.remove("{{interface_name_pascal}}")
+        {% endfor %}
+
+    def get_updates(self):
+        for i in range(0, 3):
+            try:
+                updates = self.bot.get_updates()  # get_Updates(offset, limit, timeout):
+                break
+            except:
+                time.sleep(0.3)
+        if not 'updates' in locals():
+            print("No updates in local variables")
+            return "None"
+        if len(updates) > 1:
+            if not updates[-1].message.message_id == self.last_message_id:
+                self.last_message_id = updates[-1].message.message_id
+                return updates[-1].message.text
+            else:
+                return "None"
+        else:
+            return "None"
+
+    def update_interface_subscription(self):
+        pass
+
+    def update_interface_publishing(self):
+        pass

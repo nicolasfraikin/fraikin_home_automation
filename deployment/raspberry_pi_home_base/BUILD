@@ -3,18 +3,19 @@ load("//fraikin_home_automation/utils:helpers.bzl", "get_deployment_deps")
 load("//fraikin_home_automation/utils/code_generators:create_raspi_deployment_core.bzl", "generate_raspi_deployment_core")
 
 DEPLOYED_MODULES = [
-    "serial_communication_test",
+    "danbolig_house_watcher",
 ]
 
 ADDITIONAL_DEPS = [
-    "//fraikin_home_automation/communication/external_interface_communication/raspi/serial:interface_sender",
-    "//fraikin_home_automation/communication/external_interface_communication/raspi/serial:interface_receiver",
+    "//fraikin_home_automation/communication/external_interface_communication/raspi/with_app:interface_sender",
+    "//fraikin_home_automation/communication/external_interface_communication/raspi/with_app:interface_receiver",
 ]
 
 generate_raspi_deployment_core(
     name = "raspi_core",
     deployed_modules = DEPLOYED_MODULES,
     file_name = "raspi_deployment.py",
+    include_serial_communication = False,
 )
 
 py_binary(
