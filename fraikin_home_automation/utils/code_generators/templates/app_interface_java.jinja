@@ -1,0 +1,67 @@
+package example.hello_world;
+import android.util.Log;
+
+public class {{InterfaceNamePascalCase}} {
+    public static String interface_name = "{{InterfaceNamePascalCase}}";
+    {% for enum_name, enum_fields in EnumDefinitions %}
+    public enum {{enum_name}} {
+    {% for enum_field in enum_fields %}
+        {{enum_field}},{% endfor %}
+    }
+    {% endfor %}
+
+    {% for type, name, default_init in DataTypeMembers %}
+    public static {{type}} {{name}} = {{default_init}};{% endfor %}
+
+    private static void set_values({% for type, name, default_init in DataTypeMembers2 %}{{type}} {{name}}{% endfor %}) {
+    {% for type, name, default_init in DataTypeMembers3 %}
+        {{name}} = {{name}}_in;{% endfor %}
+    }
+    
+    public static String get_message_string({% for type, name, default_init in DataTypeMembers6 %}{{type}} {{name}}{% endfor %}) {
+        set_values({% for type, name, default_init in DataTypeMembers7 %}{{name}}{% endfor %});
+
+        String out_string = "{{InterfaceNamePascalCase}}";
+        out_string += " : ";
+        {% for is_enum, name, default_init in DataTypeMembers4 %}
+        out_string += "{{name}}=";
+        {% if is_enum %}
+        out_string += String.valueOf({{name}}.ordinal());
+        {% else %}
+        out_string += String.valueOf({{name}});
+        {% endif %}
+        out_string += " | ";
+        {% endfor %}
+
+        //new TelegramSendClient().execute(out_string);
+        return replace_patterns(out_string);
+        
+    }
+
+    private static String replace_patterns(String str) {
+        return str.replace("true", "True").replace("false", "False");
+    }
+
+    public static void receive_message(String receive_string) {
+        if (!receive_string.contains("{{InterfaceNamePascalCase}}")) {
+            return;
+        }
+
+        String[] interface_values = receive_string.split(" :")[1].split(" | ");
+        String[] new_interface_values = interface_values;
+        int array_size = 0;
+        for (int i = 0; i < interface_values.length; i++) {
+            if (interface_values[i].length() > 1) {
+                String added_value = interface_values[i].split("=")[1];
+                {% for enum_name in EnumNames %}
+                added_value = added_value.replace("{{enum_name}}.","");
+                {% endfor %}
+                new_interface_values[array_size] = added_value;
+                array_size++;
+            }
+        }
+        {% for type, name, index in DataTypeMembers5 %}
+        {{name}} = {{type}}.valueOf(new_interface_values[{{index}}].replace(" ","").replace("|",""));
+        {% endfor %}
+    }
+}

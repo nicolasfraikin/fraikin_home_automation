@@ -1,0 +1,75 @@
+import asyncio
+import threading
+import websockets
+
+from fraikin_home_automation.common.py_base_classes.i_module import IModule
+# Receive interfaces
+{% for interface_name_snake, interface_name_pascal in InterfaceNameSnakePascalCase %}
+from fraikin_home_automation.communication.interfaces.{{interface_name_snake}} import {{interface_name_pascal}}, {{interface_name_pascal}}DataType
+{% endfor %}
+# Send interfaces
+{% for interface_name_snake, interface_name_pascal in InterfaceNameSnakePascalCaseSend %}
+from fraikin_home_automation.communication.interfaces.{{interface_name_snake}} import {{interface_name_pascal}}
+{% endfor %}
+
+class AppInterfaceSenderReceiver(IModule):
+    def __init__(self):
+        self.expected_recieve_interfaces = [
+            {% for interface_name_pascal in InterfaceNamePascalCase1 %}
+            "{{interface_name_pascal}}",
+            {% endfor %}
+        ]
+
+    def init(self):
+        websocket_thread = threading.Thread(target=self.start_websocket)
+        websocket_thread.start()
+
+    def start_websocket(self):
+        asyncio.run(self.websocket_main())
+
+    async def handle_message(self, websocket, path):
+        async for message in websocket:
+            print("Received " + str(message))
+            self.process_message(message)
+            {% for interface_name_pascal in InterfaceNamePascalCaseSend %}
+            print("Send {{interface_name_pascal}}")
+            await websocket.send({{interface_name_pascal}}.get_instance().get_data_string())
+            {% endfor %}
+
+    async def websocket_main(self):
+        async with websockets.serve(self.handle_message, "192.168.1.111", 60141):
+            print("WebSocket server is running on ws://192.168.1.111:60141")
+            await asyncio.Future()  # Run until canceled
+
+    def step(self):
+        pass
+
+    def process_message(self, message : str):
+        message = str(message)
+        if not "Interface :" in message or "None" in message:
+            return
+        interface_name = message.split(" :")[0]
+        if interface_name not in self.expected_recieve_interfaces:
+            return
+        print(f"Received interface message from client: {message}")
+        interface_values = message.split(" :")[1].split(" | ")
+        interface_values  = [entry.replace(" ","").replace("|","") for entry in interface_values]
+        self.process_interface(interface_name, interface_values)
+
+    def process_interface(self, interface_name, interface_values):
+        if interface_name == "":
+            return
+        {% for interface_name_pascal in InterfaceNamePascalCase3 %}
+        elif interface_name == "{{interface_name_pascal}}":
+            data = {{interface_name_pascal}}DataType()
+            for interface_value in interface_values:
+                if len(interface_value) > 0:
+                    exec("data." + interface_value)
+            {{interface_name_pascal}}.get_instance().set_data(data)
+        {% endfor %}
+
+    def update_interface_subscription(self):
+        pass
+
+    def update_interface_publishing(self):
+        pass

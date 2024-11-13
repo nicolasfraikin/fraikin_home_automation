@@ -1,0 +1,26 @@
+from fraikin_home_automation.common.py_base_classes.interface_base import InterfaceBase
+from fraikin_home_automation.communication.data_types.{{DataTypeName}} import {{DataTypeNamePascalCase}}
+
+{{InterfaceNamePascalCase}}DataType = {{DataTypeNamePascalCase}}
+class {{InterfaceNamePascalCase}}(InterfaceBase):
+    def __init__(self):
+        InterfaceBase.__init__(self, {{DataTypeNamePascalCase}}())
+
+    _instance = None
+
+    @staticmethod
+    def get_instance():
+        if {{InterfaceNamePascalCase}}._instance is None:
+            {{InterfaceNamePascalCase}}._instance = {{InterfaceNamePascalCase}}()
+        return {{InterfaceNamePascalCase}}._instance
+
+    def get_data_string(self) -> str:
+        out_string = "{{InterfaceNamePascalCase}}"
+        out_string += " : "
+        {% for data_type_variable in DataTypeVariables %}
+        out_string += "{{data_type_variable}}="
+        out_string += str(self.get_instance().get_data().{{data_type_variable}})
+        out_string += " | "
+        {% endfor %}
+        out_string+= "\n"
+        return out_string

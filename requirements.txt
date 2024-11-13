@@ -1,0 +1,5 @@
+# requirements.txt
+
+MarkupSafe==2.1.5
+Jinja2==3.1.2
+websockets==13.1

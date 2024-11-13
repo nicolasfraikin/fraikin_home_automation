@@ -1,0 +1,56 @@
+{% for module_name_pascal_case, module_name_snake_case in ModuleNames %}
+from fraikin_home_automation.modules.py_modules.{{module_name_snake_case}}.{{module_name_snake_case}} import {{module_name_pascal_case}}
+{% endfor %}
+{% if IncludeSerialCommunication %}
+from fraikin_home_automation.communication.external_interface_communication.raspi.serial.serial_interface_sender import SerialInterfaceSender
+from fraikin_home_automation.communication.external_interface_communication.raspi.serial.serial_interface_receiver import SerialInterfaceReceiver
+{% endif %}
+from fraikin_home_automation.communication.external_interface_communication.raspi.with_app.app_interface_sender_receiver import AppInterfaceSenderReceiver
+import time
+
+def init():
+{% if IncludeSerialCommunication %}
+    serial_interface_receiver.init()
+{% endif %}
+    app_interface_sender_receiver.init();
+    {% for module_name_pascal_case, module_name_snake_case in ModuleNames1 %}
+    {{module_name_snake_case}}.init()
+    {% endfor %}
+{% if IncludeSerialCommunication %}
+    serial_interface_sender.init()
+{% endif %}
+
+def step():
+    time.sleep(1)
+{% if IncludeSerialCommunication %}
+    serial_interface_receiver.step()
+{% endif %}
+    app_interface_sender_receiver.step();
+    {% for module_name_pascal_case, module_name_snake_case in ModuleNames2 %}
+    {{module_name_snake_case}}.update_interface_subscription()
+    {{module_name_snake_case}}.step()
+    {{module_name_snake_case}}.update_interface_publishing()
+    {% endfor %}
+{% if IncludeSerialCommunication %}
+    serial_interface_sender.step()
+{% endif %}
+
+
+if __name__ == "__main__":
+    # Interface Receiver
+{% if IncludeSerialCommunication %}
+    serial_interface_receiver = SerialInterfaceReceiver()
+{% endif %}
+    app_interface_sender_receiver = AppInterfaceSenderReceiver()
+    # All modules
+    {% for module_name_pascal_case, module_name_snake_case in ModuleNames3 %}
+    {{module_name_snake_case}} =  {{module_name_pascal_case}}();
+    {% endfor %}
+    # Interface sender
+{% if IncludeSerialCommunication %}
+    serial_interface_sender = SerialInterfaceSender()
+{% endif %}
+
+    init()
+    while True:
+        step()
