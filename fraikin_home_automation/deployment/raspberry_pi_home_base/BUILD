@@ -22,3 +22,12 @@ py_binary(
     srcs = [":raspi_core"],
     deps = get_deployment_deps(DEPLOYED_MODULES, MODULES, "py") + ADDITIONAL_DEPS,
 )
+
+py_binary(
+    name = "deploy_raspi_deployment",
+    srcs = [
+        "deploy_raspi_deployment.py",
+        "replaceall_symlinks.py",
+    ],
+    deps = [":raspi_deployment"],
+)
