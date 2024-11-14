@@ -1,6 +1,7 @@
 import asyncio
 import threading
 import websockets
+import os
 
 from fraikin_home_automation.common.py_base_classes.i_module import IModule
 # Receive interfaces
@@ -37,8 +38,9 @@ class AppInterfaceSenderReceiver(IModule):
             {% endfor %}
 
     async def websocket_main(self):
-        async with websockets.serve(self.handle_message, "192.168.1.111", 60141):
-            print("WebSocket server is running on ws://192.168.1.111:60141")
+        websocket_ip_adress = os.environ["WEBSOCKET_IP_ADRESS"]
+        async with websockets.serve(self.handle_message, websocket_ip_adress, 60141):
+            print("WebSocket server is running on ws://" + websocket_ip_adress + ":60141")
             await asyncio.Future()  # Run until canceled
 
     def step(self):
