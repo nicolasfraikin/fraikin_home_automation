@@ -1,0 +1,22 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "RequestedSmartHomeRuns",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "bool",
+        "VariableName": "dishwasher_run_requested",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "string",
+        "VariableName": "requested_dishwasher_run_time",
+        "DefaultValue": "None"
+      }
+    ],
+    "EnumDefinitions": [
+    ]
+  }
+}

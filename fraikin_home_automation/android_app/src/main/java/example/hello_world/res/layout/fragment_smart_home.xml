@@ -1,0 +1,85 @@
+<!-- res/layout/fragment_home.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:gravity="top"
+              android:background="@color/bazel_black">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SMART HOME"
+            android:textColor="@color/bazel_magenta"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="28sp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22sp"
+            android:layout_gravity="center_horizontal"
+            android:text="Electricity prices"
+            android:textColor="@color/bazel_white"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="22sp"/>
+    <TextView
+            android:id="@+id/ElectricityPrices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14sp"
+            android:text="Updated : "
+            android:textColor="@color/bazel_white"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="18sp"/>
+    <Button
+            android:id="@+id/seeElectricityPrices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:background="@color/bazel_green"
+            android:textColor="@color/color_on_bazel_green"
+            android:layout_marginTop="16dp"
+            android:text="See prices"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22sp"
+            android:layout_gravity="center_horizontal"
+            android:text="Dishwasher"
+            android:textColor="@color/bazel_white"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="22sp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14sp"
+            android:text="Scheduled runs:"
+            android:textColor="@color/bazel_white"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="18sp"/>
+    <TextView
+            android:id="@+id/status_dishwasher_runs_scheduled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14sp"
+            android:text="No dishwasher runs scheduled"
+            android:textColor="@color/bazel_green"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="18sp"/>
+    <Button
+            android:id="@+id/scheduleDishwasherRun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/bazel_green"
+            android:textColor="@color/color_on_bazel_green"
+            android:layout_marginTop="16dp"
+            android:text="Schedule run"/>
+
+</LinearLayout>

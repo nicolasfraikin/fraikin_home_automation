@@ -26,4 +26,19 @@ INTERFACE_DEFINITIONS = [
         "DataTypeDefinition": "danbolig_new_house.json",
         "InterfaceConfig": "RaspiToApp",
     },
+    {
+        "Name": "electricity_prices_interface",
+        "DataTypeDefinition": "electricity_prices.json",
+        "InterfaceConfig": "RaspiToApp",
+    },
+    {
+        "Name": "scheduled_smart_home_runs_interface",
+        "DataTypeDefinition": "scheduled_smart_home_runs.json",
+        "InterfaceConfig": "RaspiToApp",
+    },
+    {
+        "Name": "requested_smart_home_runs_interface",
+        "DataTypeDefinition": "requested_smart_home_runs.json",
+        "InterfaceConfig": "AppToRaspi",
+    },
 ]

@@ -19,7 +19,7 @@ class {{InterfaceNamePascalCase}}(InterfaceBase):
         out_string += " : "
         {% for data_type_variable in DataTypeVariables %}
         out_string += "{{data_type_variable}}="
-        out_string += str(self.get_instance().get_data().{{data_type_variable}})
+        out_string += str(self.get_instance().get_data().{{data_type_variable}}).replace(" ","_")
         out_string += " | "
         {% endfor %}
         out_string+= "\n"

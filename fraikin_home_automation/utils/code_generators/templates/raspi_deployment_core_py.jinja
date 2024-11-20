@@ -8,6 +8,7 @@ from fraikin_home_automation.communication.external_interface_communication.rasp
 from fraikin_home_automation.communication.external_interface_communication.raspi.with_app.app_interface_sender_receiver import AppInterfaceSenderReceiver
 import time
 
+
 def init():
 {% if IncludeSerialCommunication %}
     serial_interface_receiver.init()
@@ -21,19 +22,22 @@ def init():
 {% endif %}
 
 def step():
-    time.sleep(1)
 {% if IncludeSerialCommunication %}
     serial_interface_receiver.step()
 {% endif %}
     app_interface_sender_receiver.step();
     {% for module_name_pascal_case, module_name_snake_case in ModuleNames2 %}
+    global {{module_name_snake_case}}_last_execution_time
     {{module_name_snake_case}}.update_interface_subscription()
-    {{module_name_snake_case}}.step()
+    if {{module_name_snake_case}}.get_cycle_time() < 0 or (time.time() -  {{module_name_snake_case}}_last_execution_time) > {{module_name_snake_case}}.get_cycle_time():
+        {{module_name_snake_case}}.step()
+        {{module_name_snake_case}}_last_execution_time = time.time()
     {{module_name_snake_case}}.update_interface_publishing()
     {% endfor %}
 {% if IncludeSerialCommunication %}
     serial_interface_sender.step()
 {% endif %}
+    time.sleep(1)
 
 
 if __name__ == "__main__":
@@ -44,13 +48,19 @@ if __name__ == "__main__":
     app_interface_sender_receiver = AppInterfaceSenderReceiver()
     # All modules
     {% for module_name_pascal_case, module_name_snake_case in ModuleNames3 %}
-    {{module_name_snake_case}} =  {{module_name_pascal_case}}();
+    {{module_name_snake_case}} =  {{module_name_pascal_case}}()
     {% endfor %}
     # Interface sender
 {% if IncludeSerialCommunication %}
     serial_interface_sender = SerialInterfaceSender()
 {% endif %}
 
+    # Setup timers
+    {% for module_name_pascal_case, module_name_snake_case in ModuleNames4 %}
+    {{module_name_snake_case}}_last_execution_time = 0
+    {% endfor %}
+
     init()
+
     while True:
         step()

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="bazel_green" type="color">#43A047</item>
+    <item name="bazel_red" type="color">#FF0000</item>
     <item name="bazel_white" type="color">#FFFFFF</item>
     <item name="bazel_black" type="color">#000000</item>
     <item name="bazel_magenta" type="color">#FF00FF</item>

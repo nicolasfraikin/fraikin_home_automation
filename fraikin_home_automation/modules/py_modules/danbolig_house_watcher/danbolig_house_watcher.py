@@ -10,6 +10,7 @@ class DanboligHouseWatcher(IModule):
     def __init__(self):
         self.data = DanboligHouseInterfaceDataType()
         self.test_data = Test3InterfaceDataType()
+        # IModule.cycle_time = 60
 
     def init(self):
         # print("Init function")

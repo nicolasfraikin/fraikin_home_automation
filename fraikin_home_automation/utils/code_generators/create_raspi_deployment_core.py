@@ -21,6 +21,7 @@ def generate_py(output_file, template_path, deployed_modules, include_serial_com
     res["ModuleNames1"] = zip(res["ModuleNamePascalCase"], res["ModuleNameSnakeCase"])
     res["ModuleNames2"] = zip(res["ModuleNamePascalCase"], res["ModuleNameSnakeCase"])
     res["ModuleNames3"] = zip(res["ModuleNamePascalCase"], res["ModuleNameSnakeCase"])
+    res["ModuleNames4"] = zip(res["ModuleNamePascalCase"], res["ModuleNameSnakeCase"])
     res["IncludeSerialCommunication"] = include_serial_communication
     rendered_py = template.render(res)
 

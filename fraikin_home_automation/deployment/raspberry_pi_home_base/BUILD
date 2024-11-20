@@ -4,6 +4,8 @@ load("//fraikin_home_automation/utils/code_generators:create_raspi_deployment_co
 
 DEPLOYED_MODULES = [
     "danbolig_house_watcher",
+    "electricity_price_watcher",
+    "smart_home_device_manager",
 ]
 
 ADDITIONAL_DEPS = [

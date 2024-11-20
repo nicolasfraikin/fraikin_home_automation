@@ -2,7 +2,6 @@ android_library(
     name = "greeter_activity",
     srcs = [
         "BackgroundService.java",
-        "DebugFragment.java",
         "Greeter.java",
         "HomeFragment.java",
         "MainActivity.java",
@@ -11,6 +10,7 @@ android_library(
         "Restarter.java",
         "SandboxFragment.java",
         "SettingsFragment.java",
+        "SmartHomeFragment.java",
         "SplashActivity.java",
         "StatusFragment.java",
         "TelegramReceiveClient.java",

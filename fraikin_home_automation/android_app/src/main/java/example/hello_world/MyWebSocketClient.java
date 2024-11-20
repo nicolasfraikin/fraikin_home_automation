@@ -12,6 +12,7 @@ import android.util.Log;
 public class MyWebSocketClient extends WebSocketListener {
 
     private WebSocket webSocket;
+    public static boolean isConnected = false;
 
     public void connect() {
         Log.v("Fraikin Home Automation","Connect to server");
@@ -27,6 +28,7 @@ public class MyWebSocketClient extends WebSocketListener {
         Log.v("Fraikin Home Automation","Open message");
         webSocket.send("Hello, Raspberry Pi!");
         Log.v("Fraikin Home Automation","Connected to server");
+        isConnected=true;
     }
 
     public void sendMessage(String message) {
@@ -40,6 +42,8 @@ public class MyWebSocketClient extends WebSocketListener {
     public void onMessage(WebSocket webSocket, String text) {
         Log.v("Fraikin Home Automation","Received from server: " + text);
         Test3Interface.receive_message(text);
+        ScheduledSmartHomeRunsInterface.receive_message(text);
+        ElectricityPricesInterface.receive_message(text);
     }
 
 //     @Override
@@ -51,14 +55,17 @@ public class MyWebSocketClient extends WebSocketListener {
     public void onClosing(WebSocket webSocket, int code, String reason) {
         webSocket.close(1000, null);
         Log.v("Fraikin Home Automation","Connection closing: " + reason);
+        isConnected = false;
     }
 
     @Override
     public void onFailure(WebSocket webSocket, Throwable t, Response response) {
         Log.v("Fraikin Home Automation","Connection failed: " + t.getMessage());
+        isConnected = false;
     }
 
     public void close() {
         webSocket.close(1000, "Closing");
+        isConnected = false;
     }
 }

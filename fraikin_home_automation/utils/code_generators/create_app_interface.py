@@ -102,6 +102,7 @@ def create_app_interface(output_file, template_path, interface_name, interface_d
         [convert_cpp_to_java_default_value(member["DefaultValue"]) for member in
          data_type_definition["DataTypeMembers"]])
     res["DataTypeMembers5"] = zip(
+        ["string" in member["Type"] for member in data_type_definition["DataTypeMembers"]],
         [convert_cpp_type_to_conversion_type(member["Type"]) for member in data_type_definition["DataTypeMembers"]],
         [member["VariableName"] for member in data_type_definition["DataTypeMembers"]],
         [i for i in range(0, len(

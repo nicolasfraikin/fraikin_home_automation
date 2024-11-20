@@ -3,15 +3,31 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:gravity="center"
+              android:gravity="top"
               android:background="@color/bazel_black">
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="STATUS"
-            android:textColor="@color/bazel_green"
+            android:textColor="@color/bazel_magenta"
             android:textStyle="bold"
             android:gravity="center"
             android:textSize="28sp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22sp"
+            android:text="Connected to network"
+            android:textColor="@color/bazel_white"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="22sp"/>
+    <ImageView
+            android:id="@+id/status_network"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="11sp"
+            android:src="@drawable/red_circle"
+            android:contentDescription="Status Network"/>
 </LinearLayout>

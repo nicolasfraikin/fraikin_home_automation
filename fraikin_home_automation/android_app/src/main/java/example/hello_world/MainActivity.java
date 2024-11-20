@@ -35,6 +35,9 @@ import android.app.PendingIntent;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.content.Intent;
+import android.content.Context;
+import android.app.ActivityManager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isLocationPermissionGranted = false;
     private static final String CHANNEL_ID = "default_channel";
     static MyWebSocketClient webSocketClient = new MyWebSocketClient();
+    Intent backgroundService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new HomeFragment();
                 } else if (item_id==R.id.nav_status) {
                     selectedFragment = new StatusFragment();
-                } else if (item_id==R.id.nav_debug) {
-                    selectedFragment = new DebugFragment();
+                } else if (item_id==R.id.nav_smart_home) {
+                    selectedFragment = new SmartHomeFragment();
                 } else if (item_id==R.id.nav_sandbox) {
                     selectedFragment = new SandboxFragment();
                 } else if (item_id==R.id.nav_settings) {
@@ -104,11 +108,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Setup websocket connection
-        webSocketClient.connect();
-        webSocketClient.sendMessage("Hello from Android!");
-
+        connectWebsocket();
         allowToRunInBackground();
 
+        // Start backgroundService
+        BackgroundService.setActivityContext(this);
+        backgroundService = new Intent(this, BackgroundService.class);
+        if (!isMyServiceRunning(backgroundService.getClass())) {
+            startService(backgroundService);
+            Log.v("Fraikin Home Automation", "Start service background");
+        }
+
+    }
+
+    public static void connectWebsocket() {
+        webSocketClient.connect();
+        webSocketClient.sendMessage("Hello from Android!");
     }
 
     private void allowToRunInBackground() {
@@ -169,14 +184,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Method to send a notification
-    public void sendNotification(String title, String message, String targetFragment) {
-        Intent intent = new Intent(this, MainActivity.class);
+    public static void sendNotification(Context context, String title, String message, String targetFragment) {
+        Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("targetFragment", targetFragment); // Pass the target fragment's name
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.splash_screen)
                 .setContentTitle(title)
                 .setContentText(message)
@@ -184,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(1, builder.build());
     }
 
@@ -202,8 +217,8 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new HomeFragment();
             } else if (targetFragment.equals("StatusFragment")) {
                 selectedFragment = new StatusFragment();
-            } else if (targetFragment.equals("DebugFragment")) {
-                selectedFragment = new DebugFragment();
+            } else if (targetFragment.equals("SmartHomeFragment")) {
+                selectedFragment = new SmartHomeFragment();
             } else if (targetFragment.equals("SandboxFragment")) {
                 selectedFragment = new SandboxFragment();
             } else if (targetFragment.equals("SettingsFragment")) {
@@ -216,5 +231,23 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, selectedFragment)
                     .commit();
         }
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.v("Fraikin Home Automation", "onDestroy MainActivity!");
+        stopService(backgroundService);
+        super.onDestroy();
+
     }
 }

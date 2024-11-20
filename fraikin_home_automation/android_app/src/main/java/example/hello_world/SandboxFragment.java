@@ -80,7 +80,7 @@ public class SandboxFragment extends Fragment {
         sendDummyNotificationButton.setOnClickListener(v -> {
             MainActivity mainActivity = (MainActivity) getActivity();
             if (mainActivity != null) {
-                mainActivity.sendNotification("Orm", "Test notification.", "StatusFragment");
+                mainActivity.sendNotification(mainActivity, "Orm", "Test notification.", "StatusFragment");
             }
         });
     }
@@ -92,9 +92,6 @@ public class SandboxFragment extends Fragment {
         final Runnable r = new Runnable() {
                 public void run() {
                     handler.postDelayed(this, 1000);
-//                     String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-//                     new TelegramReceiveClient(res -> {receiveTelegramTextView.setText(res);}).execute();
-//                     new Test3Interface().receive_message();
                     receiveTelegramTextView.setText(String.valueOf(Test3Interface.test_uint8));
                 }
             };

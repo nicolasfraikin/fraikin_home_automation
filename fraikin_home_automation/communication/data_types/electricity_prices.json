@@ -1,0 +1,22 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "ElectricityPrices",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "string",
+        "VariableName": "update_time",
+        "DefaultValue": "None"
+      },
+      {
+        "Type": "string",
+        "VariableName": "cheapest_prices",
+        "DefaultValue": "None"
+      }
+    ],
+    "EnumDefinitions": [
+    ]
+  }
+}

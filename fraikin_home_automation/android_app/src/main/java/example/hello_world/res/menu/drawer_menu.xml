@@ -7,8 +7,8 @@
             android:id="@+id/nav_status"
             android:title="Status"/>
     <item
-            android:id="@+id/nav_debug"
-            android:title="Debug"/>
+            android:id="@+id/nav_smart_home"
+            android:title="Smart Home"/>
     <item
             android:id="@+id/nav_sandbox"
             android:title="Sandbox"/>
