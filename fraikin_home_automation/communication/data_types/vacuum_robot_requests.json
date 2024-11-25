@@ -1,0 +1,26 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "VacuumRobotRequests",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "Request",
+        "VariableName": "request",
+        "DefaultValue": "Request::kInvalid"
+      }
+    ],
+    "EnumDefinitions": [
+      {
+        "EnumName": "Request",
+        "EnumFields": [
+          "kStartRobot",
+          "kStopRobot",
+          "kStartAfterPeopleInHouseLeave",
+          "kInvalid"
+        ]
+      }
+    ]
+  }
+}

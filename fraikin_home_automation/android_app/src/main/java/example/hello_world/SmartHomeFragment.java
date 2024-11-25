@@ -37,6 +37,9 @@ public class SmartHomeFragment extends Fragment {
         handleScheduledDishwasherRuns();
         handleButtonPressScheduleDishwasherRun();
         handleButtonSeeElectricityPrices();
+        handleVacuumRobotStatus();
+        handleVacuumRobotStartStop();
+        handleChristmasLights();
     }
 
     private void handleScheduledDishwasherRuns() {
@@ -60,6 +63,106 @@ public class SmartHomeFragment extends Fragment {
                 };
                 handler.postDelayed(r, 0000);
 
+    }
+
+    private void handleVacuumRobotStatus() {
+        TextView statusRobot = getView().findViewById(R.id.status_robot);
+        Button startRobotButton = getView().findViewById(R.id.startRobot);
+        Button stopRobotButton = getView().findViewById(R.id.stopCleaning);
+        Button startCleaningWhenOutOfHouseButton = getView().findViewById(R.id.startCleaningWhenOutOfHouse);
+
+        Handler handler =new Handler();
+            final Runnable r = new Runnable() {
+                    public void run() {
+                        handler.postDelayed(this, 1000);
+                        statusRobot.setText(VacuumRobotStatusInterface.status);
+                        if (VacuumRobotStatusInterface.status.contains("Charging")) {
+                            statusRobot.setTextColor(Color.BLUE);
+                            startRobotButton.setVisibility(View.VISIBLE);
+                            startCleaningWhenOutOfHouseButton.setVisibility(View.VISIBLE);
+                            stopRobotButton.setVisibility(View.GONE);
+                        } else {
+                            statusRobot.setTextColor(Color.GREEN);
+                            startRobotButton.setVisibility(View.GONE);
+                            startCleaningWhenOutOfHouseButton.setVisibility(View.GONE);
+                            stopRobotButton.setVisibility(View.VISIBLE);
+                        }
+                    }
+                };
+                handler.postDelayed(r, 0000);
+
+    }
+
+    private void handleVacuumRobotStartStop() {
+        Button startRobotButton = getView().findViewById(R.id.startRobot);
+        Button stopRobotButton = getView().findViewById(R.id.stopCleaning);
+        Button startCleaningWhenOutOfHouseButton = getView().findViewById(R.id.startCleaningWhenOutOfHouse);
+
+        startRobotButton.setOnClickListener(v -> startRobot());
+        stopRobotButton.setOnClickListener(v -> stopRobot());
+        startCleaningWhenOutOfHouseButton.setOnClickListener(v -> startCleaningWhenOutOfHouse());
+    }
+
+    private void handleChristmasLights() {
+        Button turnOnLightButton = getView().findViewById(R.id.turnChristmasLightsOn);
+        Button turnOffLightButton = getView().findViewById(R.id.turnChristmasLightsOff);
+
+        turnOnLightButton.setOnClickListener(v -> turnOnLight());
+        turnOffLightButton.setOnClickListener(v -> turnOffLight());
+        Handler handler =new Handler();
+            final Runnable r = new Runnable() {
+                    public void run() {
+                        handler.postDelayed(this, 1000);
+                        if (ChristmasLightStatusInterface.status == ChristmasLightStatusInterface.Status.kTurnedOn) {
+                            turnOnLightButton.setVisibility(View.GONE);
+                            turnOffLightButton.setVisibility(View.VISIBLE);
+                        } else if (ChristmasLightStatusInterface.status == ChristmasLightStatusInterface.Status.kTurnedOff) {
+                            turnOnLightButton.setVisibility(View.VISIBLE);
+                            turnOffLightButton.setVisibility(View.GONE);
+                        }
+                    }
+                };
+                handler.postDelayed(r, 0000);
+    }
+
+    private void turnOnLight() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            mainActivity.sendWebsocketMessage(ChristmasLightRequestInterface.get_message_string(ChristmasLightRequestInterface.Request.kTurnOn));
+        }
+        Toast.makeText(requireContext(), "Christmas Lights will be turned on", Toast.LENGTH_SHORT).show();
+    }
+
+    private void turnOffLight() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            mainActivity.sendWebsocketMessage(ChristmasLightRequestInterface.get_message_string(ChristmasLightRequestInterface.Request.kTurnOff));
+        }
+        Toast.makeText(requireContext(), "Christmas Lights will be turned off", Toast.LENGTH_SHORT).show();
+    }
+
+    private void startRobot() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            mainActivity.sendWebsocketMessage(VacuumRobotRequestsInterface.get_message_string(VacuumRobotRequestsInterface.Request.kStartRobot));
+        }
+        Toast.makeText(requireContext(), "Vacuum robot will be started", Toast.LENGTH_SHORT).show();
+    }
+
+    private void stopRobot() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            mainActivity.sendWebsocketMessage(VacuumRobotRequestsInterface.get_message_string(VacuumRobotRequestsInterface.Request.kStopRobot));
+        }
+        Toast.makeText(requireContext(), "Vacuum robot will be stopped",Toast.LENGTH_SHORT).show();
+    }
+
+    private void startCleaningWhenOutOfHouse() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            mainActivity.sendWebsocketMessage(VacuumRobotRequestsInterface.get_message_string(VacuumRobotRequestsInterface.Request.kStartAfterPeopleInHouseLeave));
+        }
+        Toast.makeText(requireContext(), "THIS FEATURE IS NOT YET SUPPORTED!", Toast.LENGTH_SHORT).show();
     }
 
     private void handleButtonSeeElectricityPrices() {

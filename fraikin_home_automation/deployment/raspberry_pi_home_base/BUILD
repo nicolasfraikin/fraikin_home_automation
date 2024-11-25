@@ -4,12 +4,15 @@ load("//fraikin_home_automation/utils/code_generators:create_raspi_deployment_co
 
 DEPLOYED_MODULES = [
     "danbolig_house_watcher",
-    "electricity_price_watcher",
     "smart_home_device_manager",
+    "vacuum_robot_manager",
+    "christmas_light_manager",
+    "electricity_price_watcher",
 ]
 
 ADDITIONAL_DEPS = [
     "//fraikin_home_automation/communication/external_interface_communication/raspi/with_app:interface_sender_receiver",
+    "//fraikin_home_automation/communication/interfaces:modules_stati_interface_py",
 ]
 
 generate_raspi_deployment_core(

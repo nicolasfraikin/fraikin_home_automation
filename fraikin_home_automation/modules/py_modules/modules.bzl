@@ -32,4 +32,27 @@ MODULES = {
             "//fraikin_home_automation/modules/py_modules:libraries",
         ],
     },
+    "vacuum_robot_manager": {
+        "srcs": ["vacuum_robot_manager/vacuum_robot_manager.py"],
+        "visibility": [
+            "//fraikin_home_automation/deployment:__subpackages__",
+        ],
+        "deps": [
+            "//fraikin_home_automation/common/py_base_classes:i_module",
+            "//fraikin_home_automation/communication/interfaces:vacuum_robot_requests_interface_py",
+            "//fraikin_home_automation/communication/interfaces:vacuum_robot_status_interface_py",
+        ],
+    },
+    "christmas_light_manager": {
+        "srcs": ["christmas_light_manager/christmas_light_manager.py"],
+        "visibility": [
+            "//fraikin_home_automation/deployment:__subpackages__",
+        ],
+        "deps": [
+            "//fraikin_home_automation/common/py_base_classes:i_module",
+            "//fraikin_home_automation/communication/interfaces:christmas_light_request_interface_py",
+            "//fraikin_home_automation/communication/interfaces:christmas_light_status_interface_py",
+            "//fraikin_home_automation/modules/py_modules:libraries",
+        ],
+    },
 }

@@ -6,6 +6,8 @@ from fraikin_home_automation.communication.external_interface_communication.rasp
 from fraikin_home_automation.communication.external_interface_communication.raspi.serial.serial_interface_receiver import SerialInterfaceReceiver
 {% endif %}
 from fraikin_home_automation.communication.external_interface_communication.raspi.with_app.app_interface_sender_receiver import AppInterfaceSenderReceiver
+from fraikin_home_automation.communication.interfaces.modules_stati_interface import \
+    ModulesStatiInterface, ModulesStatiInterfaceDataType
 import time
 
 
@@ -26,14 +28,22 @@ def step():
     serial_interface_receiver.step()
 {% endif %}
     app_interface_sender_receiver.step();
+
     {% for module_name_pascal_case, module_name_snake_case in ModuleNames2 %}
     global {{module_name_snake_case}}_last_execution_time
     {{module_name_snake_case}}.update_interface_subscription()
     if {{module_name_snake_case}}.get_cycle_time() < 0 or (time.time() -  {{module_name_snake_case}}_last_execution_time) > {{module_name_snake_case}}.get_cycle_time():
-        {{module_name_snake_case}}.step()
-        {{module_name_snake_case}}_last_execution_time = time.time()
+        try:
+            {{module_name_snake_case}}.step()
+            {{module_name_snake_case}}_last_execution_time = time.time()
+            modules_stati.{{module_name_snake_case}}_okay = True
+        except:
+            print("Step of module {{module_name_pascal_case}} failed")
+            modules_stati.{{module_name_snake_case}}_okay = False
+
     {{module_name_snake_case}}.update_interface_publishing()
     {% endfor %}
+    ModulesStatiInterface.get_instance().set_data(modules_stati)
 {% if IncludeSerialCommunication %}
     serial_interface_sender.step()
 {% endif %}
@@ -62,5 +72,6 @@ if __name__ == "__main__":
 
     init()
 
+    modules_stati = ModulesStatiInterfaceDataType()
     while True:
         step()

@@ -3,3 +3,4 @@
 MarkupSafe==2.1.5
 Jinja2==3.1.2
 websockets==13.1
+python-miio==0.5.12

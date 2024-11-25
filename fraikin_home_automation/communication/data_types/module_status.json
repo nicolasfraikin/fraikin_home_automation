@@ -1,0 +1,37 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "ModuleStatus",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "bool",
+        "VariableName": "danbolig_house_watcher_okay",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "bool",
+        "VariableName": "smart_home_device_manager_okay",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "bool",
+        "VariableName": "vacuum_robot_manager_okay",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "bool",
+        "VariableName": "christmas_light_manager_okay",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "bool",
+        "VariableName": "electricity_price_watcher_okay",
+        "DefaultValue": "false"
+      }
+    ],
+    "EnumDefinitions": [
+    ]
+  }
+}

@@ -18,4 +18,4 @@ def toggle_device(state):
 # Example usage
 toggle_device("on")
 time.sleep(2)
-toggle_device("off")
+# toggle_device("off")

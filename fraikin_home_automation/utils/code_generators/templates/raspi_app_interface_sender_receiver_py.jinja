@@ -28,7 +28,7 @@ class AppInterfaceSenderReceiver(IModule):
     def start_websocket(self):
         asyncio.run(self.websocket_main())
 
-    async def handle_message(self, websocket, path):
+    async def handle_message(self, websocket):
         async for message in websocket:
             # print("Received " + str(message))
             self.process_message(message)

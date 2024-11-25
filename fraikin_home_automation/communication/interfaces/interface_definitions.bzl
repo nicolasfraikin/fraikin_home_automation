@@ -41,4 +41,29 @@ INTERFACE_DEFINITIONS = [
         "DataTypeDefinition": "requested_smart_home_runs.json",
         "InterfaceConfig": "AppToRaspi",
     },
+    {
+        "Name": "vacuum_robot_requests_interface",
+        "DataTypeDefinition": "vacuum_robot_requests.json",
+        "InterfaceConfig": "AppToRaspi",
+    },
+    {
+        "Name": "vacuum_robot_status_interface",
+        "DataTypeDefinition": "vacuum_robot_status.json",
+        "InterfaceConfig": "RaspiToApp",
+    },
+    {
+        "Name": "christmas_light_request_interface",
+        "DataTypeDefinition": "christmas_light_request.json",
+        "InterfaceConfig": "AppToRaspi",
+    },
+    {
+        "Name": "christmas_light_status_interface",
+        "DataTypeDefinition": "christmas_light_status.json",
+        "InterfaceConfig": "RaspiToApp",
+    },
+    {
+        "Name": "modules_stati_interface",
+        "DataTypeDefinition": "module_status.json",
+        "InterfaceConfig": "RaspiToApp",
+    },
 ]

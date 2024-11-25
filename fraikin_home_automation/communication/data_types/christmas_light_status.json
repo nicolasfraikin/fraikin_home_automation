@@ -1,0 +1,25 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "ChristmasLightStatus",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "Status",
+        "VariableName": "status",
+        "DefaultValue": "Status::kInvalid"
+      }
+    ],
+    "EnumDefinitions": [
+      {
+        "EnumName": "Status",
+        "EnumFields": [
+          "kTurnedOn",
+          "kTurnedOff",
+          "kInvalid"
+        ]
+      }
+    ]
+  }
+}

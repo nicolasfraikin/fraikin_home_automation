@@ -1,0 +1,17 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "VacuumRobotStatus",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "string",
+        "VariableName": "status",
+        "DefaultValue": "None"
+      }
+    ],
+    "EnumDefinitions": [
+    ]
+  }
+}

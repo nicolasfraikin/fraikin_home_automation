@@ -9,7 +9,8 @@ from fraikin_home_automation.communication.interfaces.scheduled_smart_home_runs_
 from fraikin_home_automation.common.py_base_classes.i_module import IModule
 from fraikin_home_automation.modules.py_modules.libraries.sonoff import Sonoff
 
-DISHWASHER_TURN_OFF_TIME = 10
+DISHWASHER_TURN_OFF_TIME = 5
+DISHWASHER_TURN_OFF_MAX_TRIES_TIME = 60
 
 
 class SmartHomeDeviceManager(IModule):
@@ -19,21 +20,38 @@ class SmartHomeDeviceManager(IModule):
         self.scheduled_runs = ScheduledSmartHomeRunsInterfaceDataType()
         self.scheduled_run_time = None
         self.previous_time = datetime.datetime.now()
-        self.sonoff_obj = Sonoff(os.environ["EWELINK_EMAIL"], os.environ["EWELINK_PW"], 'eu')
+        try:
+            self.sonoff_obj = Sonoff(os.environ["EWELINK_EMAIL"], os.environ["EWELINK_PW"], 'eu')
+        except:
+            self.sonoff_obj = None
+            print("SmartHomeDeviceManager: Login to Sonoff failed")
         self.dishwasher_request_turn_off_timer = None
 
     def init(self):
-        self.sonoff_obj.do_login()
+        pass
 
     def step(self):
+        self.attempt_login()
         self.check_if_run_was_requested()
         self.check_if_dishwasher_run_should_be_triggered()
         self.check_if_dishwasher_should_be_turned_off()
 
+    def attempt_login(self):
+        if self.sonoff_obj is None:
+            try:
+                self.sonoff_obj = Sonoff(os.environ["EWELINK_EMAIL"], os.environ["EWELINK_PW"], 'eu')
+            except:
+                self.sonoff_obj = None
+                print("SmartHomeDeviceManager: Login to Sonoff failed")
+
     def check_if_dishwasher_should_be_turned_off(self):
         if self.dishwasher_request_turn_off_timer is not None and time.time() - self.dishwasher_request_turn_off_timer > DISHWASHER_TURN_OFF_TIME:
             self.turn_dishwasher_off()
-            self.dishwasher_request_turn_off_timer = None
+            print("Turn dishwasher off")
+            if self.get_status()=='off':
+                self.dishwasher_request_turn_off_timer = None
+            elif  time.time() - self.dishwasher_request_turn_off_timer > DISHWASHER_TURN_OFF_MAX_TRIES_TIME:
+                self.dishwasher_request_turn_off_timer = None
 
     def check_if_run_was_requested(self):
         if self.requested_runs.dishwasher_run_requested and not self.previous_requested_runs.dishwasher_run_requested:
@@ -41,6 +59,7 @@ class SmartHomeDeviceManager(IModule):
             self.scheduled_runs.scheduled_dishwasher_run_time = self.requested_runs.requested_dishwasher_run_time
             self.convert_to_time()
             self.dishwasher_request_turn_off_timer = time.time()
+            print("Dishwasher run was requested")
 
     def check_if_dishwasher_run_should_be_triggered(self):
         current_time = datetime.datetime.now()
@@ -71,6 +90,10 @@ class SmartHomeDeviceManager(IModule):
         self.scheduled_run_time = datetime.datetime(chosen_date.year, chosen_date.month, chosen_date.day,
                                                     chosen_hour)
 
+    def get_status(self):
+        self.sonoff_obj.update_devices()
+        status = self.sonoff_obj.get_device('1000a5ffcd')
+        return status['params']['switch']
     def update_interface_subscription(self):
         self.previous_requested_runs = self.requested_runs
         self.requested_runs = RequestedSmartHomeRunsInterface.get_instance().get_data()

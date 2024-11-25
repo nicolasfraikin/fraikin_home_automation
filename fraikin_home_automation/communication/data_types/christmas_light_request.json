@@ -1,0 +1,25 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "ChristmasLightRequest",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "Request",
+        "VariableName": "request",
+        "DefaultValue": "Request::kInvalid"
+      }
+    ],
+    "EnumDefinitions": [
+      {
+        "EnumName": "Request",
+        "EnumFields": [
+          "kTurnOn",
+          "kTurnOff",
+          "kInvalid"
+        ]
+      }
+    ]
+  }
+}

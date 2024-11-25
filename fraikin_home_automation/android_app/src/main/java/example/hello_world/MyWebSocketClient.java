@@ -44,6 +44,9 @@ public class MyWebSocketClient extends WebSocketListener {
         Test3Interface.receive_message(text);
         ScheduledSmartHomeRunsInterface.receive_message(text);
         ElectricityPricesInterface.receive_message(text);
+        VacuumRobotStatusInterface.receive_message(text);
+        ChristmasLightStatusInterface.receive_message(text);
+        ModulesStatiInterface.receive_message(text);
     }
 
 //     @Override
