@@ -15,14 +15,17 @@ class ChristmasLightManager(IModule):
         self.light_request = ChristmasLightRequest()
         self.previous_light_request = ChristmasLightRequest()
         self.light_status = ChristmasLightStatus()
+        self.login_to_sonoff()
+
+    def init(self):
+        pass
+
+    def login_to_sonoff(self):
         try:
             self.sonoff_obj = Sonoff(os.environ["EWELINK_EMAIL"], os.environ["EWELINK_PW"], 'eu')
         except:
             self.sonoff_obj = None
             print("ChristmasLightManager: Login to Sonoff failed")
-
-    def init(self):
-        pass
 
     def step(self):
         self.attempt_login()
@@ -32,11 +35,7 @@ class ChristmasLightManager(IModule):
 
     def attempt_login(self):
         if self.sonoff_obj is None:
-            try:
-                self.sonoff_obj = Sonoff(os.environ["EWELINK_EMAIL"], os.environ["EWELINK_PW"], 'eu')
-            except:
-                self.sonoff_obj = None
-                print("ChristmasLightManager: Login to Sonoff failed")
+            self.login_to_sonoff()
 
     def check_if_light_should_be_turned_on(self):
         if (Request(self.previous_light_request.request) != Request.kTurnOn or self.get_status()=='off') and Request(
@@ -51,6 +50,7 @@ class ChristmasLightManager(IModule):
             self.turn_light_off()
 
     def get_status(self):
+        self.login_to_sonoff()
         self.sonoff_obj.update_devices()
         status = self.sonoff_obj.get_device('1000b0f22f')
         return status['params']['switch']
@@ -62,9 +62,11 @@ class ChristmasLightManager(IModule):
                 self.light_status.status = Status.kTurnedOff
 
     def turn_light_on(self):
+        self.login_to_sonoff()
         self.sonoff_obj.switch('on', '1000b0f22f')
 
     def turn_light_off(self):
+        self.login_to_sonoff()
         self.sonoff_obj.switch('off', '1000b0f22f')
 
     def update_interface_subscription(self):

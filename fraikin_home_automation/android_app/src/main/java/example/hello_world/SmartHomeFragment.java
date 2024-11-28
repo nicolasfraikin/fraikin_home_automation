@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.os.Handler;
 import android.graphics.Color;
+import java.util.Random;
 // Open dialog
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
@@ -21,6 +22,8 @@ import android.util.Log;
 
 
 public class SmartHomeFragment extends Fragment {
+
+    private Random rand = new Random();
 
     public SmartHomeFragment() {
         // Required empty public constructor
@@ -162,7 +165,7 @@ public class SmartHomeFragment extends Fragment {
         if (mainActivity != null) {
             mainActivity.sendWebsocketMessage(VacuumRobotRequestsInterface.get_message_string(VacuumRobotRequestsInterface.Request.kStartAfterPeopleInHouseLeave));
         }
-        Toast.makeText(requireContext(), "THIS FEATURE IS NOT YET SUPPORTED!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Vacuum robot will start after " + PeopleAtHomeInterface.people_at_home.replaceAll(";",",") + " left.", Toast.LENGTH_SHORT).show();
     }
 
     private void handleButtonSeeElectricityPrices() {
@@ -230,7 +233,7 @@ public class SmartHomeFragment extends Fragment {
                 .setPositiveButton("Finish", (dialog, which) -> {
                       MainActivity mainActivity = (MainActivity) getActivity();
                       if (mainActivity != null) {
-                          mainActivity.sendWebsocketMessage(RequestedSmartHomeRunsInterface.get_message_string(true, selectedTime));
+                          mainActivity.sendWebsocketMessage(RequestedSmartHomeRunsInterface.get_message_string(true, selectedTime, rand.nextInt(100)));
                       }
                       Toast.makeText(requireContext(), "Dishwasher run will be scheduled for : " + selectedTime, Toast.LENGTH_SHORT).show();
                 })

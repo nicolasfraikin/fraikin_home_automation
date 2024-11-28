@@ -130,5 +130,52 @@
                 android:layout_marginTop="11sp"
                 android:src="@drawable/red_circle"
                 android:contentDescription="Status ElectricityPriceWatcher"/>
+        <!--    PeopleAtHomeWatcher-->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22sp"
+                android:text="PeopleAtHomeWatcher"
+                android:textColor="@color/bazel_white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="18sp"/>
+        <ImageView
+                android:id="@+id/people_at_home_checker"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="11sp"
+                android:src="@drawable/red_circle"
+                android:contentDescription="Status PeopleAtHomeWatcher"/>
+        <!--    Who is home -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22sp"
+                android:text="Who is home"
+                android:textColor="@color/bazel_white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="22sp"/>
+        <TextView
+                android:id="@+id/who_is_home_updated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22sp"
+                android:text=""
+                android:textColor="@color/bazel_white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="18sp"/>
+        <TextView
+                android:id="@+id/who_is_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22sp"
+                android:text=""
+                android:textColor="@color/bazel_green"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="18sp"/>
     </LinearLayout>
 </ScrollView>

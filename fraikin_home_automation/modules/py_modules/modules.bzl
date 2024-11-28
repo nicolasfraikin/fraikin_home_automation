@@ -55,4 +55,14 @@ MODULES = {
             "//fraikin_home_automation/modules/py_modules:libraries",
         ],
     },
+    "people_at_home_checker": {
+        "srcs": ["people_at_home_checker/people_at_home_checker.py"],
+        "visibility": [
+            "//fraikin_home_automation/deployment:__subpackages__",
+        ],
+        "deps": [
+            "//fraikin_home_automation/common/py_base_classes:i_module",
+            "//fraikin_home_automation/communication/interfaces:people_at_home_interface_py",
+        ],
+    },
 }

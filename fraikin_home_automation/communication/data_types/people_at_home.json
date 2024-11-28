@@ -1,0 +1,22 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "PeopleAtHome",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "string",
+        "VariableName": "update_time",
+        "DefaultValue": "None"
+      },
+      {
+        "Type": "string",
+        "VariableName": "people_at_home",
+        "DefaultValue": "None"
+      }
+    ],
+    "EnumDefinitions": [
+    ]
+  }
+}

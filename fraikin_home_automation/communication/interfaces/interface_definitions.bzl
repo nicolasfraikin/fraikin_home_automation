@@ -66,4 +66,9 @@ INTERFACE_DEFINITIONS = [
         "DataTypeDefinition": "module_status.json",
         "InterfaceConfig": "RaspiToApp",
     },
+    {
+        "Name": "people_at_home_interface",
+        "DataTypeDefinition": "people_at_home.json",
+        "InterfaceConfig": "RaspiToApp",
+    },
 ]

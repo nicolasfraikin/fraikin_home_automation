@@ -16,6 +16,7 @@ public class BackgroundService extends Service {
     private boolean dishwasherRunPreviouslyRequested;
     private boolean firstExecution=true;
     private static Context activityContext;
+    private String peoplePreviouslyAtHome;
 
     public static void setActivityContext(Context context) {
         activityContext = context;
@@ -68,10 +69,18 @@ public class BackgroundService extends Service {
                 }
                 if (!firstExecution && dishwasherRunPreviouslyRequested && !ScheduledSmartHomeRunsInterface.dishwasher_run_scheduled) {
                     MainActivity.sendNotification(activityContext, "Smart Home", "Just started the dishwasher for you :)", "SmartHomeFragment");
-                    MainActivity.sendWebsocketMessage(RequestedSmartHomeRunsInterface.get_message_string(false, "None"));
+                }
+                if (!firstExecution && PeopleAtHomeInterface.people_at_home != peoplePreviouslyAtHome && peoplePreviouslyAtHome != null) {
+                    String[] currentPeople = PeopleAtHomeInterface.people_at_home.split(";");
+                    for (String currentPerson : currentPeople) {
+                        if (!peoplePreviouslyAtHome.contains(currentPerson)) {
+                            MainActivity.sendNotification(activityContext, "Welcome", currentPerson + " is home!", "StatusFragment");
+                        }
+                    }
                 }
                 firstExecution=false;
                 updateDishwasherPreviousRun();
+                updatePeoplePreviouslyAtHome();
 
             }
         });
@@ -83,5 +92,11 @@ public class BackgroundService extends Service {
             dishwasherRunPreviouslyRequested = ScheduledSmartHomeRunsInterface.dishwasher_run_scheduled;
         }
     }
+    private void updatePeoplePreviouslyAtHome() {
+        if (MyWebSocketClient.isConnected) {
+            peoplePreviouslyAtHome = PeopleAtHomeInterface.people_at_home;
+        }
+    }
+
 
 }

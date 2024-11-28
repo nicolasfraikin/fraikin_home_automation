@@ -47,6 +47,7 @@ public class MyWebSocketClient extends WebSocketListener {
         VacuumRobotStatusInterface.receive_message(text);
         ChristmasLightStatusInterface.receive_message(text);
         ModulesStatiInterface.receive_message(text);
+        PeopleAtHomeInterface.receive_message(text);
     }
 
 //     @Override

@@ -29,6 +29,11 @@
         "Type": "bool",
         "VariableName": "electricity_price_watcher_okay",
         "DefaultValue": "false"
+      },
+      {
+        "Type": "bool",
+        "VariableName": "people_at_home_checker_okay",
+        "DefaultValue": "false"
       }
     ],
     "EnumDefinitions": [

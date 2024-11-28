@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import android.os.Handler;
 
@@ -30,6 +31,8 @@ public class StatusFragment extends Fragment {
         handleVacuumRobotManagerStatus();
         handleChristmasLightManagerStatus();
         handleElectricityPriceWatcherStatus();
+        handlePeopleAtHomeCheckerStatus();
+        handleWhoIsHomeStatus();
     }
 
     private void handleNetworkStatus() {
@@ -123,6 +126,37 @@ public class StatusFragment extends Fragment {
                     } else {
                         status.setImageResource(R.drawable.red_circle);
                     }
+                }
+            };
+            handler.postDelayed(r, 0000);
+    }
+
+    private void handlePeopleAtHomeCheckerStatus() {
+        ImageView status = getView().findViewById(R.id.people_at_home_checker);
+        Handler handler =new Handler();
+        final Runnable r = new Runnable() {
+                public void run() {
+                    handler.postDelayed(this, 1000);
+                    if (ModulesStatiInterface.people_at_home_checker_okay) {
+                        status.setImageResource(R.drawable.green_circle);
+                    } else {
+                        status.setImageResource(R.drawable.red_circle);
+                    }
+                }
+            };
+            handler.postDelayed(r, 0000);
+    }
+
+    private void handleWhoIsHomeStatus() {
+        TextView whoIsHome = getView().findViewById(R.id.who_is_home);
+        TextView whoIsHomeUpdated = getView().findViewById(R.id.who_is_home_updated);
+        Handler handler =new Handler();
+        final Runnable r = new Runnable() {
+                public void run() {
+                    handler.postDelayed(this, 1000);
+                    String who_is_home = PeopleAtHomeInterface.people_at_home.replaceAll(";","\n");
+                    whoIsHome.setText(who_is_home);
+                    whoIsHomeUpdated.setText("Updated : " + PeopleAtHomeInterface.update_time);
                 }
             };
             handler.postDelayed(r, 0000);

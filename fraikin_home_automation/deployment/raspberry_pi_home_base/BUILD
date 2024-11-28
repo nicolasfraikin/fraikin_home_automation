@@ -6,7 +6,8 @@ DEPLOYED_MODULES = [
     "danbolig_house_watcher",
     "smart_home_device_manager",
     "vacuum_robot_manager",
-    "christmas_light_manager",
+    #    "christmas_light_manager",
+    "people_at_home_checker",
     "electricity_price_watcher",
 ]
 

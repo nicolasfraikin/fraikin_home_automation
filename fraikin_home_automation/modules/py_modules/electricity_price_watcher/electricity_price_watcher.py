@@ -23,7 +23,6 @@ class ElectricityPriceWatcher(IModule):
         pass
 
     def step(self):
-        print("STEP ELECTRICITY WATCHER!!!")
         self.update_elctricity_prices()
 
     def update_elctricity_prices(self):
@@ -53,7 +52,6 @@ class ElectricityPriceWatcher(IModule):
 
         element = driver.find_element(By.ID, "chart-component")
         price_info_from_html = element.get_attribute("data-chart")
-        print("GOT THE PRICE INFO")
         return price_info_from_html
 
     def get_days_times_and_prices(self, price_info_from_html):
@@ -114,4 +112,3 @@ class ElectricityPriceWatcher(IModule):
     def write_to_interface(self, string_formatted_time_price_info, current_time):
         self.electricity_prices.cheapest_prices = ";".join(string_formatted_time_price_info)
         self.electricity_prices.update_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
-        print("CHEAPEST ELECTRICITY PRICES = " + str(self.electricity_prices.cheapest_prices))

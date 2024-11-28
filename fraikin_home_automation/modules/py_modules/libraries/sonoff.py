@@ -180,6 +180,7 @@ class Sonoff():
         #print (r.status_code)
         #print (r.content)
         if 'error' in resp and resp['error'] in [HTTP_BAD_REQUEST, HTTP_UNAUTHORIZED]:
+            print("Error is " + str(resp))
             # @IMPROVE add maybe a service call / switch to deactivate sonoff component
             if self.is_grace_period():
                 print("Grace period activated!")
@@ -320,7 +321,6 @@ class Sonoff():
         self._ws.send(json.dumps(payload))
         wsresp = self._ws.recv()
         #_LOGGER.debug("switch socket: %s", wsresp)
-        #print (wsresp)        
         self._ws.close() # no need to keep websocket open (for now)
         self._ws = None
 
