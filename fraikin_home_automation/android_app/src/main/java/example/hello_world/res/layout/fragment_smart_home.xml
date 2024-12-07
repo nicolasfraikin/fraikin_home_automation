@@ -86,6 +86,82 @@
                 android:textColor="@color/color_on_bazel_green"
                 android:layout_marginTop="16dp"
                 android:text="  Schedule run  "/>
+        <!--    Washing machine -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22sp"
+                android:layout_gravity="center_horizontal"
+                android:text="Washing machine"
+                android:textColor="@color/bazel_white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="22sp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14sp"
+                android:text="Scheduled runs:"
+                android:textColor="@color/bazel_white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="18sp"/>
+        <TextView
+                android:id="@+id/status_washing_machine_runs_scheduled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14sp"
+                android:text="No washing machine runs scheduled"
+                android:textColor="#00CC00"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="18sp"/>
+        <Button
+                android:id="@+id/scheduleWashingMachineRun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/bazel_green"
+                android:textColor="@color/color_on_bazel_green"
+                android:layout_marginTop="16dp"
+                android:text="  Schedule run  "/>
+        <!--    Dryer -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22sp"
+                android:layout_gravity="center_horizontal"
+                android:text="Dryer"
+                android:textColor="@color/bazel_white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="22sp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14sp"
+                android:text="Scheduled runs:"
+                android:textColor="@color/bazel_white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="18sp"/>
+        <TextView
+                android:id="@+id/status_dryer_runs_scheduled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14sp"
+                android:text="No dryer runs scheduled"
+                android:textColor="#00CC00"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="18sp"/>
+        <Button
+                android:id="@+id/scheduleDryerRun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/bazel_green"
+                android:textColor="@color/color_on_bazel_green"
+                android:layout_marginTop="16dp"
+                android:text="  Schedule run  "/>
         <!--    Vacuum Robot -->
         <TextView
                 android:layout_width="wrap_content"

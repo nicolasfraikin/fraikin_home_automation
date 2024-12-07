@@ -9,6 +9,11 @@
         "Type": "Request",
         "VariableName": "request",
         "DefaultValue": "Request::kInvalid"
+      },
+      {
+        "Type": "uint8_t",
+        "VariableName": "message_id",
+        "DefaultValue": "0"
       }
     ],
     "EnumDefinitions": [

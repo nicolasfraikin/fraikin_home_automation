@@ -14,6 +14,26 @@
         "Type": "string",
         "VariableName": "scheduled_dishwasher_run_time",
         "DefaultValue": "None"
+      },
+      {
+        "Type": "bool",
+        "VariableName": "washing_machine_run_scheduled",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "string",
+        "VariableName": "scheduled_washing_machine_run_time",
+        "DefaultValue": "None"
+      },
+      {
+        "Type": "bool",
+        "VariableName": "dryer_run_scheduled",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "string",
+        "VariableName": "scheduled_dryer_run_time",
+        "DefaultValue": "None"
       }
     ],
     "EnumDefinitions": [

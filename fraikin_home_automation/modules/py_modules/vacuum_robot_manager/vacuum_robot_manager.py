@@ -32,17 +32,17 @@ class VacuumRobotManager(IModule):
         self.update_status()
 
     def check_if_robot_should_be_started(self):
-        if Request(self.previous_robot_requests.request) != Request(Request.kStartRobot) and Request(self.robot_requests.request) == Request.kStartRobot:
+        if self.previous_robot_requests.message_id != self.robot_requests.message_id and Request(self.robot_requests.request) == Request.kStartRobot:
             print("Start vacuum robot")
             self.robot.start()
 
     def check_if_robot_should_be_stopped(self):
-        if Request(self.previous_robot_requests.request) != Request.kStopRobot and Request(self.robot_requests.request) == Request.kStopRobot:
+        if self.previous_robot_requests.message_id != self.robot_requests.message_id and Request(self.robot_requests.request) == Request.kStopRobot:
             print("Stop vacuum robot")
             self.robot.home()
 
     def check_if_robot_run_when_people_leave_should_be_triggered(self):
-        if Request(self.previous_robot_requests.request) != Request.kStartAfterPeopleInHouseLeave and Request(self.robot_requests.request) == Request.kStartAfterPeopleInHouseLeave:
+        if self.previous_robot_requests.message_id != self.robot_requests.message_id and Request(self.robot_requests.request) == Request.kStartAfterPeopleInHouseLeave:
             print("Start vacuum robot after people leave")
             self.start_robot_after_people_leave = True
         if self.start_robot_after_people_leave and len(self.people_at_home.people_at_home) == 0:
@@ -52,6 +52,7 @@ class VacuumRobotManager(IModule):
         if self.start_robot_timer_after_people_leave is not None and time.time() - self.start_robot_timer_after_people_leave > WAIT_TIME_AFTER_PEOPLE_LEAVE_TO_START_ROBOT:
             print("Start robot")
             self.robot.start()
+            self.start_robot_timer_after_people_leave = None
 
     def update_status(self):
         self.robot_status.status = self.robot.status().state

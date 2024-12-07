@@ -6,10 +6,13 @@ import subprocess
 import datetime
 
 IP_ADDRESSES_MATCHER = {
-    "192.168.1.111" : "Nico",
-    "192.168.1.103" : "Irrelevant",
+    "192.168.1.103" : "Kristina",
+    "192.168.1.105" : "Nico",
     "192.168.1.1" : "Irrelevant",
     "192.168.1.107" : "Irrelevant",
+    "192.168.1.111" : "Irrelevant",
+    "192.168.1.100" : "Irrelevant",
+    "192.168.1.113" : "Irrelevant",
 }
 
 class PeopleAtHomeChecker(IModule):
@@ -17,7 +20,7 @@ class PeopleAtHomeChecker(IModule):
         self.people_at_home = PeopleAtHomeInterfaceDataType()
 
     def get_cycle_time(self):
-        return 1800
+        return 300
     def init(self):
         pass
 
@@ -35,7 +38,7 @@ class PeopleAtHomeChecker(IModule):
         self.people_at_home.update_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def get_currently_present_ip_adresses(self):
-        ip_addresses = subprocess.check_output('arp -a | grep wlan0', shell=True, text=True)
+        ip_addresses = subprocess.check_output('arp -a', shell=True, text=True)
         ip_addresses = ip_addresses.split("\n")
         ip_addresses = [adress.split("(")[1].split(")")[0] for adress in ip_addresses if len(adress) > 0]
         online_adresses = []
@@ -43,7 +46,7 @@ class PeopleAtHomeChecker(IModule):
             if (address in IP_ADDRESSES_MATCHER.keys() and not "Irrelevant" in IP_ADDRESSES_MATCHER[address]) or address not in IP_ADDRESSES_MATCHER.keys():
                 if self.ping(address):
                     online_adresses.append(address)
-        return online_adresses
+        return list(set(online_adresses))
 
     def ping(self, host):
         command = ['ping', '-c', '1', host]

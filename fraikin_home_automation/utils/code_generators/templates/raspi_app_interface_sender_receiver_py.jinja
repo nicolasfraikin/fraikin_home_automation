@@ -30,7 +30,7 @@ class AppInterfaceSenderReceiver(IModule):
 
     async def handle_message(self, websocket):
         async for message in websocket:
-            # print("Received " + str(message))
+            print("Received " + str(message))
             self.process_message(message)
             {% for interface_name_pascal in InterfaceNamePascalCaseSend %}
             # print("Send {{interface_name_pascal}}")
@@ -53,7 +53,7 @@ class AppInterfaceSenderReceiver(IModule):
         interface_name = message.split(" :")[0]
         if interface_name not in self.expected_recieve_interfaces:
             return
-        # print(f"Received interface message from client: {message}")
+        print(f"Received interface message from client: {message}")
         interface_values = message.split(" :")[1].split(" | ")
         interface_values  = [entry.replace(" ","").replace("|","") for entry in interface_values]
         self.process_interface(interface_name, interface_values)

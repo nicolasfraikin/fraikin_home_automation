@@ -96,23 +96,6 @@
                 android:layout_marginTop="11sp"
                 android:src="@drawable/red_circle"
                 android:contentDescription="Status VacuumRobotManager"/>
-        <!--    ChristmasLightManager-->
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22sp"
-                android:text="ChristmasLightManager"
-                android:textColor="@color/bazel_white"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textSize="18sp"/>
-        <ImageView
-                android:id="@+id/christmas_light_manager"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="11sp"
-                android:src="@drawable/red_circle"
-                android:contentDescription="Status ChristmasLightManager"/>
         <!--    ElectricityPriceWatcher-->
         <TextView
                 android:layout_width="wrap_content"

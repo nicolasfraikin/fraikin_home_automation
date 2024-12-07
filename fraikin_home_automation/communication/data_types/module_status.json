@@ -22,11 +22,6 @@
       },
       {
         "Type": "bool",
-        "VariableName": "christmas_light_manager_okay",
-        "DefaultValue": "false"
-      },
-      {
-        "Type": "bool",
         "VariableName": "electricity_price_watcher_okay",
         "DefaultValue": "false"
       },

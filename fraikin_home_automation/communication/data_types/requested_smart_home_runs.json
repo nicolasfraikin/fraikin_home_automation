@@ -16,6 +16,26 @@
         "DefaultValue": "None"
       },
       {
+        "Type": "bool",
+        "VariableName": "washing_machine_run_requested",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "string",
+        "VariableName": "requested_washing_machine_run_time",
+        "DefaultValue": "None"
+      },
+      {
+        "Type": "bool",
+        "VariableName": "dryer_run_requested",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "string",
+        "VariableName": "requested_dryer_run_time",
+        "DefaultValue": "None"
+      },
+      {
         "Type": "uint8_t",
         "VariableName": "message_id",
         "DefaultValue": "0"

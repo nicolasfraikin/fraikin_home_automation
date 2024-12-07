@@ -29,7 +29,6 @@ public class StatusFragment extends Fragment {
         handleDanboligHouseWatcherStatus();
         handleSmartHomeDeviceManagerStatus();
         handleVacuumRobotManagerStatus();
-        handleChristmasLightManagerStatus();
         handleElectricityPriceWatcherStatus();
         handlePeopleAtHomeCheckerStatus();
         handleWhoIsHomeStatus();
@@ -90,22 +89,6 @@ public class StatusFragment extends Fragment {
                 public void run() {
                     handler.postDelayed(this, 1000);
                     if (ModulesStatiInterface.vacuum_robot_manager_okay) {
-                        status.setImageResource(R.drawable.green_circle);
-                    } else {
-                        status.setImageResource(R.drawable.red_circle);
-                    }
-                }
-            };
-            handler.postDelayed(r, 0000);
-    }
-
-    private void handleChristmasLightManagerStatus() {
-        ImageView status = getView().findViewById(R.id.christmas_light_manager);
-        Handler handler =new Handler();
-        final Runnable r = new Runnable() {
-                public void run() {
-                    handler.postDelayed(this, 1000);
-                    if (ModulesStatiInterface.christmas_light_manager_okay) {
                         status.setImageResource(R.drawable.green_circle);
                     } else {
                         status.setImageResource(R.drawable.red_circle);

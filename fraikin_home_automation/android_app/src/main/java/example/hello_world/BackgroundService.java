@@ -14,6 +14,8 @@ public class BackgroundService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
     private boolean dishwasherRunPreviouslyRequested;
+    private boolean washingMachineRunPreviouslyRequested;
+    private boolean dryerRunPreviouslyRequested;
     private boolean firstExecution=true;
     private static Context activityContext;
     private String peoplePreviouslyAtHome;
@@ -67,8 +69,20 @@ public class BackgroundService extends Service {
                 if (!firstExecution && !dishwasherRunPreviouslyRequested && ScheduledSmartHomeRunsInterface.dishwasher_run_scheduled) {
                     MainActivity.sendNotification(activityContext, "Smart Home", "New dishwasher run scheduled at " +  ScheduledSmartHomeRunsInterface.scheduled_dishwasher_run_time, "SmartHomeFragment");
                 }
+                if (!firstExecution && !washingMachineRunPreviouslyRequested && ScheduledSmartHomeRunsInterface.washing_machine_run_scheduled) {
+                    MainActivity.sendNotification(activityContext, "Smart Home", "New washing machin run scheduled at " +  ScheduledSmartHomeRunsInterface.scheduled_washing_machine_run_time, "SmartHomeFragment");
+                }
+                if (!firstExecution && !dryerRunPreviouslyRequested && ScheduledSmartHomeRunsInterface.dryer_run_scheduled) {
+                    MainActivity.sendNotification(activityContext, "Smart Home", "New dryer run scheduled at " +  ScheduledSmartHomeRunsInterface.scheduled_dryer_run_time, "SmartHomeFragment");
+                }
                 if (!firstExecution && dishwasherRunPreviouslyRequested && !ScheduledSmartHomeRunsInterface.dishwasher_run_scheduled) {
                     MainActivity.sendNotification(activityContext, "Smart Home", "Just started the dishwasher for you :)", "SmartHomeFragment");
+                }
+                if (!firstExecution && washingMachineRunPreviouslyRequested && !ScheduledSmartHomeRunsInterface.washing_machine_run_scheduled) {
+                    MainActivity.sendNotification(activityContext, "Smart Home", "Just started the washing machine for you :)", "SmartHomeFragment");
+                }
+                if (!firstExecution && dryerRunPreviouslyRequested && !ScheduledSmartHomeRunsInterface.dryer_run_scheduled) {
+                    MainActivity.sendNotification(activityContext, "Smart Home", "Just started the dryer for you :)", "SmartHomeFragment");
                 }
                 if (!firstExecution && PeopleAtHomeInterface.people_at_home != peoplePreviouslyAtHome && peoplePreviouslyAtHome != null) {
                     String[] currentPeople = PeopleAtHomeInterface.people_at_home.split(";");
@@ -80,6 +94,8 @@ public class BackgroundService extends Service {
                 }
                 firstExecution=false;
                 updateDishwasherPreviousRun();
+                updateWashingMachinePreviousRun();
+                updateDryerPreviousRun();
                 updatePeoplePreviouslyAtHome();
 
             }
@@ -90,6 +106,16 @@ public class BackgroundService extends Service {
     private void updateDishwasherPreviousRun() {
         if (MyWebSocketClient.isConnected) {
             dishwasherRunPreviouslyRequested = ScheduledSmartHomeRunsInterface.dishwasher_run_scheduled;
+        }
+    }
+    private void updateWashingMachinePreviousRun() {
+        if (MyWebSocketClient.isConnected) {
+            washingMachineRunPreviouslyRequested = ScheduledSmartHomeRunsInterface.washing_machine_run_scheduled;
+        }
+    }
+    private void updateDryerPreviousRun() {
+        if (MyWebSocketClient.isConnected) {
+            dryerRunPreviouslyRequested = ScheduledSmartHomeRunsInterface.dryer_run_scheduled;
         }
     }
     private void updatePeoplePreviouslyAtHome() {
