@@ -71,4 +71,9 @@ INTERFACE_DEFINITIONS = [
         "DataTypeDefinition": "people_at_home.json",
         "InterfaceConfig": "RaspiToApp",
     },
+    {
+        "Name": "light_chain_request_interface",
+        "DataTypeDefinition": "light_chain_request.json",
+        "InterfaceConfig": "AppToRaspi",
+    },
 ]

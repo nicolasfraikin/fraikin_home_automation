@@ -259,6 +259,31 @@
                     android:text="  Turn Off  "/>
 
         </LinearLayout>
+        <!--    Outside Christmas lights -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22sp"
+                android:layout_gravity="center_horizontal"
+                android:text="Outside Lightchain"
+                android:textColor="@color/bazel_white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="22sp"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center"
+                  android:padding="16dp">
+        <Button
+                android:id="@+id/outsideLightChainPress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/bazel_green"
+                android:textColor="@color/color_on_bazel_green"
+                android:text="  Press button  "/>
+    </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

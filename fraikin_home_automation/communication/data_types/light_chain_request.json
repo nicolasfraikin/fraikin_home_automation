@@ -1,0 +1,22 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "LightChainRequest",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "bool",
+        "VariableName": "press_button",
+        "DefaultValue": "false"
+      },
+      {
+        "Type": "uint8_t",
+        "VariableName": "message_id",
+        "DefaultValue": "0"
+      }
+    ],
+    "EnumDefinitions": [
+    ]
+  }
+}

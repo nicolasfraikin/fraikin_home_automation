@@ -12,6 +12,9 @@ from fraikin_home_automation.communication.interfaces.christmas_light_request_in
     ChristmasLightRequestInterface
 from fraikin_home_automation.communication.interfaces.christmas_light_status_interface import \
     ChristmasLightStatusInterface
+# Lights outside
+from fraikin_home_automation.communication.interfaces.light_chain_request_interface import \
+    LightChainRequestInterface, LightChainRequestInterfaceDataType
 
 from fraikin_home_automation.common.py_base_classes.i_module import IModule
 from fraikin_home_automation.modules.py_modules.libraries.sonoff import Sonoff
@@ -36,6 +39,9 @@ class SmartHomeDeviceManager(IModule):
         self.light_request = ChristmasLightRequest()
         self.previous_light_request = ChristmasLightRequest()
         self.light_status = ChristmasLightStatus()
+        # Lights outside
+        self.lights_outside_request = LightChainRequestInterfaceDataType()
+        self.previous_lights_outside_request = LightChainRequestInterfaceDataType()
 
     def init(self):
         pass
@@ -59,6 +65,12 @@ class SmartHomeDeviceManager(IModule):
         self.check_if_light_should_be_turned_on()
         self.check_if_light_should_be_turned_off()
         self.update_light_status()
+        # Christmas lights outside hack
+        self.check_if_outside_lights_should_be_pressed()
+
+    def check_if_outside_lights_should_be_pressed(self):
+        if self.lights_outside_request.press_button and self.lights_outside_request.message_id != self.previous_lights_outside_request.message_id:
+            os.system('ssh nicolasfraikin@raspberrypiout.local "touch press_button"')
 
     def update_light_status(self):
         match self.get_light_status():
@@ -274,10 +286,12 @@ class SmartHomeDeviceManager(IModule):
     def update_interface_subscription(self):
         self.previous_requested_runs = self.requested_runs
         self.requested_runs = RequestedSmartHomeRunsInterface.get_instance().get_data()
-        print("Washing machine requestefd = " + str(self.requested_runs.washing_machine_run_requested))
         # Christmas lights
         self.previous_light_request = self.light_request
         self.light_request = ChristmasLightRequestInterface.get_instance().get_data()
+        # Lights outside
+        self.previous_lights_outside_request = self.lights_outside_request
+        self.lights_outside_request = LightChainRequestInterface.get_instance().get_data()
 
     def update_interface_publishing(self):
         ScheduledSmartHomeRunsInterface.get_instance().set_data(self.scheduled_runs)

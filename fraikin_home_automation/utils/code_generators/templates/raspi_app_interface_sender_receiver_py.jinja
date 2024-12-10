@@ -30,7 +30,7 @@ class AppInterfaceSenderReceiver(IModule):
 
     async def handle_message(self, websocket):
         async for message in websocket:
-            print("Received " + str(message))
+            #print("Received " + str(message))
             self.process_message(message)
             {% for interface_name_pascal in InterfaceNamePascalCaseSend %}
             # print("Send {{interface_name_pascal}}")

@@ -13,6 +13,7 @@ IP_ADDRESSES_MATCHER = {
     "192.168.1.111" : "Irrelevant",
     "192.168.1.100" : "Irrelevant",
     "192.168.1.113" : "Irrelevant",
+    "192.168.1.116" : "Irrelevant",
 }
 
 class PeopleAtHomeChecker(IModule):

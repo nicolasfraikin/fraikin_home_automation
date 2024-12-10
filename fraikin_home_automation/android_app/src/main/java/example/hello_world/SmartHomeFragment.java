@@ -53,6 +53,7 @@ public class SmartHomeFragment extends Fragment {
         handleVacuumRobotStatus();
         handleVacuumRobotStartStop();
         handleChristmasLights();
+        handleOutsideChristmasLights();
     }
 
     private void handleScheduledDishwasherRuns() {
@@ -182,6 +183,19 @@ public class SmartHomeFragment extends Fragment {
                     }
                 };
                 handler.postDelayed(r, 0000);
+    }
+
+    private void handleOutsideChristmasLights() {
+        Button lightsButton = getView().findViewById(R.id.outsideLightChainPress);
+        lightsButton.setOnClickListener(v -> pressOutsideLight());
+    }
+
+    private void pressOutsideLight() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            mainActivity.sendWebsocketMessage(LightChainRequestInterface.get_message_string(true, rand.nextInt(100)));
+        }
+        Toast.makeText(requireContext(), "Press outside light chain button", Toast.LENGTH_SHORT).show();
     }
 
     private void turnOnLight() {
