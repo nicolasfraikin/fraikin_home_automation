@@ -1,0 +1,23 @@
+#include "{{FileNameLowerCase}}.h"
+{% for interface_name in InterfaceNameSnakeCase %}
+#include "{{interface_name}}.h"
+{% endfor %}
+
+InterfaceBluetoothSender::InterfaceBluetoothSender(NeoSWSerial& bluetooth) : bluetooth_{bluetooth} {}
+void InterfaceBluetoothSender::UpdateInterfaceSubscription() {}
+void InterfaceBluetoothSender::UpdateInterfacePublishing() {}
+
+void InterfaceBluetoothSender::Init() {}
+
+void InterfaceBluetoothSender::Step() {
+{% for interface_name in InterfaceNamePascalCase %}
+    if ({{interface_name}}::send_on_change_data) {
+
+    }
+    SendBluetoothString({{interface_name}}::GetInterfaceCommunicationString());
+{% endfor %}
+}
+
+void InterfaceBluetoothSender::SendBluetoothString(const String& message) {
+    //TODO: This still needs to be implemented!
+}

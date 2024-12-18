@@ -1,0 +1,29 @@
+#include "{{FileNameLowerCase}}.h"
+{% for interface_name in InterfaceNameSnakeCase %}
+#include "{{interface_name}}.h"
+{% endfor %}
+
+InterfaceFunkSender::InterfaceFunkSender() {}
+void InterfaceFunkSender::UpdateInterfaceSubscription() {}
+void InterfaceFunkSender::UpdateInterfacePublishing() {}
+
+void InterfaceFunkSender::Init() {
+    vw_set_tx_pin(12); // Pin connected to the DATA pin of the transmitter
+    vw_setup(2000);    // Bits per second
+}
+
+void InterfaceFunkSender::Step() {
+{% for interface_name in InterfaceNamePascalCase %}
+    if ({{interface_name}}::GetSendOnChangeDataRaw()) {
+        SendFunkMessage({{interface_name}}::GetInterfaceCommunicationString());
+    }
+    //TODO: Enable this only if a sender is connected
+{% endfor %}
+}
+
+void InterfaceFunkSender::SendFunkMessage(const String& communication_string) {
+    Log("Send message " + communication_string);
+    const char *msg = communication_string.c_str();
+    vw_send((uint8_t *)msg, strlen(msg)); // Send the message
+    vw_wait_tx(); // Wait until the message is sent
+}

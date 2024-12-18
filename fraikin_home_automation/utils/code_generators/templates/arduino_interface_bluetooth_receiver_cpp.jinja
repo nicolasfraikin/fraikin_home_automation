@@ -1,0 +1,71 @@
+#include "{{FileNameLowerCase}}.h"
+{% for interface_name in InterfaceNamesSnakeCase %}
+#include "{{interface_name}}.h"
+{% endfor %}
+
+InterfaceBluetoothReceiver::InterfaceBluetoothReceiver(NeoSWSerial& bluetooth) : bluetooth_{bluetooth} {}
+
+void InterfaceBluetoothReceiver::UpdateInterfaceSubscription() {}
+void InterfaceBluetoothReceiver::UpdateInterfacePublishing() {}
+
+void InterfaceBluetoothReceiver::Init() {}
+
+void InterfaceBluetoothReceiver::Step() {
+    unsigned long start_time = millis();
+    String data = "";
+    while (!BluetoothReceptionTimedOut(start_time)) {
+        if (bluetooth_.available()) {
+            char c = bluetooth_.read();
+            data += c;
+            if (c == '+') {
+                Log("Received " + c);
+                ProcessData(data);
+                data = "";
+            }
+        }
+    }
+}
+
+bool InterfaceBluetoothReceiver::BluetoothReceptionTimedOut(const unsigned long& start_time) {
+    return (millis() - start_time) > 50;
+}
+
+void InterfaceBluetoothReceiver::ProcessData(const String& message) {
+    if (!StringContainsSubstring(message, " : ") || !StringContainsSubstring(message, "|")) {
+        return;
+    }
+    String interface_name = message.substring(0,message.indexOf(": "));
+    interface_name.trim();
+    const String interface_values = message.substring(message.indexOf(": ")+2,message.length());
+    //Log("interface_values=" + interface_values);
+    ProcessInterface(interface_name,interface_values);
+}
+
+void InterfaceBluetoothReceiver::ProcessInterface(const String& interface_name, const String& interface_values) {
+    {% for interface_name_short, interface_name in InterfaceNamesPascalCase %}
+    if (interface_name.equals("{{interface_name_short}}")) {
+        Send{{interface_name}}Data(interface_values);
+        return;
+    }
+    {% endfor %}
+}
+
+{% for interface_name, data_type_variable_assignments in InterfaceNamesAndDataTypes %}
+void InterfaceBluetoothReceiver::Send{{interface_name}}Data(const String& interface_values) {
+    String str = interface_values;
+    String data_fields[{{data_type_variable_assignments|length}}] = {""};
+    for (uint8_t idx=0; idx< {{data_type_variable_assignments|length}}; idx++) {
+        data_fields[idx] = str.substring(str.indexOf("=")+1, str.indexOf("|"));
+        str = str.substring(str.indexOf("|")+1, str.length());
+    }
+    {{interface_name}}::DataType data{};
+    {% for var_assignments in data_type_variable_assignments %}
+    {{var_assignments}};{% endfor %}
+    {{interface_name}}::SetData(data);
+
+}
+{% endfor %}
+
+bool InterfaceBluetoothReceiver::StringContainsSubstring(const String& main_string, const String& sub_string) {
+    return main_string.indexOf(sub_string) != -1;
+}

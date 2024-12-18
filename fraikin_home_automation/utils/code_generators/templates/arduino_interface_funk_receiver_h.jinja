@@ -1,0 +1,25 @@
+#ifndef {{FileNameUpperCase}}
+#define {{FileNameUpperCase}}
+
+#include "module_base.h"
+#include <VirtualWire.h>
+
+class InterfaceFunkReceiver : public ModuleBase {
+  public:
+    InterfaceFunkReceiver();
+    void Init() final;
+    void Step() final;
+    void UpdateInterfaceSubscription() final;
+    void UpdateInterfacePublishing() final;
+
+private:
+    void ProcessData(const String& message);
+    void ProcessInterface(const String& interface_name, const String& interface_values);
+    {% for interface_name_short, interface_name in InterfaceNamesPascalCase %}
+    void Send{{interface_name}}Data(const String& interface_values);
+    {% endfor %}
+    bool StringContainsSubstring(const String& main_string, const String& sub_string);
+    bool FunkReceptionTimedOut(const unsigned long& start_time);
+
+};
+#endif // {{FileNameUpperCase}}

@@ -21,7 +21,11 @@ public class {{InterfaceNamePascalCase}} {
     public static String get_message_string({% for type, name, default_init in DataTypeMembers6 %}{{type}} {{name}}{% endfor %}) {
         set_values({% for type, name, default_init in DataTypeMembers7 %}{{name}}{% endfor %});
 
+        {% if ShortNameDefined %}
+        String out_string = "{{InterfaceShortNamePascalCase}}";
+        {% else %}
         String out_string = "{{InterfaceNamePascalCase}}";
+        {% endif %}
         out_string += " : ";
         {% for is_enum, name, default_init in DataTypeMembers4 %}
         out_string += "{{name}}=";
@@ -33,7 +37,6 @@ public class {{InterfaceNamePascalCase}} {
         out_string += " | ";
         {% endfor %}
 
-        //new TelegramSendClient().execute(out_string);
         return replace_patterns(out_string);
         
     }
@@ -44,11 +47,15 @@ public class {{InterfaceNamePascalCase}} {
 
     public static void receive_message(String receive_string) {
         Log.v("AppInterface", "Receive string is " + receive_string);
-        if (!receive_string.contains("{{InterfaceNamePascalCase}}")) {
+        {% if ShortNameDefined %}
+        if (!receive_string.contains("{{InterfaceShortNamePascalCase}} :")) {
+        {% else %}
+        if (!receive_string.contains("{{InterfaceNamePascalCase}} :")) {
+        {% endif %}
             return;
         }
 
-        String[] interface_values = receive_string.split("Interface : ")[1].split(" | ");
+        String[] interface_values = receive_string.split("{{InterfaceNamePascalCase}} : ")[1].split(" | ");
         String[] new_interface_values = interface_values;
         int array_size = 0;
         for (int i = 0; i < interface_values.length; i++) {

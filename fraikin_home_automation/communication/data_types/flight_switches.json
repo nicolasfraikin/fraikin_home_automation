@@ -1,0 +1,28 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "FlightSwitches",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "uint8_t",
+        "VariableName": "v",
+        "DefaultValue": "0"
+      }
+    ],
+    "EnumDefinitions": [
+      {
+        "EnumName": "Switch",
+        "EnumFields": [
+          "kWheels",
+          "kTurbine",
+          "kLooping",
+          "kCheckup",
+          "kSteering",
+          "kLights"
+        ]
+      }
+    ]
+  }
+}

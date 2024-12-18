@@ -13,7 +13,11 @@ class {{InterfaceNamePascalCase}} : public InterfaceBase<{{InterfaceNamePascalCa
     using DataType = {{DataTypeNamePascalCase}};
 
     static String GetInterfaceCommunicationString() {
+        {% if ShortNameDefined %}
+        String out_string = "{{InterfaceShortNamePascalCase}}";
+        {% else %}
         String out_string = "{{InterfaceNamePascalCase}}";
+        {% endif %}
         out_string += " : ";
         {% for data_type_variable in DataTypeVariables %}
         out_string += "{{data_type_variable}}=";
@@ -22,6 +26,16 @@ class {{InterfaceNamePascalCase}} : public InterfaceBase<{{InterfaceNamePascalCa
         {% endfor %}
         return out_string;
     }
+
+    static void SendOnChangeData(const bool send_on_change_data) {
+        GetSendOnChangeDataRaw() = send_on_change_data;
+    }
+
+    static bool& GetSendOnChangeDataRaw() {
+        static bool send_on_change_data{};
+        return send_on_change_data;
+    }
+
 };
 
 #endif // {{InterfaceNameUpperCase}}_H

@@ -1,0 +1,79 @@
+#include "{{FileNameLowerCase}}.h"
+{% for interface_name in InterfaceNamesSnakeCase %}
+#include "{{interface_name}}.h"
+{% endfor %}
+
+#define MAX_BUF_LEN 20
+
+InterfaceFunkReceiver::InterfaceFunkReceiver() {}
+
+void InterfaceFunkReceiver::UpdateInterfaceSubscription() {}
+void InterfaceFunkReceiver::UpdateInterfacePublishing() {}
+
+void InterfaceFunkReceiver::Init() {
+    vw_set_rx_pin(6); // Pin connected to the DATA pin of the receiver
+    vw_setup(2000);    // Bits per second
+    vw_rx_start();     // Start the receiver
+}
+
+void InterfaceFunkReceiver::Step() {
+    unsigned long start_time = millis();
+    String data = "";
+
+    uint8_t buf[MAX_BUF_LEN];
+    uint8_t buflen = MAX_BUF_LEN;
+    while (!FunkReceptionTimedOut(start_time)) {
+        if (vw_get_message(buf, &buflen)) {
+            String message = "";
+            for (int i = 0; i < buflen; i++) {
+                message += (char)buf[i];
+            }
+            //Log("Process message " + message);
+            ProcessData(message);
+        }
+    }
+}
+
+bool InterfaceFunkReceiver::FunkReceptionTimedOut(const unsigned long& start_time) {
+    return (millis() - start_time) > 50;
+}
+
+void InterfaceFunkReceiver::ProcessData(const String& message) {
+    if (!StringContainsSubstring(message, " : ") || !StringContainsSubstring(message, "|")) {
+        return;
+    }
+    String interface_name = message.substring(0,message.indexOf(": "));
+    interface_name.trim();
+    const String interface_values = message.substring(message.indexOf(": ")+2,message.length());
+    //Log("interface_values=" + interface_values);
+    ProcessInterface(interface_name,interface_values);
+}
+
+void InterfaceFunkReceiver::ProcessInterface(const String& interface_name, const String& interface_values) {
+    {% for interface_name_short, interface_name in InterfaceNamesPascalCase %}
+    if (interface_name.equals("{{interface_name_short}}")) {
+        Send{{interface_name}}Data(interface_values);
+        return;
+    }
+    {% endfor %}
+}
+
+{% for interface_name, data_type_variable_assignments in InterfaceNamesAndDataTypes %}
+void InterfaceFunkReceiver::Send{{interface_name}}Data(const String& interface_values) {
+    String str = interface_values;
+    String data_fields[{{data_type_variable_assignments|length}}] = {""};
+    for (uint8_t idx=0; idx< {{data_type_variable_assignments|length}}; idx++) {
+        data_fields[idx] = str.substring(str.indexOf("=")+1, str.indexOf("|"));
+        str = str.substring(str.indexOf("|")+1, str.length());
+    }
+    {{interface_name}}::DataType data{};
+    {% for var_assignments in data_type_variable_assignments %}
+    {{var_assignments}};{% endfor %}
+    {{interface_name}}::SetData(data);
+
+}
+{% endfor %}
+
+bool InterfaceFunkReceiver::StringContainsSubstring(const String& main_string, const String& sub_string) {
+    return main_string.indexOf(sub_string) != -1;
+}

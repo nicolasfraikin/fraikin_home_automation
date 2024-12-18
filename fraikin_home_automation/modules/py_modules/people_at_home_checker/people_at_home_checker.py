@@ -7,7 +7,7 @@ import datetime
 
 IP_ADDRESSES_MATCHER = {
     "192.168.1.103" : "Kristina",
-    "192.168.1.105" : "Nico",
+    "192.168.1.190" : "Nico",
     "192.168.1.1" : "Irrelevant",
     "192.168.1.107" : "Irrelevant",
     "192.168.1.111" : "Irrelevant",

@@ -1,0 +1,17 @@
+{
+  "DataTypeDefinition": {
+    "IncludeStatementsCpp": [],
+    "ImportStatementsPy": [],
+    "DataTypeName": "FlightMainRotorSpeed",
+    "DataTypeType": "struct",
+    "DataTypeMembers": [
+      {
+        "Type": "uint8_t",
+        "VariableName": "v",
+        "DefaultValue": "0"
+      }
+    ],
+    "EnumDefinitions": [
+    ]
+  }
+}

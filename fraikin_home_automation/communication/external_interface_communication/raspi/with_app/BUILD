@@ -1,9 +1,9 @@
 load("//fraikin_home_automation/communication/interfaces:interface_definitions.bzl", "INTERFACE_DEFINITIONS")
 load("//fraikin_home_automation/utils/code_generators:create_raspi_app_interface_sender_receiver.bzl", "create_raspi_app_interface_sender_receiver")
 
-INTERFACE_LIST_SENDER = [interface["Name"] for interface in INTERFACE_DEFINITIONS if "ToApp" in interface["InterfaceConfig"]]
+INTERFACE_LIST_SENDER = [interface["Name"] for interface in INTERFACE_DEFINITIONS if "RaspiToApp" in interface["InterfaceConfig"]]
 
-INTERFACE_LIST_RECEIVER = [interface["Name"] for interface in INTERFACE_DEFINITIONS if "AppTo" in interface["InterfaceConfig"]]
+INTERFACE_LIST_RECEIVER = [interface["Name"] for interface in INTERFACE_DEFINITIONS if "AppToRaspi" in interface["InterfaceConfig"]]
 
 create_raspi_app_interface_sender_receiver(
     name = "interface_sender_receiver_py",

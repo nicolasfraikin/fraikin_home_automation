@@ -1,0 +1,19 @@
+#ifndef {{FileNameUpperCase}}
+#define {{FileNameUpperCase}}
+
+#include <VirtualWire.h>
+
+#include "module_base.h"
+
+class InterfaceFunkSender : public ModuleBase {
+  public:
+    InterfaceFunkSender();
+    void Init() final;
+    void Step() final;
+    void UpdateInterfaceSubscription() final;
+    void UpdateInterfacePublishing() final;
+
+private:
+    void SendFunkMessage(const String& communication_string);
+};
+#endif // {{FileNameUpperCase}}

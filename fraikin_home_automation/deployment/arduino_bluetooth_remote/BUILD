@@ -8,21 +8,23 @@ load("//fraikin_home_automation/utils:helpers.bzl", "get_deployment_deps")
 load("//fraikin_home_automation/utils/code_generators:create_arduino_deployment_core.bzl", "generate_arduino_deployment_core")
 
 DEPLOYED_MODULES = [
-    "blink",
-    "blink2",
+    "flight_control_signal_forwarder",
 ]
 
 ADDITIONAL_DEPS = [
     "//fraikin_home_automation/common/cpp_base_classes:i_module",
-    "//fraikin_home_automation/communication/external_interface_communication/arduino:interface_sender",
-    "//fraikin_home_automation/communication/external_interface_communication/arduino:interface_receiver",
+    "//fraikin_home_automation/communication/external_interface_communication/arduino:interface_bluetooth_sender",
+    "//fraikin_home_automation/communication/external_interface_communication/arduino:interface_bluetooth_receiver",
+    "//fraikin_home_automation/communication/external_interface_communication/arduino:interface_funk_sender",
+    "//fraikin_home_automation/communication/external_interface_communication/arduino:interface_funk_receiver",
 ]
 
 generate_arduino_deployment_core(
     name = "arduino_core",
     deployed_modules = DEPLOYED_MODULES,
     file_name = "arduino_core.cc",
-    use_serial_communication = True,
+    use_bluetooth_communication = True,
+    use_funk_communication = True,
 )
 
 platformio_project(
@@ -38,6 +40,10 @@ platformio_project(
     #        "board_f_cpu": "16000000L",
     #    },
     framework = "arduino",
+    lib_deps = [
+        "mikem/VirtualWire@^1.27",
+        "slashdevin/NeoSWSerial@^3.0.5",
+    ],
     platform = "atmelavr",
     deps = get_deployment_deps(DEPLOYED_MODULES, MODULES, "cpp") + ADDITIONAL_DEPS,
 )

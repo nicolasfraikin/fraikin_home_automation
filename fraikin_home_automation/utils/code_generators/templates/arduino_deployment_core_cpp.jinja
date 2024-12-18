@@ -1,30 +1,83 @@
 {% for module_name_snake_case in ModuleNameSnakeCase %}
 #include "{{module_name_snake_case}}.h"
 {% endfor %}
+{% if UseSerialCommunication %}
 #include "interface_sender.h"
 #include "interface_receiver.h"
+{% endif %}
+{% if UseBluetoothCommunication %}
+#include <NeoSWSerial.h>
+#include "interface_bluetooth_sender.h"
+#include "interface_bluetooth_receiver.h"
+NeoSWSerial bluetooth(10, 11); // RX, TX
+{% endif %}
+{% if UseFunkCommunication %}
+#include "interface_funk_sender.h"
+#include "interface_funk_receiver.h"
+{% endif %}
 
 // Communication modules
+{% if UseSerialCommunication %}
 InterfaceSender interface_sender{};
 InterfaceReceiver interface_receiver{};
+{% endif %}
+{% if UseBluetoothCommunication %}
+InterfaceBluetoothSender interface_bluetooth_sender{bluetooth};
+InterfaceBluetoothReceiver interface_bluetooth_receiver{bluetooth};
+{% endif %}
+{% if UseFunkCommunication %}
+InterfaceFunkSender interface_funk_sender{};
+InterfaceFunkReceiver interface_funk_receiver{};
+{% endif %}
+
 // Modules
 {% for module_name_pascal_case, module_name_snake_case in ModuleNames %}
 {{module_name_pascal_case}} {{module_name_snake_case}}{};
 {% endfor %}
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(250000);
 {% for module_name_snake_case in ModuleNameSnakeCase %}
     {{module_name_snake_case}}.Init();
 {% endfor %}
+
+{% if UseSerialCommunication %}
     interface_receiver.Init();
     interface_sender.Init();
+{% endif %}
+{% if UseFunkCommunication %}
+    interface_funk_receiver.Init();
+    interface_funk_sender.Init();
+{% endif %}
+{% if UseBluetoothCommunication %}
+    bluetooth.begin(9600);
+    interface_bluetooth_receiver.Init();
+    interface_bluetooth_sender.Init();
+{% endif %}
 }
 
 void loop() {
+{% if UseSerialCommunication %}
     interface_receiver.StepModule();
+{% endif %}
+{% if UseFunkCommunication %}
+    interface_funk_receiver.StepModule();
+{% endif %}
+{% if UseBluetoothCommunication %}
+    interface_bluetooth_receiver.StepModule();
+{% endif %}
+
 {% for module_name_snake_case in ModuleNameSnakeCase %}
     {{module_name_snake_case}}.StepModule();
 {% endfor %}
+
+{% if UseSerialCommunication %}
     interface_sender.StepModule();
+{% endif %}
+{% if UseFunkCommunication %}
+    interface_funk_sender.StepModule();
+{% endif %}
+{% if UseBluetoothCommunication %}
+    interface_bluetooth_sender.StepModule();
+{% endif %}
 }

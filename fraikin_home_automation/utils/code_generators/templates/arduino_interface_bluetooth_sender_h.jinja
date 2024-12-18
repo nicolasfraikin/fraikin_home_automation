@@ -1,0 +1,20 @@
+#ifndef {{FileNameUpperCase}}
+#define {{FileNameUpperCase}}
+
+#include "module_base.h"
+#include <NeoSWSerial.h>
+
+class InterfaceBluetoothSender : public ModuleBase {
+  public:
+    InterfaceBluetoothSender(NeoSWSerial& bluetooth);
+    void Init() final;
+    void Step() final;
+    void UpdateInterfaceSubscription() final;
+    void UpdateInterfacePublishing() final;
+
+private:
+    void SendBluetoothString(const String& message);
+    NeoSWSerial& bluetooth_;
+
+};
+#endif // {{FileNameUpperCase}}

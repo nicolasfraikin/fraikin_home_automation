@@ -2,6 +2,7 @@ android_library(
     name = "greeter_activity",
     srcs = [
         "BackgroundService.java",
+        "FlightControlFragment.java",
         "Greeter.java",
         "HomeFragment.java",
         "MainActivity.java",

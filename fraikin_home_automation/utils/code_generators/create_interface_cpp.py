@@ -10,7 +10,7 @@ def pascal_case(s):
     return s.replace("_", " ").title().replace(" ", "")
 
 
-def create_interface_h(output_file, template_path, interface_name, interface_data_type):
+def create_interface_h(output_file, template_path, interface_name, interface_short_name, interface_data_type):
     template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), template_path)
     env = Environment(loader=FileSystemLoader(searchpath=os.path.dirname(template_path)))
     template = env.get_template(os.path.basename(template_path))
@@ -28,6 +28,8 @@ def create_interface_h(output_file, template_path, interface_name, interface_dat
                                 data_type_description["DataTypeDefinition"]["DataTypeMembers"]]
     res["InterfaceNameUpperCase"] = interface_name.upper()
     res["InterfaceNamePascalCase"] = pascal_case(interface_name)
+    res["InterfaceShortNamePascalCase"] = interface_short_name
+    res["ShortNameDefined"] = "None" not in interface_short_name
     res["DataTypeNamePascalCase"] = pascal_case(interface_data_type)
     res["IncludeStatementDataType"] = interface_data_type + ".h"
 
@@ -42,6 +44,7 @@ if __name__ == "__main__":
     output_file = sys.argv[1]
     template_path = sys.argv[2]
     interface_name = sys.argv[3]
-    interface_data_type = sys.argv[4]
+    interface_short_name = sys.argv[4]
+    interface_data_type = sys.argv[5]
 
-    create_interface_h(output_file, template_path, interface_name, interface_data_type)
+    create_interface_h(output_file, template_path, interface_name, interface_short_name, interface_data_type)

@@ -53,6 +53,42 @@ filegroup(
 )
 
 filegroup(
+    name = "arduino_interface_bluetooth_sender",
+    srcs = [
+        "arduino_interface_bluetooth_sender_cpp.jinja",
+        "arduino_interface_bluetooth_sender_h.jinja",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "arduino_interface_bluetooth_receiver",
+    srcs = [
+        "arduino_interface_bluetooth_receiver_cpp.jinja",
+        "arduino_interface_bluetooth_receiver_h.jinja",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "arduino_interface_funk_sender",
+    srcs = [
+        "arduino_interface_funk_sender_cpp.jinja",
+        "arduino_interface_funk_sender_h.jinja",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "arduino_interface_funk_receiver",
+    srcs = [
+        "arduino_interface_funk_receiver_cpp.jinja",
+        "arduino_interface_funk_receiver_h.jinja",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
     name = "raspi_serial_interface_sender",
     srcs = [
         "raspi_serial_interface_sender_py.jinja",

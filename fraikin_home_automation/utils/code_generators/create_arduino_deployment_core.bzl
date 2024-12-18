@@ -10,7 +10,7 @@ def _generate_arduino_deployment_core_impl(ctx):
         inputs = [],
         outputs = [output_file],
         executable = ctx.executable._codegen_script,
-        arguments = [output_file.path, ctx.attr.template_path, ",".join(ctx.attr.deployed_modules)],
+        arguments = [str(ctx.attr.use_serial_communication), str(ctx.attr.use_bluetooth_communication), str(ctx.attr.use_funk_communication), output_file.path, ctx.attr.template_path, ",".join(ctx.attr.deployed_modules)],
     )
     return [DefaultInfo(files = depset([output_file]))]
 
@@ -21,6 +21,15 @@ def _generate_attrs():
         ),
         "file_name": attr.string(
             mandatory = True,
+        ),
+        "use_serial_communication": attr.bool(
+            default = False,
+        ),
+        "use_bluetooth_communication": attr.bool(
+            default = False,
+        ),
+        "use_funk_communication": attr.bool(
+            default = False,
         ),
         "template_path": attr.string(default = TEMPLATE_PATH),
         "_codegen_script": attr.label(

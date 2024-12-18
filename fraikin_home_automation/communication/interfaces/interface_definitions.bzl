@@ -1,4 +1,12 @@
-INTERFACE_CONFIGS = ["ArduinoOnly", "ArduinoToRaspi", "RaspiToArduino", "RaspiOnly", "AppToRaspi", "RaspiToApp"]
+INTERFACE_CONFIGS = [
+    "ArduinoOnly",
+    "ArduinoToRaspi",
+    "AppToArduino",
+    "RaspiToArduino",
+    "RaspiOnly",
+    "AppToRaspi",
+    "RaspiToApp",
+]
 
 INTERFACE_DEFINITIONS = [
     {
@@ -75,5 +83,53 @@ INTERFACE_DEFINITIONS = [
         "Name": "light_chain_request_interface",
         "DataTypeDefinition": "light_chain_request.json",
         "InterfaceConfig": "AppToRaspi",
+    },
+    {
+        "Name": "flight_main_rotor_speed_interface",
+        "DataTypeDefinition": "flight_main_rotor_speed.json",
+        "InterfaceConfig": "AppToArduino",
+        "InterfaceShortName": "S",
+    },
+    {
+        "Name": "flight_altitude_interface",
+        "DataTypeDefinition": "flight_altitude.json",
+        "InterfaceConfig": "AppToArduino",
+        "InterfaceShortName": "A",
+    },
+    {
+        "Name": "flight_direction_interface",
+        "DataTypeDefinition": "flight_direction.json",
+        "InterfaceConfig": "AppToArduino",
+        "InterfaceShortName": "D",
+    },
+    {
+        "Name": "flight_switches_interface",
+        "DataTypeDefinition": "flight_switches.json",
+        "InterfaceConfig": "AppToArduino",
+        "InterfaceShortName": "B",
+    },
+    {
+        "Name": "flight_main_rotor_speed_funk_interface",
+        "DataTypeDefinition": "flight_main_rotor_speed.json",
+        "InterfaceConfig": "ArduinoToArduino",
+        "InterfaceShortName": "S",
+    },
+    {
+        "Name": "flight_altitude_funk_interface",
+        "DataTypeDefinition": "flight_altitude.json",
+        "InterfaceConfig": "ArduinoToArduino",
+        "InterfaceShortName": "A",
+    },
+    {
+        "Name": "flight_direction_funk_interface",
+        "DataTypeDefinition": "flight_direction.json",
+        "InterfaceConfig": "ArduinoToArduino",
+        "InterfaceShortName": "D",
+    },
+    {
+        "Name": "flight_switches_funk_interface",
+        "DataTypeDefinition": "flight_switches.json",
+        "InterfaceConfig": "ArduinoToArduino",
+        "InterfaceShortName": "B",
     },
 ]

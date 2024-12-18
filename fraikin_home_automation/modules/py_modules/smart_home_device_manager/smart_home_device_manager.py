@@ -48,6 +48,7 @@ class SmartHomeDeviceManager(IModule):
 
     def step(self):
         self.sonoff_obj.update_devices()
+        self.sonoff_obj_2.update_devices()
         self.attempt_login()
         # Dishwasher
         self.check_if_dishwasher_run_was_requested()
@@ -100,12 +101,14 @@ class SmartHomeDeviceManager(IModule):
     def login_to_sonoff(self):
         try:
             self.sonoff_obj = Sonoff(os.environ["EWELINK_EMAIL"], os.environ["EWELINK_PW"], 'eu')
+            self.sonoff_obj_2 = Sonoff(os.environ["EWELINK_EMAIL2"], os.environ["EWELINK_PW"], 'eu')
         except:
             self.sonoff_obj = None
+            self.sonoff_obj_2 = None
             print("SmartHomeDeviceManager: Login to Sonoff failed")
 
     def attempt_login(self):
-        if self.sonoff_obj is None:
+        if self.sonoff_obj is None or self.sonoff_obj_2 is None:
             self.login_to_sonoff()
 
     def check_if_dishwasher_should_be_turned_off(self):
@@ -178,7 +181,7 @@ class SmartHomeDeviceManager(IModule):
         if (self.scheduled_dishwasher_run_time is not None
                 and self.scheduled_dishwasher_run_time.day == current_time.day
                 and current_time.hour == self.scheduled_dishwasher_run_time.hour):
-            if self.get_status()!='on':
+            if self.get_dishwasher_status()!='on':
                 self.turn_dishwasher_on()
             else:
                 self.reset_scheduled_dishwasher_interface_data()
@@ -188,7 +191,7 @@ class SmartHomeDeviceManager(IModule):
         if (self.scheduled_washing_machine_run_time is not None
                 and self.scheduled_washing_machine_run_time.day == current_time.day
                 and current_time.hour == self.scheduled_washing_machine_run_time.hour):
-            if self.get_status()!='on':
+            if self.get_washig_machine_status()!='on':
                 self.turn_washing_machine_on()
             else:
                 self.reset_scheduled_washing_machine_interface_data()
@@ -198,7 +201,7 @@ class SmartHomeDeviceManager(IModule):
         if (self.scheduled_dryer_run_time is not None
                 and self.scheduled_dryer_run_time.day == current_time.day
                 and current_time.hour == self.scheduled_dryer_run_time.hour):
-            if self.get_status()!='on':
+            if self.get_dryer_status()!='on':
                 self.turn_dryer_on()
             else:
                 self.reset_scheduled_dryer_interface_data()
@@ -213,19 +216,19 @@ class SmartHomeDeviceManager(IModule):
 
     def turn_washing_machine_on(self):
         self.login_to_sonoff()
-        # self.sonoff_obj.switch('on', '1000a5ffcd')
+        self.sonoff_obj_2.switch('on', '100231c7aa')
 
     def turn_washing_machine_off(self):
         self.login_to_sonoff()
-        # self.sonoff_obj.switch('off', '1000a5ffcd')
+        self.sonoff_obj_2.switch('off', '100231c7aa')
 
     def turn_dryer_on(self):
         self.login_to_sonoff()
-        # self.sonoff_obj.switch('on', '1000a5ffcd')
+        self.sonoff_obj_2.switch('on', '100232302f')
 
     def turn_dryer_off(self):
         self.login_to_sonoff()
-        # self.sonoff_obj.switch('off', '1000a5ffcd')
+        self.sonoff_obj_2.switch('off', '100232302f')
 
     def reset_scheduled_dishwasher_interface_data(self):
         self.scheduled_runs.dishwasher_run_scheduled = False

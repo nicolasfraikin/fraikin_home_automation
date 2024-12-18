@@ -15,6 +15,7 @@ load("//fraikin_home_automation/utils/code_generators:create_interface_py.bzl", 
             name = interface_definition["Name"] + "_h_file",
             interface_data_type = interface_definition["DataTypeDefinition"].replace(".json", ""),
             interface_name = interface_definition["Name"],
+            interface_short_name = interface_definition["InterfaceShortName"] if "InterfaceShortName" in interface_definition.keys() else "None",
         ),
         platformio_library(
             name = interface_definition["Name"],
@@ -70,6 +71,7 @@ load("//fraikin_home_automation/utils/code_generators:create_interface_py.bzl", 
             name = interface_definition["Name"] + "_java_file",
             interface_data_type = interface_definition["DataTypeDefinition"].replace(".json", ""),
             interface_name = interface_definition["Name"],
+            interface_short_name = interface_definition["InterfaceShortName"] if "InterfaceShortName" in interface_definition.keys() else "None",
         ),
     )
     for interface_definition in INTERFACE_DEFINITIONS

@@ -33,11 +33,12 @@ import android.content.Intent;
 import android.app.PendingIntent;
 // Allow to run in background
 import android.net.Uri;
-import android.os.Build;
 import android.provider.Settings;
 import android.content.Intent;
 import android.content.Context;
 import android.app.ActivityManager;
+// Bluetooth permissions
+import android.content.pm.PackageManager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,9 +47,12 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean isLocationPermissionGranted = false;
+    private boolean isBluetoothPermissionGranted = false;
     private static final String CHANNEL_ID = "default_channel";
     static MyWebSocketClient webSocketClient = new MyWebSocketClient();
     Intent backgroundService;
+    private static final int REQUEST_BLUETOOTH_PERMISSIONS = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new SandboxFragment();
                 } else if (item_id==R.id.nav_settings) {
                     selectedFragment = new SettingsFragment();
+                } else if (item_id==R.id.nav_flight_control) {
+                    selectedFragment = new FlightControlFragment();
                 } else {
                     selectedFragment = new HomeFragment();
                 }
@@ -119,6 +125,28 @@ public class MainActivity extends AppCompatActivity {
             Log.v("Fraikin Home Automation", "Start service background");
         }
 
+        // Check bluetooth permission
+        checkBluetoothPermissions();
+
+    }
+
+    private void checkBluetoothPermissions() {
+        String[] permissions = {
+                Manifest.permission.BLUETOOTH_CONNECT,
+                Manifest.permission.BLUETOOTH_SCAN
+        };
+
+        isBluetoothPermissionGranted = true;
+        for (String permission : permissions) {
+            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                isBluetoothPermissionGranted = false;
+                break;
+            }
+        }
+
+        if (!isBluetoothPermissionGranted) {
+            requestPermissions(permissions, REQUEST_BLUETOOTH_PERMISSIONS);
+        }
     }
 
     public static void connectWebsocket() {
@@ -162,10 +190,17 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             isLocationPermissionGranted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
         }
+        if (requestCode == REQUEST_BLUETOOTH_PERMISSIONS) {
+            isBluetoothPermissionGranted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+        }
     }
 
     public boolean isLocationPermissionGranted() {
         return isLocationPermissionGranted;
+    }
+
+    public boolean isBluetoothPermissionGranted() {
+        return isBluetoothPermissionGranted;
     }
 
     private void createNotificationChannel() {
@@ -223,6 +258,8 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new SandboxFragment();
             } else if (targetFragment.equals("SettingsFragment")) {
                 selectedFragment = new SettingsFragment();
+            } else if (targetFragment.equals("FlightControlFragment")) {
+                selectedFragment = new FlightControlFragment();
             } else {
                 selectedFragment = new HomeFragment();
             }
@@ -241,6 +278,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+    public void LockDrawer() {
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    public void UnlockDrawer() {
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
     @Override

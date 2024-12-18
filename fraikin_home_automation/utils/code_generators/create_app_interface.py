@@ -58,7 +58,7 @@ def write_file(output_file, template_name, res):
         f.write(rendered_file)
 
 
-def create_app_interface(output_file, template_path, interface_name, interface_data_type):
+def create_app_interface(output_file, template_path, interface_name, interface_short_name, interface_data_type):
     data_type_json = interface_data_type + ".json"
     json_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
                              DATA_TYPE_FOLDER, data_type_json)
@@ -70,6 +70,8 @@ def create_app_interface(output_file, template_path, interface_name, interface_d
     # Render the template with the given parameters
     res = {}
     res["InterfaceNamePascalCase"] = pascal_case(interface_name)
+    res["InterfaceShortNamePascalCase"] = interface_short_name
+    res["ShortNameDefined"] = "None" not in interface_short_name
     res["DataTypeType"] = data_type_definition["DataTypeType"]
     res["DataTypeName"] = data_type_definition["DataTypeName"]
     res["DataTypeNameUpperCase"] = data_type_definition["DataTypeName"].upper()
@@ -131,6 +133,7 @@ if __name__ == "__main__":
     output_file = sys.argv[1]
     template_path = sys.argv[2]
     interface_name = sys.argv[3]
-    interface_data_type = sys.argv[4]
+    interface_short_name = sys.argv[4]
+    interface_data_type = sys.argv[5]
 
-    create_app_interface(output_file, template_path, interface_name, interface_data_type)
+    create_app_interface(output_file, template_path, interface_name, interface_short_name, interface_data_type)

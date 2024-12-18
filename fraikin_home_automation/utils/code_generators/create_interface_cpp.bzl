@@ -9,7 +9,7 @@ def _create_interface_cpp_impl(ctx):
         inputs = [],
         outputs = [output_file_name],
         executable = ctx.executable._codegen_script,
-        arguments = [output_file_name.path, ctx.attr.template_path, ctx.attr.interface_name, ctx.attr.interface_data_type],
+        arguments = [output_file_name.path, ctx.attr.template_path, ctx.attr.interface_name, ctx.attr.interface_short_name, ctx.attr.interface_data_type],
     )
     return [DefaultInfo(files = depset([output_file_name]))]
 
@@ -18,6 +18,9 @@ def _generate_attrs():
         "template_path": attr.string(default = TEMPLATE_PATH),
         "interface_name": attr.string(),
         "interface_data_type": attr.string(),
+        "interface_short_name": attr.string(
+            default = "None",
+        ),
         "_codegen_script": attr.label(
             default = Label(GENERATOR),  # Use the py_binary as the executable
             executable = True,

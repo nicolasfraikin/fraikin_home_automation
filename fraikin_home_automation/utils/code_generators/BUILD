@@ -82,6 +82,48 @@ py_binary(
 )
 
 py_binary(
+    name = "create_arduino_interface_bluetooth_sender",
+    srcs = ["create_arduino_interface_bluetooth_sender.py"],
+    data = [
+        "//fraikin_home_automation/utils/code_generators/templates:arduino_interface_bluetooth_sender",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
+    name = "create_arduino_interface_bluetooth_receiver",
+    srcs = ["create_arduino_interface_bluetooth_receiver.py"],
+    data = [
+        "//fraikin_home_automation/communication/data_types",
+        "//fraikin_home_automation/utils/code_generators/templates:arduino_interface_bluetooth_receiver",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
+    name = "create_arduino_interface_funk_sender",
+    srcs = ["create_arduino_interface_funk_sender.py"],
+    data = [
+        "//fraikin_home_automation/utils/code_generators/templates:arduino_interface_funk_sender",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
+    name = "create_arduino_interface_funk_receiver",
+    srcs = ["create_arduino_interface_funk_receiver.py"],
+    data = [
+        "//fraikin_home_automation/communication/data_types",
+        "//fraikin_home_automation/utils/code_generators/templates:arduino_interface_funk_receiver",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@pip_deps_jinja2//:pkg"],
+)
+
+py_binary(
     name = "create_raspi_serial_interface_sender",
     srcs = ["create_raspi_serial_interface_sender.py"],
     data = [
