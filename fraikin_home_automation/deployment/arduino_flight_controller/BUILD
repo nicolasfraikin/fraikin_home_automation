@@ -38,7 +38,9 @@ platformio_project(
     #        "board_f_cpu": "16000000L",
     #    },
     framework = "arduino",
-    lib_deps = [],
+    lib_deps = [
+        "mikem/VirtualWire@^1.27",
+    ],
     platform = "atmelavr",
     deps = get_deployment_deps(DEPLOYED_MODULES, MODULES, "cpp") + ADDITIONAL_DEPS,
 )

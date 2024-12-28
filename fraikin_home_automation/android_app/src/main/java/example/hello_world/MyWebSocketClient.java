@@ -18,7 +18,7 @@ public class MyWebSocketClient extends WebSocketListener {
         Log.v("Fraikin Home Automation","Connect to server");
         OkHttpClient client = new OkHttpClient();
 //         Request request = new Request.Builder().url("ws://192.168.1.111:60141").build(); Host computer
-        Request request = new Request.Builder().url("ws://192.168.1.106:60141").build(); //Raspi
+        Request request = new Request.Builder().url("ws://192.168.1.108:60141").build(); //Raspi
         webSocket = client.newWebSocket(request, this);
         Log.v("Fraikin Home Automation","End of connect to server");
     }

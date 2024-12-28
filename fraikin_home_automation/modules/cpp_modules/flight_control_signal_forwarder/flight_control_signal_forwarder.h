@@ -32,6 +32,7 @@ class FlightControlSignalForwarder : public ModuleBase {
     }
     void ConfigureInterfaceSendingOnChange();
     void ForwardData();
+    void CheckBluetoothConnection();
     // Speed
     FlightMainRotorSpeedInterface::DataType rotor_speed_from_bluetooth_;
     FlightMainRotorSpeedInterface::DataType previous_rotor_speed_from_bluetooth_;
@@ -48,5 +49,7 @@ class FlightControlSignalForwarder : public ModuleBase {
     FlightSwitchesInterface::DataType switches_from_bluetooth_;
     FlightSwitchesInterface::DataType previous_switches_from_bluetooth_;
     FlightSwitchesFunkInterface::DataType switches_to_plane_;
+    // Bluetooth state
+    bool bluetooth_connected_;
 };
 #endif // FLIGHT_SPEED_CONTROL_SIGNAL_FORWARDER_H

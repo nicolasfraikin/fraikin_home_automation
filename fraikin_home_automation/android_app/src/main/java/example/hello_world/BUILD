@@ -14,8 +14,6 @@ android_library(
         "SmartHomeFragment.java",
         "SplashActivity.java",
         "StatusFragment.java",
-        "TelegramReceiveClient.java",
-        "TelegramSendClient.java",
         "//fraikin_home_automation/communication/interfaces:java_interfaces",
     ],
     manifest = "AndroidManifest.xml",

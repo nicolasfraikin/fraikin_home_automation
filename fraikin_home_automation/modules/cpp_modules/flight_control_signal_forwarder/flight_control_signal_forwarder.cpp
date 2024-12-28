@@ -4,11 +4,14 @@
 
 #include "flight_control_signal_forwarder.h"
 
+#define BLUETOOTH_STATE_PIN 6
+
 FlightControlSignalForwarder::FlightControlSignalForwarder()
     : rotor_speed_from_bluetooth_{}, previous_rotor_speed_from_bluetooth_{}, rotor_speed_to_plane_{},
       altitude_from_bluetooth_{}, previous_altitude_from_bluetooth_{}, altitude_to_plane_{},
       direction_from_bluetooth_{}, previous_direction_from_bluetooth_{}, direction_to_plane_{},
-      switches_from_bluetooth_{}, previous_switches_from_bluetooth_{}, switches_to_plane_{} {}
+      switches_from_bluetooth_{}, previous_switches_from_bluetooth_{}, switches_to_plane_{},
+      bluetooth_connected_{false} {}
 
 void FlightControlSignalForwarder::UpdateInterfaceSubscription() {
   ReceiveInterface<FlightMainRotorSpeedInterface>(previous_rotor_speed_from_bluetooth_, rotor_speed_from_bluetooth_);
@@ -28,6 +31,7 @@ void FlightControlSignalForwarder::Init() {
   FlightAltitudeFunkInterface::SendOnChangeData(true);
   FlightDirectionFunkInterface::SendOnChangeData(true);
   FlightSwitchesFunkInterface::SendOnChangeData(true);
+  pinMode(BLUETOOTH_STATE_PIN, INPUT);
 }
 
 void FlightControlSignalForwarder::ConfigureInterfaceSendingOnChange() {
@@ -39,13 +43,25 @@ void FlightControlSignalForwarder::ConfigureInterfaceSendingOnChange() {
 }
 
 void FlightControlSignalForwarder::ForwardData() {
-  rotor_speed_to_plane_.v = rotor_speed_from_bluetooth_.v;
-  altitude_to_plane_.v = altitude_from_bluetooth_.v;
-  direction_to_plane_.v = direction_from_bluetooth_.v;
-  switches_to_plane_.v = switches_from_bluetooth_.v;
+  if (bluetooth_connected_) {
+    rotor_speed_to_plane_.v = rotor_speed_from_bluetooth_.v;
+    altitude_to_plane_.v = altitude_from_bluetooth_.v;
+    direction_to_plane_.v = direction_from_bluetooth_.v;
+    switches_to_plane_.v = switches_from_bluetooth_.v;
+  } else {
+    rotor_speed_to_plane_.v = 0;
+    altitude_to_plane_.v = 0;
+    direction_to_plane_.v = 0;
+    switches_to_plane_.v = 0;
+  }
+}
+
+void FlightControlSignalForwarder::CheckBluetoothConnection() {
+  bluetooth_connected_ = digitalRead(BLUETOOTH_STATE_PIN) == 1 ? true : false;
 }
 
 void FlightControlSignalForwarder::Step() {
-  ConfigureInterfaceSendingOnChange();
+  //  ConfigureInterfaceSendingOnChange();
+  CheckBluetoothConnection();
   ForwardData();
 }

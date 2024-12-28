@@ -88,7 +88,8 @@ public class FlightControlFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (progress % 10 == 0) {
-                    sendBluetoothData(FlightMainRotorSpeedInterface.get_message_string(progress) + '+');
+                    int converted_value = (int)(255 * progress * 0.01);
+                    sendBluetoothData(FlightMainRotorSpeedInterface.get_message_string(converted_value) + '+');
                     speedValue.setText(String.valueOf(progress));
                     Log.e(TAG, "Send value " + progress);
                 }
