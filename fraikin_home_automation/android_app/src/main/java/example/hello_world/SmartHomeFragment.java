@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import android.widget.Button;
 import android.content.DialogInterface;
 import android.text.Html;
+import java.text.DecimalFormat;
 
 import android.util.Log;
 
@@ -22,6 +23,8 @@ import android.util.Log;
 
 
 public class SmartHomeFragment extends Fragment {
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+
 
     enum SmartHomeMachine {
         DISHWASHER,
@@ -325,23 +328,32 @@ public class SmartHomeFragment extends Fragment {
                   .show();
     }
 
-    private String getFinalDialogMessage(SmartHomeMachine variant) {
+    private String getFinalDialogMessage(SmartHomeMachine variant, double saved_money_per_kwh) {
         if (variant==SmartHomeMachine.DISHWASHER) {
-            return "Now close the door to the dishwasher. Shortly after the dishwasher will be turned off. It will be restarted at the scheduled time.";
+            double saved_money = saved_money_per_kwh * 1.5; // 1-2 kwh on average
+            return "Congratulations: This will save us ca. " + df.format(saved_money) + " DKK. <br> <br> Now close the door to the dishwasher. Shortly after the dishwasher will be turned off. It will be restarted at the scheduled time.";
         }
         else if (variant==SmartHomeMachine.WASHING_MACHINE) {
-            return "Now close the door to the washing machine. Shortly after the washing machine will be turned off. It will be restarted at the scheduled time.";
+            double saved_money = saved_money_per_kwh * 1.0; // 0.5 - 1.5 kwh on average
+            return "Congratulations: This will save us ca. " + df.format(saved_money) + " DKK. <br> <br> Now close the door to the washing machine. Shortly after the washing machine will be turned off. It will be restarted at the scheduled time.";
         }
         else if (variant==SmartHomeMachine.DRYER) {
-            return "Now close the door to the dryer. Shortly after the dryer will be turned off. It will be restarted at the scheduled time.";
+            double saved_money = saved_money_per_kwh * 4.0; // 3.5 - 4 kwh on average
+            return "Congratulations: This will save us ca. " + df.format(saved_money) + " DKK. <br> <br> Now close the door to the dryer. Shortly after the dryer will be turned off. It will be restarted at the scheduled time.";
         }
         return "Invalid";
     }
 
     private void showFinalDialog(String selectedTime, SmartHomeMachine variant) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        double current_price = Double.valueOf(ElectricityPricesInterface.current_price);
+        double chosen_price = Double.valueOf(selectedTime.split("\\(")[1].split("\\)")[0].replace(" DKK",""));
+        double saved_money_per_kwh = current_price - chosen_price;
+        Log.v("PRICE", "Current price = " + String.valueOf(current_price));
+        Log.v("PRICE", "chosen_price = " + String.valueOf(chosen_price));
+        Log.v("PRICE", "saved_money_per_kwh = " + String.valueOf(saved_money_per_kwh));
         builder.setTitle("3. Close the door")
-                .setMessage(getFinalDialogMessage(variant))
+                .setMessage(Html.fromHtml(getFinalDialogMessage(variant,saved_money_per_kwh)))
                 .setPositiveButton("Finish", (dialog, which) -> {
                       MainActivity mainActivity = (MainActivity) getActivity();
                       if (mainActivity != null) {

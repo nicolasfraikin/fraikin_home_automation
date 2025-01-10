@@ -51,5 +51,6 @@ class FlightControlSignalForwarder : public ModuleBase {
     FlightSwitchesFunkInterface::DataType switches_to_plane_;
     // Bluetooth state
     bool bluetooth_connected_;
+    unsigned long bluetooth_check_timer_;
 };
 #endif // FLIGHT_SPEED_CONTROL_SIGNAL_FORWARDER_H

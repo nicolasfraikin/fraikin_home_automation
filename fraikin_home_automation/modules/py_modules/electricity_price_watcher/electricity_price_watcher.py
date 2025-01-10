@@ -30,8 +30,8 @@ class ElectricityPriceWatcher(IModule):
         price_info_from_html = self.extract_price_info()
         days, times, values = self.get_days_times_and_prices(price_info_from_html)
         days, times, values = self.get_info_from_current_time_onwards(current_time, days, times, values)
-        string_formatted_time_price_info = self.get_string_formatted_time_price_info(current_time, days, times, values)
-        self.write_to_interface(string_formatted_time_price_info, current_time)
+        string_formatted_time_price_info, current_price = self.get_string_formatted_time_price_info(current_time, days, times, values)
+        self.write_to_interface(string_formatted_time_price_info, current_price, current_time)
 
     def update_interface_subscription(self):
         pass
@@ -100,6 +100,7 @@ class ElectricityPriceWatcher(IModule):
     def get_string_formatted_time_price_info(self, current_time, days, times, values):
         string_dates = []
         current_day = current_time.day
+        current_price = None
         for day, t, price in zip(days, times, values):
             if day == current_day and t >= 1:
                 string_date = "Today, "
@@ -107,8 +108,11 @@ class ElectricityPriceWatcher(IModule):
                 string_date = "Tomorrow, "
             string_date += str(t) + ":00 - " + str(t + 1 if t != 23 else "0") + ":00 (" + str(price) + " DKK)"
             string_dates.append(string_date)
-        return string_dates
+            if day == current_day and t == current_time.hour:
+                current_price = price
+        return string_dates, str(current_price)
 
-    def write_to_interface(self, string_formatted_time_price_info, current_time):
+    def write_to_interface(self, string_formatted_time_price_info, current_price, current_time):
         self.electricity_prices.cheapest_prices = ";".join(string_formatted_time_price_info)
+        self.electricity_prices.current_price = current_price
         self.electricity_prices.update_time = current_time.strftime("%Y-%m-%d %H:%M:%S")

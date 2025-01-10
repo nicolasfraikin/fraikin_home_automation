@@ -1,6 +1,101 @@
-###############################################################################
-# Bazel now uses Bzlmod by default to manage external dependencies.
-# Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
+################################################################################
+## Bazel now uses Bzlmod by default to manage external dependencies.
+## Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
+##
+## For more details, please check https://github.com/bazelbuild/bazel/issues/18958
+################################################################################
 #
-# For more details, please check https://github.com/bazelbuild/bazel/issues/18958
-###############################################################################
+##maven_install = use_repo_rule("@rules_jvm_external//:defs.bzl", "maven_install")
+##
+##git_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+##
+#
+############################### PYTHON
+#bazel_dep(name = "rules_python", version = "0.40.0")
+#
+#python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+#python.toolchain(
+#    is_default = True,
+#    python_version = "3.12",
+#)
+#
+#pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+#pip.parse(
+#    hub_name = "my_pip_deps",
+#    python_interpreter = "/usr/bin/python3",
+#    python_version = "3.12",
+#    requirements_lock = "//:requirements.txt",
+#)
+#use_repo(pip, "my_pip_deps")
+#
+###################################### App
+#bazel_dep(name = "rules_java", version = "7.12.2")
+#bazel_dep(name = "bazel_skylib", version = "1.3.0")
+#bazel_dep(
+#    name = "rules_android",
+#    version = "0.6.0",
+#)
+#
+#remote_android_extensions = use_extension(
+#    "@rules_android//bzlmod_extensions:android_extensions.bzl",
+#    "remote_android_tools_extensions",
+#)
+#use_repo(remote_android_extensions, "android_gmaven_r8", "android_tools")
+#
+#android_sdk_repository_extension = use_extension("@rules_android//rules/android_sdk_repository:rule.bzl", "android_sdk_repository_extension")
+#use_repo(android_sdk_repository_extension, "androidsdk")
+#
+#register_toolchains("@androidsdk//:sdk-toolchain", "@androidsdk//:all")
+#
+#bazel_dep(name = "rules_jvm_external", version = "6.6")
+#
+#maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+#maven.install(
+#    name = "maven",
+#    artifacts = [
+#        "androidx.fragment:fragment:1.2.0",  # Update version as needed
+#        "androidx.appcompat:appcompat:1.4.0",
+#        "androidx.annotation:annotation:1.8.2",
+#        "androidx.drawerlayout:drawerlayout:1.1.1",
+#        "com.google.android.material:material:1.2.0",
+#        "androidx.core:core:1.7.0",
+#        "com.squareup.okhttp3:okhttp:4.9.2",
+#        "org.json:json:20210307",
+#        "androidx.lifecycle:lifecycle-runtime:2.3.1",
+#        "androidx.lifecycle:lifecycle-viewmodel:2.3.1",
+#        "androidx.lifecycle:lifecycle-livedata:2.3.1",
+#        "androidx.lifecycle:lifecycle-livedata-core:2.3.1",
+#        "androidx.work:work-runtime:2.7.1",
+#        "com.squareup.okio:okio:3.2.0",
+#    ],
+#    repositories = [
+#        "https://maven.google.com",
+#        "https://repo1.maven.org/maven2",
+#    ],
+#)
+#use_repo(maven, "maven")
+#
+############################ Platform IO
+##git_repository = use_extension("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+#
+##git_repository(
+##    name = "platformio_rules",
+##    remote = "http://github.com/mum4k/platformio_rules.git",
+##    tag = "v0.0.14",
+##)
+##
+##platformio_rules_dependencies = use_extension("@platformio_rules//bazel:deps.bzl", "platformio_rules_dependencies")
+##
+###platformio_rules_dependencies()
+##
+##platformio_rules_transitive_dependencies = use_extension("@platformio_rules//bazel:transitive.bzl", "platformio_rules_transitive_dependencies")
+##
+###platformio_rules_transitive_dependencies()
+##
+##platformio_rules_pip_parse_dependencies = use_extension("@platformio_rules//bazel:pip_parse.bzl", "platformio_rules_pip_parse_dependencies")
+##
+###platformio_rules_pip_parse_dependencies()
+##
+##platformio_rules_pip_install_dependencies = use_extension("@platformio_rules//bazel:pip_install.bzl", "platformio_rules_pip_install_dependencies")
+##
+###platformio_rules_pip_install_dependencies()

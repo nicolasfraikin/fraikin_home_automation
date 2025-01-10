@@ -14,7 +14,12 @@
         "Type": "string",
         "VariableName": "cheapest_prices",
         "DefaultValue": "None"
+      },{
+        "Type": "string",
+        "VariableName": "current_price",
+        "DefaultValue": "None"
       }
+
     ],
     "EnumDefinitions": [
     ]

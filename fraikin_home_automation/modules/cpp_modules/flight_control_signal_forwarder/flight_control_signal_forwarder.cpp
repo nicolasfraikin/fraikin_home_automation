@@ -5,13 +5,14 @@
 #include "flight_control_signal_forwarder.h"
 
 #define BLUETOOTH_STATE_PIN 6
+#define BLUETOOTH_CHECK_TIME 10000
 
 FlightControlSignalForwarder::FlightControlSignalForwarder()
     : rotor_speed_from_bluetooth_{}, previous_rotor_speed_from_bluetooth_{}, rotor_speed_to_plane_{},
       altitude_from_bluetooth_{}, previous_altitude_from_bluetooth_{}, altitude_to_plane_{},
       direction_from_bluetooth_{}, previous_direction_from_bluetooth_{}, direction_to_plane_{},
       switches_from_bluetooth_{}, previous_switches_from_bluetooth_{}, switches_to_plane_{},
-      bluetooth_connected_{false} {}
+      bluetooth_connected_{false}, bluetooth_check_timer_{0U} {}
 
 void FlightControlSignalForwarder::UpdateInterfaceSubscription() {
   ReceiveInterface<FlightMainRotorSpeedInterface>(previous_rotor_speed_from_bluetooth_, rotor_speed_from_bluetooth_);
@@ -57,7 +58,10 @@ void FlightControlSignalForwarder::ForwardData() {
 }
 
 void FlightControlSignalForwarder::CheckBluetoothConnection() {
-  bluetooth_connected_ = digitalRead(BLUETOOTH_STATE_PIN) == 1 ? true : false;
+  if (millis() - bluetooth_check_timer_ > BLUETOOTH_CHECK_TIME) {
+    bluetooth_connected_ = digitalRead(BLUETOOTH_STATE_PIN) == 1 ? true : false;
+  }
+  bluetooth_check_timer_ = millis();
 }
 
 void FlightControlSignalForwarder::Step() {
